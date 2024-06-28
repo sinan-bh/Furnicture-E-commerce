@@ -1,0 +1,52 @@
+.bg-color{
+    background: #9b704264;
+    border-radius: 25px;
+}
+
+.categories-head{
+    z-index: 1;
+    border: none;
+    border-color: aliceblue;
+    padding-top: 50px;    
+}
+
+.furcategories{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 10px;
+    margin-top: 50px;    
+    
+ 
+}
+.card-item{
+ display: flex;
+ flex-direction: row;
+ overflow: hidden;
+}
+
+/* hr{
+    border: 2px solid rgba(30, 55, 154, 0.909);
+} */
+.card-text{
+    max-width: 150px;
+    
+}
+
+.img-style{
+    transition: transform 0.5s ;
+}
+.img-style:hover{
+    transform: scale(105%);
+}
+.text-control{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btn-list{
+    transition: transform 0.5s ;
+}
+.btn-list:hover{
+    transform: scale(105%);
+}

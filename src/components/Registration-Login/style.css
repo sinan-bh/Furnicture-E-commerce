@@ -1,0 +1,85 @@
+/* Registration */
+
+.registration{
+    width: 100vw;
+    height: 100vh;
+    background: #efebeb;
+    position: fixed;
+    background-image: url('https://media.istockphoto.com/id/968086564/photo/wooden-chairs-at-table-in-bright-open-space-interior-with-lamp-next-to-grey-couch-real-photo.jpg?s=612x612&w=0&k=20&c=TfE8sZbX_XC4yIYEaRAJHrdIWjZqvRx3Crn0ygcr-h0=');
+}
+.form-group{
+    width: 300px;
+    margin: 10px 0 0 150px;
+    
+}
+
+.registration .cardSize{
+    width: 700px;
+    margin: 180px 0 0 -50px;
+    padding: 50px;
+    position: fixed;
+    overflow: hidden;
+    border: none;
+    background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcC00NjQtdGQtMDE3MC0wNF8xLmpwZw.jpg');
+}
+.cardSize::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(5px); 
+    z-index: 1; 
+  }
+.cardSize .card-body {
+    position: relative;
+    z-index: 2;
+  }
+
+
+.registration .text-outline {
+    text-shadow: 
+        15px 10px 5px #6c6969, 
+        2px 3px 5px #908d8d,  
+        -1px 0px 0px #9c8f8f,
+        1px 10px 20px #d5cfcf; 
+    color: rgb(246, 238, 238);
+}
+
+/* End Registration */
+
+/* Login */
+
+.login{
+    width: 100vw;
+    height: 100vh;
+    background: #1f1e1ee7;
+    position: fixed;
+    background-image: url('https://img.freepik.com/free-photo/blue-armchair-against-blue-wall-living-room-interior-elegant-interior-design-with-copy-space-ai-generative_123827-23718.jpg');
+}
+.login .cardSize{
+    margin-top: 180px;
+    padding: 100px;
+    border: none;
+    background-image: url('https://t4.ftcdn.net/jpg/05/65/75/59/360_F_565755935_GLp4UQXwqgB4wYBGorgOVWm6NqU1taTE.jpg');
+
+}
+
+.login  .text-outline {
+    text-shadow: 
+        7px 10px 5px #f2ececa6, 
+        1px 0px 0px #ece4e4ad,  
+        -1px 0px 0px #e7e1e1,
+        1px 10px 20px #d5cfcf; 
+    color: rgb(15, 12, 12);
+}
+.login .btn-navy {
+    background-color: #d7dde3ab;
+    border-color: #061525;
+    color: #045882;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  /*End  Login */
