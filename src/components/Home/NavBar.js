@@ -9,7 +9,8 @@ const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
-  const { total } = useContext(addContext);
+  const { cartItem } = useContext(addContext);
+  const count = Object.keys(cartItem).reduce((total,key)=>cartItem[key] !== 0 ? total + 1 : total,0)
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {
@@ -36,14 +37,7 @@ const Navbar = () => {
     setSearch([...search, value]);
   };
 
-  const handleClick = () => {
-    const data = Dataset.filter((item) => search.includes(item.imageCategory));
-    console.log(data);
-  };
-
-  // const AddCard = (a) ={
-
-  // }
+ 
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -63,7 +57,7 @@ const Navbar = () => {
             />
             <button
               type="button"
-              onClick={handleClick}
+              // onClick={handleClick}
               className="btn1"
               style={{ height: 41 }}
             >
@@ -75,8 +69,8 @@ const Navbar = () => {
             <IoCartSharp className="icon"/>
           </button>
           </Link>
-            <div className="totaldiv me-2">{total ? total : ''}</div>
-          <Link to="/login" style={{ height: 41 }}>
+            <div className="totaldiv">{count ? count : ''}</div>
+          <Link to="/login" style={{ height: 41 }} className="log-btn me-5">
             Login
           </Link>
         </div>

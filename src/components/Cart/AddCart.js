@@ -2,23 +2,46 @@ import React, { useContext } from "react";
 import { Dataset } from "../../assets/data-set.js/dataSet";
 import { addContext } from "../context/CartContext";
 import CardItems from "./CardItems";
-import '../Cart/AddCart.js'
+import { useNavigate } from "react-router-dom";
+
+
+
 
 function AddCart() {
-  const { cartItem } = useContext(addContext);
-  console.log(cartItem);
+  const { cartItem,price,count } = useContext(addContext);
+  const navigate = useNavigate()
+  const istrue = localStorage.getItem('registrationData')
+  const btnHandler = () => {
+    if (!istrue) {
+      navigate('/login')
+    }
+  }
+ 
   return (
-    <div>
+    <div className="container">
       <div>
         <h2 className="text-center">Your Carts Are...!</h2>
       </div>
-      <div className="furcategories">
+      <div className="cart-container">
+      <div className="d-flex justify-content-between">
+          <h5 className="mb-3">Shopping Cart</h5>
+          <a href="#" className=" text-danger  float-end ">
+            Remove all
+          </a>
+        </div>
         {Dataset.map((card) => {
           if (cartItem[card.id] !== 0) {
-            console.log(card);
             return <CardItems item={card} />;
           }
         })}
+        <hr />
+        <div className="cart-summary">
+          <h6>Sub-Total ({count} items)</h6>
+          <h6>${price}</h6>
+        </div>
+        <dir className="text-end">
+          <button className="btn btn-primary " onClick={btnHandler}>Checkout</button>
+        </dir>
       </div>
     </div>
   );

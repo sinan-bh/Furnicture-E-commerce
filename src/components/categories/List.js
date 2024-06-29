@@ -30,7 +30,7 @@ function List({ list }) {
             <small class="text-muted">{price}</small>
           </p>
         </div>
-        <button className="btn-list btn btn-primary m-3"  onClick={()=>addToCart(id)}>ADD TO CART</button>
+        <button className="btn-list btn btn-primary m-3"  onClick={()=>addToCart(id) }>ADD TO CART</button>
       </div>
     </div>
   );

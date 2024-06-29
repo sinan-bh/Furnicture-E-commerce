@@ -1,29 +1,53 @@
-import React from 'react'
-import "../Cart/CardItems.jsx";
+import React, { useContext } from "react";
+import "./card.css";
+import { addContext } from "../context/CartContext";
+
+function CardItems({ item }) {
+  const { id, image, imageCategory, price } = item;
+
+  const { cartItem, addToCart, removeFromCart,setPrice } = useContext(addContext);
+  console.log(cartItem);
+
+  // const value = 0;
+  // value += parseInt(price * cartItem[id] )
+  // setPrice(value)
+ 
 
 
-function CardItems({item}) {
-    const {id,image,imageCategory,description,price} = item
   return (
-    <div className="card card-item g-0">
-    <div className=" col-md-4">
-        <img
-          src={image}
-          className="img-style img-fluid rounded-start mt-4"
-          alt=""
-        />
-    </div>
-    <div className="text-control">
-      <div className=" mt-3 ms-3">
-          <h5 className="card-title">{imageCategory}</h5>
-        <p className="card-text">{description}</p>
-        <p className="card-text">
-          <small class="text-muted">{price}</small>
-        </p>
+    <div>
+      <div className="">
+       
+        <div className="item-container">
+          <img
+            src={image}
+            alt=""
+            className="img-fluid rounded-start"
+          />
+          <div className="item-details">
+            <h6 className="mb-1">{imageCategory}</h6>
+            {/* <p className="mb-0 text-muted">250ml</p> */}
+          </div>
+          <div className="item-controls">
+            <button className="btn btn-outline-secondary btn-sm" onClick={() => removeFromCart(id)}>-</button>
+            <span className="mx-2">{cartItem[id]}</span>
+            <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(id)}>+</button>
+          </div>
+          <div className="item-price">
+            <p className="mb-0">${price}</p>
+            <a href="#" className="text-muted text-decoration-none">
+              Save for later
+            </a>
+            <br />
+            <a href="#" className="text-danger text-decoration-none">
+              Remove
+            </a>
+          </div>
+        </div>
+      
       </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default CardItems
+export default CardItems;

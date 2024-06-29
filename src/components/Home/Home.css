@@ -103,9 +103,14 @@ body {
 
  
 .totaldiv{
-  position: absolute;
-  right: 135px;
+  position: relative;
+  right: 40px;
   color: yellow;
+}
+
+.log-btn {
+  position: fixed;
+  margin-left: 440px;
 }
 
 /* .icon{
