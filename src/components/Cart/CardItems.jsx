@@ -1,18 +1,25 @@
-import React, { useContext } from "react";
+import React, { useState,useContext } from "react";
 import "./card.css";
 import { addContext } from "../context/CartContext";
 
 function CardItems({ item }) {
   const { id, image, imageCategory, price } = item;
 
-  const { cartItem, addToCart, removeFromCart,setPrice } = useContext(addContext);
-  console.log(cartItem);
+  // const [removeItem,setRemoveItem] = useState(0)
 
-  // const value = 0;
-  // value += parseInt(price * cartItem[id] )
-  // setPrice(value)
- 
 
+  const { cartItem, addToCart, removeFromCart,setPrice ,setCount  } = useContext(addContext);
+
+  
+  const removeCart = (id) => {
+
+    addToCart( cartItem[id] = 0 )
+    console.log(id);
+
+    setCount( Object.keys(cartItem).reduce((total,id)=>total - id,id))
+
+    
+  }
 
   return (
     <div>
@@ -35,11 +42,11 @@ function CardItems({ item }) {
           </div>
           <div className="item-price">
             <p className="mb-0">${price}</p>
-            <a href="#" className="text-muted text-decoration-none">
+            {/* <a href="#" className="text-muted text-decoration-none">
               Save for later
-            </a>
+            </a> */}
             <br />
-            <a href="#" className="text-danger text-decoration-none">
+            <a href="#" className="text-danger text-decoration-none" onClick={()=>removeCart(id)}>
               Remove
             </a>
           </div>

@@ -8,6 +8,9 @@ import NavBar from "./components/Home/NavBar";
 import Collections from "./components/categories/Collections";
 import AddCart from "./components/Cart/AddCart";
 import  CartContext  from "./components/context/CartContext";
+import Payment from "./components/Paymet/Payment";
+
+
 
 function App() {
   return (
@@ -25,6 +28,7 @@ function App() {
           <Route path="bedroom" element={<Collections type="Bedroom Furniture" />} />
         </Route>
         <Route path="/addcart" element={<AddCart />} />
+        <Route path="/payment" element={<Payment />} />
 
       </Routes>
       {/* <Footer /> */}

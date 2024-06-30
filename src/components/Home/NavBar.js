@@ -9,6 +9,8 @@ const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
+  const [searchItem, setSearch] = useState("");
+
   const { cartItem } = useContext(addContext);
   const count = Object.keys(cartItem).reduce((total,key)=>cartItem[key] !== 0 ? total + 1 : total,0)
 
@@ -29,15 +31,14 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-  const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
     e.preventDefault();
-    const { value } = e.target;
-    setSearch([...search, value]);
+    setSearch(e.target.value);
   };
 
- 
+  const searching = Dataset.filter(seach=>seach.imageCategory.toLowerCase().includes(searchItem.toLowerCase()))
+  console.log(searching);
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>

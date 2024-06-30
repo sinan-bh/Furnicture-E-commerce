@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { Dataset } from '../../assets/data-set.js/dataSet'
 
 
@@ -19,32 +19,26 @@ function CartContext(props) {
     const [count,setCount] = useState(0)
     
     
-  //  useEffect(()=>{
-  //   const totalCount = Object.keys(cartItem).reduce((total,id)=>total + cartItem[id])
-  //       setCount(totalCount)
-  //  },[cartItem])
+  
     
     useEffect(()=>{
       const totalCount = Object.keys(cartItem).reduce((total,id)=>total + cartItem[id],0)
+
+      // const removeItem = totalCount - Object.keys(cartItem).filter(item=>item)
+
+
       const totalPrice = Object.keys(cartItem).reduce((total,id)=>{
-      const price = Dataset.find(value=>value.id== id)?.price
-        return total + cartItem[id] * price
+      const price = Dataset.find(value=>value.id == id)?.price
+        return total + cartItem[id]* price
            
      },0)
       setPrice(totalPrice)
       setCount(totalCount)
     },[cartItem])
 
-    
 
     const addToCart = (listID) => {
-        setCartItem((prev)=>{ 
-          if (prev[listID]) {
-          return { ...prev, [listID]: prev[listID] + 1 };
-        }
-        return { ...prev, [listID]: 1 };
-      }
-      )
+        setCartItem((prev)=> ({ ...prev, [listID]: prev[listID] + 1 }))
 
     }
 
@@ -59,10 +53,18 @@ function CartContext(props) {
         });
     }
 
+    //   const removeCart = (id) => {
+
+    // // addToCart( cartItem[id] = 0 )
+    // console.log(id);
+
+    // const removCount = 
+
+    // setCount(removCount)
+  // }
 
 
-
-    const contextValue = {cartItem,addToCart,removeFromCart,price,count}
+    const contextValue = {cartItem,addToCart,removeFromCart,price,count,setCount}
 
   return (
     <addContext.Provider value={contextValue}>

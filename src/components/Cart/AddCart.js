@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 
 
 function AddCart() {
-  const { cartItem,price,count } = useContext(addContext);
+  const { cartItem,price,count,removeCount } = useContext(addContext);
   const navigate = useNavigate()
   const istrue = localStorage.getItem('registrationData')
-  const btnHandler = () => {
+  const handlerClick = () => {
     if (!istrue) {
       navigate('/login')
+    }else{
+      navigate('/payment')
     }
   }
  
@@ -40,7 +42,7 @@ function AddCart() {
           <h6>${price}</h6>
         </div>
         <dir className="text-end">
-          <button className="btn btn-primary " onClick={btnHandler}>Checkout</button>
+          <button className="btn btn-primary " onClick={handlerClick}>Checkout</button>
         </dir>
       </div>
     </div>
