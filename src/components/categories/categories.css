@@ -1,6 +1,11 @@
-.bg-color{
-    background: #f1eeeacb;
+.card-list{
+    background: transparent;
     border-radius: 25px;
+    margin-top: 100px;
+    width: 100vw;
+    border: none;
+    
+    
 }
 
 .categories-head{
@@ -22,11 +27,22 @@
  display: flex;
  flex-direction: row;
  overflow: hidden;
+ height: 250px;
+ border-radius: 20px;
+ transition: transform 0.5s ;
+ margin: 10px;
+
 }
 
-/* hr{
-    border: 2px solid rgba(30, 55, 154, 0.909);
-} */
+.card-item:hover{
+    transform: scale(105%);
+}
+
+.card-item img{
+    height: 250px;
+}
+
+
 .card-text{
     max-width: 150px;
     

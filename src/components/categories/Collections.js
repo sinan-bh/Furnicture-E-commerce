@@ -8,14 +8,14 @@ function Collections({ type }) {
     type === "All" ? Dataset : Dataset.filter((list) => list.type === type);
 
   return (
-    <div className="container bg-color">
+    <div className="container  card-list pb-5 mb-5">
       <h2 className="categories-head text-center" >
         {type === "All" && "All Products"}
         {type === "Living Room Furniture" && "Living Room Furniture"}
         {type === "Dining Room Furniture" && "Dining Room Furniture"}
         {type === "Bedroom Furniture" && "Bedroom Furniture"}
       </h2>
-      <div className=" furcategories ">
+      <div className=" furcategories">
       {list.map((item) => (
           <List  key={item.id} list={item}></List>
             ))}

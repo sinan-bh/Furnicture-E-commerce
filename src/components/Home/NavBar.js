@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
-import { Dataset } from "../../assets/data-set.js/dataSet";
 import { IoCartSharp } from "react-icons/io5";
 import { addContext } from "../context/CartContext";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
+  const { cartItem,searchTerm,setSearchTerm } = useContext(addContext);
 
-  const [searchItem, setSearch] = useState("");
+  const navigate = useNavigate()
 
-  const { cartItem } = useContext(addContext);
-  const count = Object.keys(cartItem).reduce((total,key)=>cartItem[key] !== 0 ? total + 1 : total,0)
+  
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+ 
+
+  const count = Object.keys(cartItem).reduce((total, key) => (cartItem[key] !== 0 ? total + 1 : total), 0);
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {
@@ -25,55 +32,54 @@ const Navbar = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
 
+  const search = () => {
+    navigate('/searchItem')
+  }
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
-
-  const searching = Dataset.filter(seach=>seach.imageCategory.toLowerCase().includes(searchItem.toLowerCase()))
-  console.log(searching);
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
-      <div className="navbar">
-        {/* <Link to="/" className="navbar-brand">
-          MyWebsite
-        </Link> */}
-        <div className="navbar-menu d-flex">
-          <Link to="/" style={{ height: 41 }}>
-            Home
-          </Link>
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search..."
-              onChange={handleChange}
-            />
-            <button
-              type="button"
-              // onClick={handleClick}
-              className="btn1"
-              style={{ height: 41 }}
-            >
-              Search
-            </button>
+      <div className="navbar-container">
+        <div className="navbar">
+          <div className="navbar-menu d-flex">
+            <Link to="/" className="navbar-link fw-bold">
+              Home
+            </Link>
+            <div className="search-bar fw-bold">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleChange}
+              />
+              <button type="button" className="btn1 fw-bold" onClick={()=>search()}>
+                Search
+              </button>
+            </div>
+            <Link to="/addcart" className="cart-link">
+              <button type="button" className="btn2">
+                <IoCartSharp className="icon" />
+              {count > 0 && <div className="totaldiv fw-bold">{count}</div>}
+              </button>
+            </Link>
+            <Link to="/login" className="log-btn fw-bold">
+              Login
+            </Link>
           </div>
-          <Link to={'/addcart'} style={{ height: 41 }}>
-          <button type="button" className="btn2" >
-            <IoCartSharp className="icon"/>
-          </button>
-          </Link>
-            <div className="totaldiv">{count ? count : ''}</div>
-          <Link to="/login" style={{ height: 41 }} className="log-btn me-5">
-            Login
-          </Link>
+        </div>
+        <div className="Category">
+          <div className="Catogarylink">
+            <div className="text m-2 px-2"><Link to="/allproducts" className="fw-bold  text-decoration-none "style={{ color: '#1ba8c4f3' }} >COLLECTIONS</Link></div>
+            <div className="text m-2 px-2"><Link to="/allproducts/livingroom" className="fw-bold  text-decoration-none " style={{ color: '#1ba8c4f3' }}>LIVING ROOM</Link></div>
+            <div className="text m-2 px-2"><Link to="/allproducts/diningset" className="fw-bold  text-decoration-none " style={{ color: '#1ba8c4f3' }}>DINING SET</Link></div>
+            <div className="text mt-2 px-2"><Link to="/allproducts/bedroom" className="fw-bold  text-decoration-none" style={{ color: '#1ba8c4f3' }}>BED ROOM</Link></div>
+            {/* <div className="text m-2"><Link to="/"></Link></div> */}
+          </div>
         </div>
       </div>
     </nav>

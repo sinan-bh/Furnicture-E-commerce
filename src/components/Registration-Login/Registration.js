@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Registration = () => {
   const [reg, setReg] = useState({
     name: "",
@@ -12,8 +10,8 @@ const Registration = () => {
     pass2: "",
   });
 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,24 +21,42 @@ const Registration = () => {
     });
   };
 
+  const validate = () => {
+    const newErrors = {};
+    if (!reg.name) newErrors.name = "Name is required";
+    if (!reg.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(reg.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!reg.uname) newErrors.uname = "Username is required";
+    if (!reg.pass1) newErrors.pass1 = "Password is required";
+    if (!reg.pass2) {
+      newErrors.pass2 = "Confirm Password is required";
+    } else if (reg.pass1 !== reg.pass2) {
+      newErrors.pass2 = "Passwords do not match";
+    }
+    return newErrors;
+  };
+
   const onSubmit = () => {
-    if (reg.pass1 === reg.pass2) {
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
       localStorage.setItem("registrationData", JSON.stringify(reg));
-      navigate('/login')
+      navigate("/login");
       alert("Registration Complete");
     } else {
-      navigate('/')
-      alert("The Passwords do not match");
+      setErrors(validationErrors);
     }
   };
 
   return (
-    <div className=" registration me-5">
-      <div className="row justify-content-center ">
-        <div className="col-md-6 ">
+    <div className="registration me-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
           <div className="card cardSize">
-            <div className="card-body d-flex justify-content-center aling-items-center">
-              <h1 className="text-outline text-white fw-bold mt-5">User Registration</h1>
+            <div className="card-body d-flex  justify-content-center align-items-center">
+              <h1 className="text-outline text-white fw-bold ">User Registration</h1>
               <form>
                 <div className="form-group">
                   <input
@@ -51,6 +67,7 @@ const Registration = () => {
                     value={reg.name}
                     onChange={handleChange}
                   />
+                  {errors.name && <div className="text-danger">{errors.name}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -61,6 +78,7 @@ const Registration = () => {
                     value={reg.email}
                     onChange={handleChange}
                   />
+                  {errors.email && <div className="text-danger">{errors.email}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -71,6 +89,7 @@ const Registration = () => {
                     value={reg.uname}
                     onChange={handleChange}
                   />
+                  {errors.uname && <div className="text-danger">{errors.uname}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -81,6 +100,7 @@ const Registration = () => {
                     value={reg.pass1}
                     onChange={handleChange}
                   />
+                  {errors.pass1 && <div className="text-danger">{errors.pass1}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -91,6 +111,7 @@ const Registration = () => {
                     value={reg.pass2}
                     onChange={handleChange}
                   />
+                  {errors.pass2 && <div className="text-danger">{errors.pass2}</div>}
                 </div>
                 <button
                   type="button"

@@ -5,21 +5,14 @@ import { addContext } from "../context/CartContext";
 function CardItems({ item }) {
   const { id, image, imageCategory, price } = item;
 
-  // const [removeItem,setRemoveItem] = useState(0)
 
 
-  const { cartItem, addToCart, removeFromCart,setPrice ,setCount  } = useContext(addContext);
+  const { cartItem, addToCart, removeFromCart,removeItem  } = useContext(addContext);
 
   
-  const removeCart = (id) => {
-
-    addToCart( cartItem[id] = 0 )
-    console.log(id);
-
-    setCount( Object.keys(cartItem).reduce((total,id)=>total - id,id))
-
-    
-  }
+  const handleRemoveItem = (id) => {
+    removeItem(id);
+};
 
   return (
     <div>
@@ -46,7 +39,7 @@ function CardItems({ item }) {
               Save for later
             </a> */}
             <br />
-            <a href="#" className="text-danger text-decoration-none" onClick={()=>removeCart(id)}>
+            <a href="#" className="text-danger text-decoration-none" onClick={()=>handleRemoveItem(id)}>
               Remove
             </a>
           </div>

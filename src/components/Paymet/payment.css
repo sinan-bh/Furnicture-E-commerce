@@ -2,7 +2,7 @@
     max-width: 700px;
     margin: 20px auto;
     padding: 20px;
-    /* background-color: #121212; */
+    background: transparent;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -11,16 +11,15 @@
   }
   
   .payment-card {
-    background-color: #1b1b3a;
-    color: #00d9ff;
+    background-color: #27272949;
+    color: #e9eff0;
     padding: 20px;
     border-radius: 10px;
-    /* width: 100%; */
   }
   
   .payment-title {
     font-size: 1.5em;
-    color: #00d9ff;
+    /* color: #00d9ff; */
     text-align: center;
     margin-bottom: 20px;
   }
@@ -32,7 +31,7 @@
   }
   
   .payment-method label {
-    color: #00d9ff;
+    /* color: #00d9ff; */
     cursor: pointer;
   }
   
@@ -41,7 +40,7 @@
   }
   
   .card-details {
-    background-color: #2a2a59;
+    background-color: #d3d3df5f;
     padding-top: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -52,35 +51,35 @@
 
   }
   
-  .form-group {
+  .card-details .form-group {
     margin-bottom: 15px;
         width: 300px;
         margin: 0px 0 10px 10px;
   }
   
-  .form-group label {
+  .card-details .form-group label {
     display: block;
-    color: #00d9ff;
+    color: #f4f5f5;
     margin-bottom: 5px;
   }
   
-  .form-group input {
+  .card-details .form-group input {
     width: 100%;
     padding: 10px;
     background-color: #1b1b3a;
-    color: #00d9ff;
-    border: 1px solid #00d9ff;
+    color: #f3f6f7;
+    border: 1px solid #717374;
     border-radius: 5px;
   }
   
-  .form-group input::placeholder {
+  /* .card-details .form-group input::placeholder {
     color: #00d9ff;
   }
-  
+   */
   .finish-pay-btn {
     width: 100%;
     padding: 15px;
-    background-color: #00d9ff;
+    background-color: #d2e0e2ca;
     border: none;
     border-radius: 5px;
     color: #121212;

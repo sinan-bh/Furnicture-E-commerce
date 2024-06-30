@@ -14,12 +14,13 @@ const getDefualtCart = () => {
 }
 function CartContext(props) {
 
-    const [cartItem , setCartItem] = useState(getDefualtCart)
+    const [cartItem , setCartItem] = useState(getDefualtCart())
     const [price,setPrice] = useState(0)
     const [count,setCount] = useState(0)
+    const [searchTerm, setSearchTerm] = useState('');
     
     
-  
+   
     
     useEffect(()=>{
       const totalCount = Object.keys(cartItem).reduce((total,id)=>total + cartItem[id],0)
@@ -43,28 +44,25 @@ function CartContext(props) {
     }
 
     const removeFromCart = (listID) => {
-        setCartItem(prev=> {
-          if (prev[listID] === 1) {
-            const newCartItems = { ...prev };
-            delete newCartItems[listID];
-            return newCartItems;
-          }
-          return { ...prev, [listID]: prev[listID] - 1 };
-        });
-    }
+      setCartItem((prev) => {
+          const newCart = { ...prev, [listID]: Math.max(0, prev[listID] - 1) };
+          return newCart;
+      });
+  };
 
-    //   const removeCart = (id) => {
+  const removeItem = (listID) => {
+    setCartItem((prev) => {
+        const newCart = { ...prev, [listID]: 0 };
+        return newCart;
+    });
+};
 
-    // // addToCart( cartItem[id] = 0 )
-    // console.log(id);
-
-    // const removCount = 
-
-    // setCount(removCount)
-  // }
+const removeAllItem = () => {
+  setCartItem(getDefualtCart())
+}
 
 
-    const contextValue = {cartItem,addToCart,removeFromCart,price,count,setCount}
+const contextValue = { cartItem, addToCart, removeFromCart, removeItem,removeAllItem,setSearchTerm, price, count ,searchTerm};
 
   return (
     <addContext.Provider value={contextValue}>

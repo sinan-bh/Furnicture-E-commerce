@@ -10,12 +10,12 @@ function List({ list }) {
 
     
   return (
-    <div className="card card-item g-0">
+    <div className="card card-item">
       <div class=" col-md-6">
         <Link to={`/product/${id}`}>
           <img
             src={image}
-            className="img-style img-fluid rounded-start mt-4"
+            className="img-style img-fluid rounded-start"
             alt=""
           />
         </Link>
@@ -27,7 +27,7 @@ function List({ list }) {
           </Link>
           <p className="card-text">{description}</p>
           <p className="card-text">
-            <small class="text-muted">{price}</small>
+            <small class="text-muted">${price}</small>
           </p>
         </div>
         <button className="btn-list btn btn-primary m-3"  onClick={()=>addToCart(id) }>ADD TO CART</button>
