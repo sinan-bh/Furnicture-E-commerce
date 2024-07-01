@@ -11,6 +11,7 @@ import CartContext from "./components/context/CartContext";
 import Payment from "./components/Paymet/Payment";
 import Footer from "./components/Home/Footer";
 import SearchItem from "./components/Home/SearchItem";
+import ProductDetails from "./components/Products/ProductDetails";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               path="bedroom"
               element={<Collections type="Bedroom Furniture" />}
             />
+            <Route path=":productId" element={<ProductDetails />} />
           </Route>
           <Route path="/addcart" element={<AddCart />} />
           <Route path="/payment" element={<Payment />} />

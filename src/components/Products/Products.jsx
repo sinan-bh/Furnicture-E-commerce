@@ -2,11 +2,16 @@ import React from "react";
 import { Dataset } from "../../assets/data-set.js/dataSet";
 import "./Style.css";
 import List from "./List";
+import { useParams } from "react-router-dom";
+
+
+
 
 function Collections({ type }) {
   const list =
     type === "All" ? Dataset : Dataset.filter((list) => list.type === type);
 
+   
   return (
     <div className="container  card-list pb-5 mb-5">
       <h2 className="categories-head text-center" >

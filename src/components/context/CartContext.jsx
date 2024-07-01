@@ -19,6 +19,7 @@ function CartContext(props) {
     const [price,setPrice] = useState(0)
     const [count,setCount] = useState(0)
     const [searchTerm, setSearchTerm] = useState('');
+    
 
     const [log, setLog] = useState({
       lname: "",
@@ -68,6 +69,8 @@ function CartContext(props) {
 const removeAllItem = () => {
   setCartItem(getDefualtCart())
 }
+
+
 
 
 const contextValue = { cartItem, addToCart, removeFromCart, removeItem,removeAllItem,setSearchTerm, price, count ,searchTerm,log,setLog};
