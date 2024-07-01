@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import { Dataset } from '../../assets/data-set.js/dataSet'
 import { addContext } from '../context/CartContext'
-import List from '../categories/List'
+import List from '../Products/List'
+import "./Style.css";
+
 
 
 
@@ -20,9 +22,9 @@ function SearchItem() {
       );
 
   return (
-    <div>
-        <h2 className='container text-center pt-5 mt-5 text-white'>Seardched Items are...!</h2>
-      <div className=" furcategories m-5 py-5">
+    <div className='pt-5'>
+        <h2 className='container text-center pt-5 mt-5 '>Seardched Items are...!</h2>
+      <div className=" search  ">
       {list.map((item) => (
           <List  key={item.id} list={item}></List>
             ))}

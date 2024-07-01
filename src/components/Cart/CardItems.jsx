@@ -1,6 +1,7 @@
 import React, { useState,useContext } from "react";
-import "./card.css";
+import "./Style.css";
 import { addContext } from "../context/CartContext";
+
 
 function CardItems({ item }) {
   const { id, image, imageCategory, price } = item;

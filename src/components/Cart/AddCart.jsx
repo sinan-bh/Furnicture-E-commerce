@@ -3,20 +3,23 @@ import { Dataset } from "../../assets/data-set.js/dataSet";
 import { addContext } from "../context/CartContext";
 import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
+import "./Style.css";
+
+
 
 function AddCart() {
   const { cartItem, price, count, removeAllItem } = useContext(addContext);
   const navigate = useNavigate();
-  const registrationData = JSON.parse(localStorage.getItem("registrationData"));
-  console.log(registrationData);
 
-  const handleCheckout = () => {
-    if (!registrationData) {
-      navigate("/login");
-    } else {
-      navigate("/payment");
+ 
+
+ 
+
+ 
+    const handleCheckout = () => {
+        navigate("/payment");
     }
-  };
+ 
 
   const hasItemsInCart = Object.values(cartItem).some((item) => item !== 0);
 
@@ -53,7 +56,7 @@ function AddCart() {
           </div>
         </div>
       ) : (
-        <div className="text-center">
+        <div className="text-center card empt-cart">
           <h2>Your cart is empty...!</h2>
         </div>
       )}

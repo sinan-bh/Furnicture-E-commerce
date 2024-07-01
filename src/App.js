@@ -5,7 +5,7 @@ import Registration from "./components/Registration-Login/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home/Home";
 import NavBar from "./components/Home/NavBar";
-import Collections from "./components/categories/Collections";
+import Collections from "./components/Products/Products";
 import AddCart from "./components/Cart/AddCart";
 import CartContext from "./components/context/CartContext";
 import Payment from "./components/Paymet/Payment";

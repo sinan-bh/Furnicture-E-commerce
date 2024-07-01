@@ -1,20 +1,24 @@
-import React, { useState } from "react";
-import './style.css'
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import './Style.css'
+import { Link, useHistory, useNavigate} from "react-router-dom";
+import { addContext } from "../context/CartContext";
 
 function Login() {
   const datas = JSON.parse(localStorage.getItem("registrationData"));
-  console.log(datas);
-  const [log, setLog] = useState({
-    lname: "",
-    lpass: "",
-  });
+
+  // const history = useHistory()
+ 
+
   const [errors, setErrors] = useState({});
 
+  const {log,setLog} = useContext(addContext)
+
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
+  // console.log(location);
   
-  const from = location.state?.from?.pathname || "/";
+  // const from = location.state?.from?.pathname || "/";
+  // console.log(from);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +40,8 @@ function Login() {
     if (Object.keys(validationErrors).length === 0) {
       if (datas.uname === log.lname && datas.pass1 === log.lpass) {
         alert("Login Successfully");
-        navigate(from, { replace: true }); // Redirect to the previous page
+        navigate('/')
+        // history.goBack() 
       } else {
         alert("Username or Password is Incorrect");
       }

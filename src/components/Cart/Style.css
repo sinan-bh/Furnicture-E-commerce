@@ -1,7 +1,7 @@
 
 .cart-container {
     max-width: 700px;
-    margin: 20px auto;
+    margin: 200px ;
     padding: 20px;
     border-radius: 10px;
     background-color: #fff;
@@ -40,4 +40,15 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+  }
+
+  .empt-cart{
+    margin: 150px 0 50px 300px;
+    width: 500px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: transparent;
   }

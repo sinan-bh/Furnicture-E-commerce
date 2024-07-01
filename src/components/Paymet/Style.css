@@ -1,6 +1,6 @@
 .payment-container {
     max-width: 700px;
-    margin: 20px auto;
+    margin: 50px auto;
     padding: 20px;
     background: transparent;
     border-radius: 10px;
@@ -11,7 +11,7 @@
   }
   
   .payment-card {
-    background-color: #27272949;
+    background-color: rgb(84,98,102);
     color: #e9eff0;
     padding: 20px;
     border-radius: 10px;
@@ -40,7 +40,7 @@
   }
   
   .card-details {
-    background-color: #d3d3df5f;
+    background-color: transparent;
     padding-top: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -66,9 +66,9 @@
   .card-details .form-group input {
     width: 100%;
     padding: 10px;
-    background-color: #1b1b3a;
-    color: #f3f6f7;
-    border: 1px solid #717374;
+    background-color: #fff;
+    color:  rgb(84,98,102);
+    border: 1px solid #e0e6ea;
     border-radius: 5px;
   }
   
@@ -76,8 +76,13 @@
     color: #00d9ff;
   }
    */
+.pay{
+  display: flex;
+  justify-content: flex-end;
+}
+
   .finish-pay-btn {
-    width: 100%;
+    width: 150px;
     padding: 15px;
     background-color: #d2e0e2ca;
     border: none;

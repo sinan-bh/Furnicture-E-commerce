@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
-import "./categories.css";
+import "./Style.css";
 import { addContext } from "../context/CartContext";
 
 

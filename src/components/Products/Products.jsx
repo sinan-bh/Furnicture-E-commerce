@@ -1,6 +1,6 @@
 import React from "react";
 import { Dataset } from "../../assets/data-set.js/dataSet";
-import "./categories.css";
+import "./Style.css";
 import List from "./List";
 
 function Collections({ type }) {

@@ -1,4 +1,4 @@
-import './Home.css'
+import './Style.css'
 import React from 'react'
 import { FaFacebook, } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
