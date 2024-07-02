@@ -38,9 +38,10 @@ function App() {
           </Route>
           <Route path="/addcart" element={<AddCart />} />
           <Route path="/payment" element={<Payment />} />
+          
+          <Route path="/searchItem" element={<SearchItem />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/searchItem" element={<SearchItem />} />
         </Routes>
         <Footer />
       </CartContext>
