@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import './Style.css'
-import { Link, useHistory, useNavigate} from "react-router-dom";
+ import "./Style.css";
+import { Link, useNavigate} from "react-router-dom";
 import { addContext } from "../context/CartContext";
 
 function Login() {
   const datas = JSON.parse(localStorage.getItem("registrationData"));
 
-  // const history = useHistory()
  
 
   const [errors, setErrors] = useState({});
@@ -14,12 +13,7 @@ function Login() {
   const {log,setLog} = useContext(addContext)
 
   const navigate = useNavigate();
-  // const location = useLocation();
-  // console.log(location);
-  
-  // const from = location.state?.from?.pathname || "/";
-  // console.log(from);
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLog({
@@ -41,7 +35,6 @@ function Login() {
       if (datas.uname === log.lname && datas.pass1 === log.lpass) {
         alert("Login Successfully");
         navigate('/')
-        // history.goBack() 
       } else {
         alert("Username or Password is Incorrect");
       }
