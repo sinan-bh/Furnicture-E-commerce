@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
 import { addContext } from "../context/CartContext";
+import { CiSearch } from "react-icons/ci";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
@@ -12,8 +13,19 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  
+  const search = () => {
+    navigate("/searchItem");
+  };
+
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
+    if (!e.target.value) {
+      navigate('/')
+    }else{
+
+      navigate("/searchItem");
+    }
   };
 
   const count = Object.keys(cartItem).reduce(
@@ -37,12 +49,11 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-  const search = () => {
-    navigate("/searchItem");
-  };
+
 
   const handleLogout = () => {
     setLog(false);
+    alert('Logo Out')
    
   };
 
@@ -123,9 +134,9 @@ const Navbar = () => {
             value={searchTerm}
             onChange={handleChange}
           />
-          <button type="button" className="btn1 fw-bold" onClick={search}>
-            Search
-          </button>
+          <div className="searchBtn" onClick={search}>
+          <CiSearch />
+          </div>
         </div>
       </div>
     </nav>

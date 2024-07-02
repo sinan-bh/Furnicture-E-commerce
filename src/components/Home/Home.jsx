@@ -75,7 +75,7 @@ const Home = () => {
               <Link to={list.to}>
               <img src={list.image} alt={list.name} className="card category-image" />
               </Link>
-              <h4 className="text-center mt-3 me-3">{list.name}</h4>
+              <h5 className="text-center mt-3 me-3">{list.name}</h5>
             </div>
           ))}
           </div>

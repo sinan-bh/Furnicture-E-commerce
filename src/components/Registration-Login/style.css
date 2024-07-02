@@ -3,9 +3,7 @@
 .registration{
     width: 100vw;
     height: 100vh;
-    background: #efebeb;
-    position: fixed;
-    background-image: url('https://media.istockphoto.com/id/968086564/photo/wooden-chairs-at-table-in-bright-open-space-interior-with-lamp-next-to-grey-couch-real-photo.jpg?s=612x612&w=0&k=20&c=TfE8sZbX_XC4yIYEaRAJHrdIWjZqvRx3Crn0ygcr-h0=');
+    background: #dddada;
 }
 .form-group{
     width: 300px;
@@ -17,9 +15,10 @@
     width: 700px;
     margin: 150px 0 0 -50px;
     padding: 50px;
-    position: fixed;
     overflow: hidden;
     border: none;
+    box-shadow: 15px -10px 10px rgb(163, 159, 159);
+    border-radius: 15px;
     background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcC00NjQtdGQtMDE3MC0wNF8xLmpwZw.jpg');
 }
 .cardSize::before {
@@ -54,14 +53,15 @@
 .login{
     width: 100vw;
     height: 100vh;
-    background: #1f1e1ee7;
-    position: fixed;
-    background-image: url('https://img.freepik.com/free-photo/blue-armchair-against-blue-wall-living-room-interior-elegant-interior-design-with-copy-space-ai-generative_123827-23718.jpg');
+    background: #fbf9f5f7;
 }
 .login .cardSize{
     margin-top: 180px;
     padding: 100px;
+    overflow: hidden;
     border: none;
+    border-radius: 15px;
+    box-shadow: 15px -10px 10px rgb(163, 159, 159);
     background-image: url('https://t4.ftcdn.net/jpg/05/65/75/59/360_F_565755935_GLp4UQXwqgB4wYBGorgOVWm6NqU1taTE.jpg');
 
 }

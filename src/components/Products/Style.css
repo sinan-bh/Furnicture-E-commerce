@@ -33,27 +33,37 @@
  flex-direction: row;
  overflow: hidden;
  height: 250px;
- border-radius: 10px;
  transition: transform 0.5s ;
  margin: 10px;
  box-shadow: 0px 0px 2px black;
 
+ background: rgba(239, 238, 238, 0.626);
 
 }
 
 .card-item:hover{
-    transform: scale(105%);
+    transform: scale(103%);
 }
 
 .card-item img{
     height: 250px;
 }
 
+.card-title{
+    color: rgb(42, 99, 111);
+    font-weight: bolder;
+    text-align: center;
+}
 
 .card-text{
     max-width: 150px;
-    
+    color: rgb(116, 115, 110);
 }
+
+.text-muted{
+    color: greenyellow;
+}
+
 
 .img-style{
     transition: transform 0.5s ;
@@ -67,6 +77,8 @@
     justify-content: space-between;
 }
 
+
+
 .btn-list{
     transition: transform 0.5s ;
 }
@@ -78,7 +90,9 @@
 
 /* ProductDetails */
 
-
+.product{
+    margin-left: 85px;
+}
 
 .cart-image{
     width: 500px;

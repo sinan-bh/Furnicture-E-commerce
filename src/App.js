@@ -34,7 +34,7 @@ function App() {
               path="bedroom"
               element={<Collections type="Bedroom Furniture" />}
             />
-            <Route path=":productId" element={<ProductDetails />} />
+            <Route path="/allproducts:productID" element={<ProductDetails />} />
           </Route>
           <Route path="/addcart" element={<AddCart />} />
           <Route path="/payment" element={<Payment />} />

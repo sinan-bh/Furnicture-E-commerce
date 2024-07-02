@@ -28,6 +28,8 @@ function CartContext(props) {
     
 
     const navigate = useNavigate()
+
+    
     
    
     
@@ -35,7 +37,7 @@ function CartContext(props) {
       const totalCount = Object.keys(cartItem).reduce((total,id)=>total + cartItem[id],0)
 
       const totalPrice = Object.keys(cartItem).reduce((total,id)=>{
-      const price = Dataset.find(value=>value.id == id)?.price
+      const price = Dataset.find(value=>value.id === Number(id))?.price
         return total + cartItem[id]* price
            
      },0)
@@ -73,7 +75,7 @@ const removeAllItem = () => {
 
 
 
-const contextValue = { cartItem, addToCart, removeFromCart, removeItem,removeAllItem,setSearchTerm, price, count ,searchTerm,log,setLog};
+const contextValue = { Dataset,cartItem, addToCart, removeFromCart, removeItem,removeAllItem,setSearchTerm, price, count ,searchTerm,log,setLog};
 
   return (
     <addContext.Provider value={contextValue}>
