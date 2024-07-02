@@ -59,9 +59,11 @@ const Navbar = () => {
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
       <div className="navbar-container">
         <div className="navbar">
-      <div className="nav-icon">
-        <img src="plush1.png" alt="Logo" />
-      </div>
+          <div className="nav-icon">
+            <Link to={"/"}>
+              <img src="plush1.png" alt="Logo" />
+            </Link>
+          </div>
           <div className="navbar-menu d-flex">
             <Link to="/" className="navbar-link fw-bold">
               Home
@@ -74,7 +76,7 @@ const Navbar = () => {
                     className="fw-bold text-decoration-none"
                     style={{ color: "rgb(84,98,102)" }}
                   >
-                    Collections
+                    All Products
                   </Link>
                 </div>
                 <div className="text m-2 px-2">
@@ -121,11 +123,13 @@ const Navbar = () => {
                 className="log-btn fw-bold"
                 onClick={handleLogout}
               >
-                {log.lname}<CiLogout />
+                {log.lname}
+                <CiLogout />
               </button>
             ) : (
               <Link to="/login" className="log-btn fw-bold">
-                Login<CiLogin />
+                Login
+                <CiLogin />
               </Link>
             )}
           </div>

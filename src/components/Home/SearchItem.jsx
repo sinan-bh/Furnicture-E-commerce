@@ -23,7 +23,7 @@ function SearchItem() {
 
   return (
     <div className='pt-5'>
-        <h2 className='container text-center pt-5 mt-5 '>Seardched Items are...!</h2>
+        <h2 className='container text-center pt-5 mt-5 '>Searched Items are...!</h2>
       <div className=" search  ">
       {list.map((item) => (
           <List  key={item.id} list={item}></List>

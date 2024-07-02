@@ -113,9 +113,9 @@ function Popular() {
                   {list.name}
                 </h5>
                 <div>
-                  <h6 className="text-success">{list.offerPrice}</h6>
+                  <h6 className="text-success">$ {list.offerPrice}</h6>
                   <small>
-                    <del className="text-danger">{list.price}</del>
+                    <del className="text-danger">$ {list.price}</del>
                   </small>
                 </div>
               </div>
