@@ -43,7 +43,7 @@ function Payment() {
           </div>
           </div>
           <div className='pay '>
-          <button type="button" className="finish-pay-btn me-3">update</button>
+          <button type="button" className="finish-pay-btn me-3" onClick={()=>alert('Updated')}>update</button>
           <button type="button" className="finish-pay-btn" onClick={()=>alert('pay successfully')}>pay ${price}</button>
           </div>
         </form>
