@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './Style.css'
 
 const Registration = () => {
   const [reg, setReg] = useState({
