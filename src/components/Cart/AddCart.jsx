@@ -11,9 +11,6 @@ function AddCart() {
   const { cartItem, price, count, removeAllItem } = useContext(addContext);
   const navigate = useNavigate();
 
- 
-
- 
 
  
     const handleCheckout = () => {
@@ -50,7 +47,7 @@ function AddCart() {
             <h6>${price}</h6>
           </div>
           <div className="text-end">
-            <button className="btn btn-primary" onClick={handleCheckout}>
+            <button className="btn btn-secondary" onClick={handleCheckout}>
               Checkout
             </button>
           </div>

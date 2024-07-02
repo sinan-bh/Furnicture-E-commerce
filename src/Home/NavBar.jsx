@@ -2,18 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
-import { addContext } from "../context/CartContext";
+import { addContext } from "../components/context/CartContext";
 import { CiSearch } from "react-icons/ci";
+import { CiLogout } from "react-icons/ci";
+import { CiLogin } from "react-icons/ci";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const { cartItem, searchTerm, setSearchTerm } = useContext(addContext);
-  const {log,setLog} = useContext(addContext)
+  const { log, setLog } = useContext(addContext);
 
   const navigate = useNavigate();
 
-  
   const search = () => {
     navigate("/searchItem");
   };
@@ -21,9 +22,8 @@ const Navbar = () => {
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
     if (!e.target.value) {
-      navigate('/')
-    }else{
-
+      navigate("/");
+    } else {
       navigate("/searchItem");
     }
   };
@@ -49,21 +49,19 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-
-
   const handleLogout = () => {
-    setLog(false);
-    alert('Logo Out')
-   
+    setLog(log.lname === "");
+    console.log(log.lname, "log value");
+    alert("Logo Out");
   };
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
+      <div className="navbar-container">
+        <div className="navbar">
       <div className="nav-icon">
         <img src="plush1.png" alt="Logo" />
       </div>
-      <div className="navbar-container">
-        <div className="navbar">
           <div className="navbar-menu d-flex">
             <Link to="/" className="navbar-link fw-bold">
               Home
@@ -109,23 +107,28 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="car-log">
-          <Link to="/addcart" className="cart-link">
-            <button type="button" className="btn2">
-              <IoCartSharp className="icon" />
-              {count > 0 && <div className="totaldiv fw-bold">{count}</div>}
-            </button>
-          </Link>
-          {log ? (
-            <button type="button" className="log-btn fw-bold" onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
-            <Link to="/login" className="log-btn fw-bold">
-              Login
+          <div className="car-log">
+            <Link to="/addcart" className="">
+              <button type="button" className="cart-link ">
+                <IoCartSharp className="icon" />
+                {count > 0 && <div className="totaldiv fw-bold">{count}</div>}
+              </button>
             </Link>
-          )}
+
+            {log.lname && log.lpass !== "" ? (
+              <button
+                type="button"
+                className="log-btn fw-bold"
+                onClick={handleLogout}
+              >
+                {log.lname}<CiLogout />
+              </button>
+            ) : (
+              <Link to="/login" className="log-btn fw-bold">
+                Login<CiLogin />
+              </Link>
+            )}
+          </div>
         </div>
         <div className="search-bar fw-bold">
           <input
@@ -135,7 +138,7 @@ const Navbar = () => {
             onChange={handleChange}
           />
           <div className="searchBtn" onClick={search}>
-          <CiSearch />
+            <CiSearch />
           </div>
         </div>
       </div>

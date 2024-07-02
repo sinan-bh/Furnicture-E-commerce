@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from 'react'
 import "./Style.css";
-import { Dataset } from "../../assets/data-set.js/dataSet";
-import homeImage from "../../assets/img/Home.png";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const category = [
   
@@ -57,15 +55,10 @@ const category = [
   
 ];
 
-console.log(category);
-
-const Home = () => {
-
+function Category() {
   return (
-    <div className="home">
-      <div>
-        <img src={homeImage} alt="" className="home-img" />
-      </div>
+    <div className='category'>
+      
       <div className="container card card-container m-5">
         <h2 className="text-center mt-4">Categories</h2>
         <div className="  p-5 ">
@@ -75,14 +68,14 @@ const Home = () => {
               <Link to={list.to}>
               <img src={list.image} alt={list.name} className="card category-image" />
               </Link>
-              <h5 className="text-center mt-3 me-3">{list.name}</h5>
+              <h5 className="text-center text-secondary mt-3 me-3">{list.name}</h5>
             </div>
           ))}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Category

@@ -4,12 +4,12 @@ import "./Style.css";
 import { addContext } from "../context/CartContext";
 
 function List({ list }) {
-  const { id: productID, image, imageCategory, description, price } = list;
+  const { id: productID, image, imageCategory, description, price,offerPrice } = list;
   const { addToCart } = useContext(addContext);
 
 
   return (
-    <div className="card card-item">
+    <div className=" card-item">
       <div class=" col-md-6">
         <Link to={`/allproducts/${productID}`}>
           <img
@@ -27,13 +27,14 @@ function List({ list }) {
           >
             <h5 className="card-title">{imageCategory}</h5>
           </Link>
-          <p className="card-text mt-3">{description}</p>
+          <p className="card-text mt-2">{description}</p>
           <p className="card-text ">
-            <small class="text-muted ">$ {price}</small>
+            <p className="text-price m-1 text-success">$ {offerPrice}</p>
+            <small class="text-muted "><del>$ {price}</del></small>
           </p>
         </div>
         <button
-          className="btn-list btn btn-primary m-3"
+          className="btn-list btn  m-3"
           onClick={() => addToCart(productID)}
         >
           ADD TO CART

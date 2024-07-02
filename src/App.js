@@ -3,13 +3,13 @@ import "./App.css";
 import Login from "./components/Registration-Login/Login";
 import Registration from "./components/Registration-Login/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./components/Home/Home";
-import NavBar from "./components/Home/NavBar";
+import Home from "./Home/Home";
+import NavBar from "./Home/NavBar";
 import Collections from "./components/Products/Products";
 import AddCart from "./components/Cart/AddCart";
 import CartContext from "./components/context/CartContext";
 import Payment from "./components/Paymet/Payment";
-import Footer from "./components/Home/Footer";
+import Footer from "./Home/Footer";
 import SearchItem from "./components/Home/SearchItem";
 import ProductDetails from "./components/Products/ProductDetails";
 

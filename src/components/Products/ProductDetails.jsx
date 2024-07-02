@@ -20,10 +20,13 @@ function ProductDetails() {
             <img src={cart.image} alt={cart.imageCategory} />
           </div>
           <div className="card text-center cart-product pt-5">
-            <h2>{cart.imageCategory}</h2>
-            <p className="pt-3 description text-start">{cart.description}</p>
+            <h2 className="text-success">{cart.imageCategory}</h2>
+            <p className="pt-3 description text-start">{cart.details}</p>
             <div className="addtocart">
-              <h4>$ {cart.price} </h4>
+              <div>
+              <h5 className="text-success">$ {cart.offerPrice}</h5>
+              <del className="text-secondary">$ {cart.price} </del>
+              </div>
               <button
                 className="btn btn-secondary"
                 onClick={() => addToCart(productID)}
