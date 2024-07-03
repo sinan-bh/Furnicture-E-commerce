@@ -3,7 +3,10 @@
 .category {
     font-family: Arial, sans-serif;
     /* height: 1450px; */
-    margin-left: 23px;
+    /* margin-left: 23px; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   
   .home-img {
