@@ -12,17 +12,22 @@ const getDefualtCart = () => {
   return cart;
 };
 function CartContext(props) {
+
+
   const [cartItem, setCartItem] = useState(getDefualtCart());
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+
 
   const [log, setLog] = useState({
     lname: "",
     lpass: "",
   });
 
+
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const totalCount = Object.keys(cartItem).reduce(
@@ -40,57 +45,52 @@ function CartContext(props) {
     setCount(totalCount);
   }, [cartItem]);
 
-  function addToCart(productID) {
+
+  const addToCart = (productID) => {
     if (!log.lname) {
       navigate("/login");
     } else {
-      setCartItem((prev) => {
-        if (prev[productID]) {
-          return { ...prev, [productID]: prev[productID] + 1 };
-        }
-        return { ...prev, [productID]: 1 };
-      });
+      setCartItem((prev) => ({ ...prev, [productID]: prev[productID] + 1 }));
     }
-  }
+  };
 
-  // const addToCart = (listID) => {
-  //   if (!log.lname) {
-  //     navigate("/login");
-  //   } else {
-  //     setCartItem((prev) => ({ ...prev, [listID]: prev[listID] + 1 }));
-  //   }
-  // };
 
-  const removeFromCart = (listID) => {
+  const removeFromCart = (productID) => {
     setCartItem((prev) => {
-      const newCart = { ...prev, [listID]: Math.max(0, prev[listID] - 1) };
+      const newCart = {
+        ...prev,
+        [productID]: Math.max(1, prev[productID] - 1),
+      };
       return newCart;
     });
   };
 
-  const removeItem = (listID) => {
+
+  const removeItem = (productID) => {
     setCartItem((prev) => {
-      const newCart = { ...prev, [listID]: 0 };
+      const newCart = { ...prev, [productID]: 0 };
       return newCart;
     });
   };
+
 
   const removeAllItem = () => {
     setCartItem(getDefualtCart());
   };
 
+  
   const contextValue = {
     Dataset,
     cartItem,
+    price,
+    count,
+    searchTerm,
+    log,
     addToCart,
     removeFromCart,
     removeItem,
     removeAllItem,
     setSearchTerm,
-    price,
-    count,
-    searchTerm,
-    log,
     setLog,
   };
 

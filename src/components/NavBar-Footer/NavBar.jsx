@@ -2,22 +2,35 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
-import { addContext } from "../components/context/CartContext";
+import { addContext } from "../context/CartContext";
 import { CiSearch } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
+import  Logo  from '../../assets/img/logo/logo.png'
 
 const Navbar = () => {
+
+//State
+
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
-  const { cartItem, searchTerm, setSearchTerm } = useContext(addContext);
   const { log, setLog } = useContext(addContext);
+  
+  //Context
+
+  const { cartItem, searchTerm, setSearchTerm } = useContext(addContext);
+  
 
   const navigate = useNavigate();
 
-  const search = () => {
+
+  //Search
+
+
+  const handleSearch = () => {
     navigate("/searchItem");
   };
+
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -28,10 +41,17 @@ const Navbar = () => {
     }
   };
 
+
+
+  //Total Cart Items Added
+
   const count = Object.keys(cartItem).reduce(
     (total, key) => (cartItem[key] !== 0 ? total + 1 : total),
     0
   );
+
+
+  //NavBar Scrolling
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {
@@ -49,11 +69,18 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
+
+
+  //Log Out
+
+
   const handleLogout = () => {
     setLog(log.lname === "");
     console.log(log.lname, "log value");
     alert("Logo Out");
   };
+
+  
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -61,7 +88,7 @@ const Navbar = () => {
         <div className="navbar">
           <div className="nav-icon">
             <Link to={"/"}>
-              <img src="plush1.png" alt="Logo" />
+              <img src={Logo} alt="Logo" />
             </Link>
           </div>
           <div className="navbar-menu d-flex">
@@ -141,7 +168,7 @@ const Navbar = () => {
             value={searchTerm}
             onChange={handleChange}
           />
-          <div className="searchBtn" onClick={search}>
+          <div className="searchBtn" onClick={handleSearch}>
             <CiSearch />
           </div>
         </div>

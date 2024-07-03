@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./components/Registration-Login/Login";
-import Registration from "./components/Registration-Login/Registration";
+import Login from "./Pages/Registration-Login/Login";
+import Registration from "./Pages/Registration-Login/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./Pages/Home";
-import NavBar from "./Pages/NavBar";
+import Home from "./Pages/Home/Home";
+import NavBar from "./components/NavBar-Footer/NavBar";
 import Collections from "./components/Products/Products";
 import AddCart from "./components/Cart/AddCart";
 import CartContext from "./components/context/CartContext";
 import Payment from "./components/Paymet/Payment";
-import Footer from "./Pages/Footer";
+import Footer from "./components/NavBar-Footer/Footer";
 import SearchItem from "./components/Home/SearchItem";
 import ProductDetails from "./components/Products/ProductDetails";
 
@@ -38,7 +38,6 @@ function App() {
           </Route>
           <Route path="/addcart" element={<AddCart />} />
           <Route path="/payment" element={<Payment />} />
-          
           <Route path="/searchItem" element={<SearchItem />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />

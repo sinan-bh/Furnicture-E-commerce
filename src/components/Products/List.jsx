@@ -4,9 +4,17 @@ import "./Style.css";
 import { addContext } from "../context/CartContext";
 
 function List({ list }) {
-  const { id: productID, image, imageCategory, description, price,offerPrice } = list;
-  const { addToCart } = useContext(addContext);
+  const {
+    id: productID,
+    image,
+    imageCategory,
+    description,
+    price,
+    offerPrice,
+  } = list;
 
+  
+  const { addToCart } = useContext(addContext);
 
   return (
     <div className=" card-item">
@@ -30,7 +38,9 @@ function List({ list }) {
           <p className="card-text mt-2">{description}</p>
           <p className="card-text ">
             <p className="text-price m-1 text-success">$ {offerPrice}</p>
-            <small class="text-muted "><del>$ {price}</del></small>
+            <small class="text-muted ">
+              <del>$ {price}</del>
+            </small>
           </p>
         </div>
         <button

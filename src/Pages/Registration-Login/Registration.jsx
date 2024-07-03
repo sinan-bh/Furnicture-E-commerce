@@ -14,6 +14,7 @@ const Registration = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setReg({
@@ -57,7 +58,9 @@ const Registration = () => {
         <div className="col-md-6">
           <div className="card cardSize">
             <div className="card-body d-flex  justify-content-center align-items-center">
-              <h1 className="text-outline text-white fw-bold ">User Registration</h1>
+              <h1 className="text-outline text-white fw-bold ">
+                User Registration
+              </h1>
               <form>
                 <div className="form-group">
                   <input
@@ -68,7 +71,9 @@ const Registration = () => {
                     value={reg.name}
                     onChange={handleChange}
                   />
-                  {errors.name && <div className="text-danger">{errors.name}</div>}
+                  {errors.name && (
+                    <div className="text-danger">{errors.name}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -79,7 +84,9 @@ const Registration = () => {
                     value={reg.email}
                     onChange={handleChange}
                   />
-                  {errors.email && <div className="text-danger">{errors.email}</div>}
+                  {errors.email && (
+                    <div className="text-danger">{errors.email}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -90,7 +97,9 @@ const Registration = () => {
                     value={reg.uname}
                     onChange={handleChange}
                   />
-                  {errors.uname && <div className="text-danger">{errors.uname}</div>}
+                  {errors.uname && (
+                    <div className="text-danger">{errors.uname}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -101,7 +110,9 @@ const Registration = () => {
                     value={reg.pass1}
                     onChange={handleChange}
                   />
-                  {errors.pass1 && <div className="text-danger">{errors.pass1}</div>}
+                  {errors.pass1 && (
+                    <div className="text-danger">{errors.pass1}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -112,7 +123,9 @@ const Registration = () => {
                     value={reg.pass2}
                     onChange={handleChange}
                   />
-                  {errors.pass2 && <div className="text-danger">{errors.pass2}</div>}
+                  {errors.pass2 && (
+                    <div className="text-danger">{errors.pass2}</div>
+                  )}
                 </div>
                 <button
                   type="button"

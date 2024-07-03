@@ -4,11 +4,11 @@ import "./Style.css";
 import { addContext } from "../context/CartContext";
 
 function ProductDetails() {
+
+  
   const { addToCart, Dataset } = useContext(addContext);
-  console.log(Dataset);
 
   const { productID } = useParams();
-  console.log(productID);
 
   const cart = Dataset.find((item) => item.id === Number(productID));
 
@@ -24,8 +24,8 @@ function ProductDetails() {
             <p className="pt-3 description text-start">{cart.details}</p>
             <div className="addtocart">
               <div>
-              <h5 className="text-success">$ {cart.offerPrice}</h5>
-              <del className="text-secondary">$ {cart.price} </del>
+                <h5 className="text-success">$ {cart.offerPrice}</h5>
+                <del className="text-secondary">$ {cart.price} </del>
               </div>
               <button
                 className="btn btn-secondary"

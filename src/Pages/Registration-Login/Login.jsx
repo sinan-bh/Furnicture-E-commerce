@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
  import "./login.css";
 import { Link, useNavigate} from "react-router-dom";
-import { addContext } from "../context/CartContext";
+import { addContext } from "../../components/context/CartContext";
 
 function Login() {
   const datas = JSON.parse(localStorage.getItem("registrationData"));
@@ -30,6 +30,10 @@ function Login() {
   };
 
   const onSubmit = () => {
+    if (datas === null) {
+      alert('Please Register')
+      navigate('/registration')
+    }else{
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       if (datas.uname === log.lname && datas.pass1 === log.lpass) {
@@ -41,6 +45,7 @@ function Login() {
     } else {
       setErrors(validationErrors);
     }
+  }
   };
 
   return (
