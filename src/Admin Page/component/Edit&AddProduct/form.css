@@ -1,0 +1,16 @@
+
+.control{
+    width: 85%;
+    margin: 100px 150px;
+    display: flex;
+    justify-content: center;
+}
+.add-product-form{
+    
+    width: 50%;
+    
+}
+.form-label{
+    width: 200px;
+}
+

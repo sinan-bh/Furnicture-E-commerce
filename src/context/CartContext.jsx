@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Dataset } from "../../assets/data-set.js/dataSet";
+import { Dataset } from "../assets/data-set/dataSet";
 import { useNavigate } from "react-router-dom";
 
 export const addContext = createContext(null);
@@ -18,6 +18,7 @@ function CartContext(props) {
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [userDatas,setUserDatas] = useState([])
 
 
   const [log, setLog] = useState({
@@ -86,13 +87,21 @@ function CartContext(props) {
     count,
     searchTerm,
     log,
+    userDatas,
     addToCart,
     removeFromCart,
     removeItem,
     removeAllItem,
     setSearchTerm,
     setLog,
+    setUserDatas,
+    setCartItem,
+    getDefualtCart
   };
+
+
+
+
 
   return (
     <addContext.Provider value={contextValue}>

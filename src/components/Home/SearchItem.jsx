@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { Dataset } from "../../assets/data-set.js/dataSet";
+import { Dataset } from "../../assets/data-set/dataSet";
 import List from "../Products/List";
 import "./Style.css";
-import { addContext } from "../context/CartContext";
+import { addContext } from "../../context/CartContext";
 
 function SearchItem() {
   const { searchTerm } = useContext(addContext);

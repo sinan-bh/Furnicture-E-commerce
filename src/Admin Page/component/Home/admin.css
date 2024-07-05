@@ -1,0 +1,98 @@
+.adminhome {
+  margin: 100px 150px;
+  width: 85vw;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-head th {
+  border-bottom: 2px solid #dee2e6;
+  padding: 12px;
+  text-align: left;
+}
+
+.product-item td {
+  border-bottom: 1px solid #dee2e6;
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.product-image {
+  width: 550px;
+  height: 150px;
+  max-width: 100%;
+}
+
+
+.product-name,
+.product-description,
+.product-details,
+.product-price,
+.del-edi-btn {
+  padding: 10px;
+  text-align: center;
+}
+
+
+
+.category-btn{
+  display: flex;
+
+}
+.category{
+  display: flex;
+  border: none;
+  justify-content: flex-start;
+  background-color: aquamarine;
+
+}
+.category-type{
+  display: flex;
+  width: 80%;
+  justify-content: space-evenly;
+}
+.category-name{
+  background-color: rgb(108, 173, 11);
+  border: none;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-name{
+  background-color: aquamarine;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-none{
+  text-decoration: none;
+  color: #04211b;
+}
+.AddBtn{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.del-edi-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 265px;
+}
+
+.del-edi-btn .btn {
+  width: 80px; /* Set width for consistency */
+  margin-bottom: 10px; /* Space between buttons */
+}
+
+.productID {
+  text-align: center;
+}
+
+

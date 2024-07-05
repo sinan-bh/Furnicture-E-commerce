@@ -4,11 +4,13 @@ import "./login.css";
 
 const Registration = () => {
   const [reg, setReg] = useState({
+    
     name: "",
     email: "",
     uname: "",
     pass1: "",
     pass2: "",
+    type : "user",
   });
 
   const [errors, setErrors] = useState({});
@@ -44,13 +46,29 @@ const Registration = () => {
   const onSubmit = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      localStorage.setItem("registrationData", JSON.stringify(reg));
+      let registrations = [];
+      const storedData = localStorage.getItem("registrationData");
+      if (storedData) {
+        try {
+          registrations = JSON.parse(storedData);
+          if (!Array.isArray(registrations)) {
+            registrations = [];
+          }
+        } catch (e) {
+          registrations = [];
+        }
+      }
+  
+      registrations.push(reg);
+  
+      localStorage.setItem("registrationData", JSON.stringify(registrations));
       navigate("/login");
       alert("Registration Complete");
     } else {
       setErrors(validationErrors);
     }
   };
+  
 
   return (
     <div className="registration me-5">

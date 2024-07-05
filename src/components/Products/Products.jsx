@@ -1,8 +1,7 @@
 import React from "react";
-import { Dataset } from "../../assets/data-set.js/dataSet";
+import { Dataset } from "../../assets/data-set/dataSet";
 import "./Style.css";
 import List from "./List";
-import { useParams } from "react-router-dom";
 
 function Collections({ type }) {
   const list =

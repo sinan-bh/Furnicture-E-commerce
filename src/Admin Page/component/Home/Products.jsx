@@ -1,0 +1,138 @@
+import React from "react";
+import useFetch from "../../../Custom Hook/useFetch";
+import "./admin.css";
+import { Link } from "react-router-dom";
+
+function Products({ type }) {
+  const {
+    data: products,
+    loading,
+    error,
+    setData: setProducts,
+  } = useFetch("http://localhost:8000/products");
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8000/products/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== id)
+      );
+    } catch (error) {
+      console.error("Failed to delete product:", error);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message || JSON.stringify(error)}</div>;
+  }
+
+  if (!products || products.length === 0) {
+    return <div>No products found.</div>;
+  }
+
+  const list =
+    type === "All" ? products : products.filter((list) => list.type === type);
+
+  return (
+    <div className="adminhome">
+      <h2 className="text-center">
+        {type === "All" && "All Products"}
+        {type === "Living Room Furniture" && "Living Room Furniture"}
+        {type === "Dining Room Furniture" && "Dining Room Furniture"}
+        {type === "Bedroom Furniture" && "Bedroom Furniture"}
+      </h2>
+      <div className="AddBtn">
+          <button className="btn btn-success mb-2">
+            <Link to={"/admin/add-edit-product"} className="text-none text-white">Add New Product</Link>
+          </button>
+        </div>
+      <div className="category-btn">
+        <div className="category ">
+          <div className="category-name">Select category</div>
+          <div className="category-type">
+          <div value="All" className=" product-name ms-3  ">
+            <Link to={"/admin/product-details"} className="text-none">All Products</Link>
+          </div>
+          <div value="Living Room Furniture" className="ms-3 product-name ">
+            <Link to={"/admin/product-details/product-lvingroom"} className="text-none">
+              Living Room Furniture
+            </Link>
+          </div>
+          <div value="Dining Room Furniture" className="ms-3 product-name ">
+            <Link to={"/admin/product-details/product-diningset"} className="text-none">
+              Dining Room Furniture
+            </Link>
+          </div>
+          <div value="Bedroom Furniture" className="ms-3 product-name ">
+            <Link to={"/admin/product-details/product-bedroom"} className="text-none">
+              Bedroom Furniture
+            </Link>
+          </div>
+          </div>
+        </div>
+        
+      </div>
+      <div>
+        <table className="table  table-hover table-success table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ProductId</th>
+              <th scope="col">Image</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Details</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((product) => (
+              <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>
+                  <img
+                    src={product.image}
+                    alt={product.imageCategory}
+                    className="product-image"
+                  />
+                </td>
+                <td>{product.imageCategory}</td>
+                <td>{product.description}</td>
+                <td>{product.details}</td>
+                <td>
+                  <div>Price: ${product.price}</div>
+                  <div>Offer Price: ${product.offerPrice}</div>
+                </td>
+                <td>
+                  <Link
+                    to={`/admin/add-edit-product/${product.id}`}
+                    className="btn btn-secondary me-2"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default Products;

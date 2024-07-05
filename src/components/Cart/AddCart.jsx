@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Dataset } from "../../assets/data-set.js/dataSet";
-import { addContext } from "../context/CartContext";
+import { Dataset } from "../../assets/data-set/dataSet";
+import { addContext } from "../../context/CartContext";
 import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
 import "./Style.css";

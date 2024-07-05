@@ -50,6 +50,7 @@
   .navbar-menu {
     display: flex;
     align-items: center;
+    margin-right: 10px;
   }
   
   .navbar-link {
@@ -104,16 +105,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 150px;
-    position: fixed;
-    right: 500px;
+    position: sticky;
+    right: 300px;
     border-color: #87acba1f;
     border: none;
+    text-decoration: underline;
+    /* text-decoration-line: overline; */
   }
   
   .search-bar input {
     height: 34px;
-    width: 200px;
+    width: 150px;
+    border: none;
     border-color:  rgb(84,98,102);
     border-radius: 15px;
     background-color: #87acba1f;
@@ -121,8 +124,9 @@
   }
   
   .searchBtn{
-    position: fixed;
-    margin-left: 170px;
+    position: absolute;
+    margin-left: 100px;
+    border: none;
   }
   
   
@@ -167,6 +171,7 @@
   .log-btn:hover,
   .cart-link:hover,
   .nav-icon:hover,
+  .search-bar input:hover,
   .Catogarylink .text:hover {
     background-color: #1ba8c41b;
     border: 1px solid rgb(84,98,102);

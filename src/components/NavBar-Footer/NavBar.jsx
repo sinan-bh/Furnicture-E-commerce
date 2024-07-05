@@ -2,35 +2,33 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
-import { addContext } from "../context/CartContext";
+import { addContext } from "../../context/CartContext";
 import { CiSearch } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
-import  Logo  from '../../assets/img/logo/logo.png'
+import Logo from "../../assets/img/logo/logo.png";
 
 const Navbar = () => {
-
-//State
+  //State
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
-  const { log, setLog } = useContext(addContext);
-  
+
   //Context
 
-  const { cartItem, searchTerm, setSearchTerm } = useContext(addContext);
-  
+  const {
+    cartItem,
+    searchTerm,
+    setSearchTerm,
+    log,
+    setLog,
+    setCartItem,
+    getDefualtCart,
+  } = useContext(addContext);
 
   const navigate = useNavigate();
 
-
   //Search
-
-
-  const handleSearch = () => {
-    navigate("/searchItem");
-  };
-
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -41,15 +39,12 @@ const Navbar = () => {
     }
   };
 
-
-
   //Total Cart Items Added
 
   const count = Object.keys(cartItem).reduce(
     (total, key) => (cartItem[key] !== 0 ? total + 1 : total),
     0
   );
-
 
   //NavBar Scrolling
 
@@ -69,18 +64,14 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-
-
   //Log Out
 
-
   const handleLogout = () => {
-    setLog(log.lname === "");
-    console.log(log.lname, "log value");
+    setLog(log.lname !== log.name);
+    setCartItem(getDefualtCart());
     alert("Logo Out");
+    navigate("/");
   };
-
-  
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -136,15 +127,33 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+          <div className="search-bar fw-bold">
+            <input
+              type="text"
+              placeholder="Search here...."
+              value={searchTerm}
+              onChange={handleChange}
+            />
+            <div className="searchBtn">
+              <CiSearch />
+            </div>
+          </div>
           <div className="car-log">
-            <Link to="/addcart" className="">
-              <button type="button" className="cart-link ">
-                <IoCartSharp className="icon" />
-                {count > 0 && <div className="totaldiv fw-bold">{count}</div>}
-              </button>
-            </Link>
-
-            {log.lname && log.lpass !== "" ? (
+            <div>
+              {log.lname ? (
+                <Link to="/addcart" className="">
+                  <button type="button" className="cart-link ">
+                    <IoCartSharp className="icon" />
+                    {count > 0 && (
+                      <div className="totaldiv fw-bold">{count}</div>
+                    )}
+                  </button>
+                </Link>
+              ) : (
+                <div></div>
+              )}
+            </div>
+            {log.lname ? (
               <button
                 type="button"
                 className="log-btn fw-bold"
@@ -159,17 +168,6 @@ const Navbar = () => {
                 <CiLogin />
               </Link>
             )}
-          </div>
-        </div>
-        <div className="search-bar fw-bold">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleChange}
-          />
-          <div className="searchBtn" onClick={handleSearch}>
-            <CiSearch />
           </div>
         </div>
       </div>

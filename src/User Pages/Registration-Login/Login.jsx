@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
  import "./login.css";
 import { Link, useNavigate} from "react-router-dom";
-import { addContext } from "../../components/context/CartContext";
+import { addContext } from "../../context/CartContext";
+import { AdminDetails } from "../../assets/data-set/Admin-Datas";
 
 function Login() {
   const datas = JSON.parse(localStorage.getItem("registrationData"));
@@ -9,44 +10,57 @@ function Login() {
  
 
   const [errors, setErrors] = useState({});
+  const [formValue,setFormValue] = useState({
+    lname : '',
+    lpass : ''
+  })
 
-  const {log,setLog} = useContext(addContext)
+  const {setLog,setUserDatas } = useContext(addContext)
 
   const navigate = useNavigate();
  
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLog({
-      ...log,
+    setFormValue({
+      ...formValue,
       [name]: value,
     });
   };
 
   const validate = () => {
     const newErrors = {};
-    if (!log.lname) newErrors.lname = "Username is required";
-    if (!log.lpass) newErrors.lpass = "Password is required";
+    if (!formValue.lname) newErrors.lname = "Username is required";
+    if (!formValue.lpass) newErrors.lpass = "Password is required";
     return newErrors;
   };
 
   const onSubmit = () => {
-    if (datas === null) {
-      alert('Please Register')
-      navigate('/registration')
-    }else{
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      if (datas.uname === log.lname && datas.pass1 === log.lpass) {
-        alert("Login Successfully");
-        navigate('/')
+      if (!datas || datas.length === 0) {
+        alert('Please Register');
+        navigate('/registration');
       } else {
-        alert("Username or Password is Incorrect");
+        const user = datas.find(user => user.uname === formValue.lname && user.pass1 === formValue.lpass);
+        const adminDatas = AdminDetails.filter(item=> item.admin === 'admin' && item.pass === '123');
+        setUserDatas(user)
+        if (user) {
+          setLog(formValue)
+          alert("Login Successfully");
+          navigate('/');
+        } else if (adminDatas) {
+          setLog(formValue)
+          alert("Login Successfully");
+          navigate('/admin');
+        } else{
+          alert("Username or Password is Incorrect");
+        }
       }
     } else {
       setErrors(validationErrors);
     }
-  }
   };
+  
 
   return (
     <div className="login">

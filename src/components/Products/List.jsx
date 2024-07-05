@@ -1,7 +1,7 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Style.css";
-import { addContext } from "../context/CartContext";
+import { addContext } from "../../context/CartContext";
 
 function List({ list }) {
   const {
