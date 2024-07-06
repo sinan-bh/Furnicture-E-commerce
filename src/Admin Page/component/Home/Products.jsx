@@ -52,28 +52,28 @@ function Products({ type }) {
       </h2>
       <div className="AddBtn">
           <button className="btn btn-success mb-2">
-            <Link to={"/admin/add-edit-product"} className="text-none text-white">Add New Product</Link>
+            <Link to={"/adminhome/add-edit-product"} className="text-none text-white">Add New Product</Link>
           </button>
         </div>
-      <div className="category-btn">
-        <div className="category ">
+      <div className="">
+        <div className="categorys ">
           <div className="category-name">Select category</div>
           <div className="category-type">
           <div value="All" className=" product-name ms-3  ">
-            <Link to={"/admin/product-details"} className="text-none">All Products</Link>
+            <Link to={"/adminhome/product-details"} className="text-none">All Products</Link>
           </div>
           <div value="Living Room Furniture" className="ms-3 product-name ">
-            <Link to={"/admin/product-details/product-lvingroom"} className="text-none">
+            <Link to={"/adminhome/product-details/product-lvingroom"} className="text-none">
               Living Room Furniture
             </Link>
           </div>
           <div value="Dining Room Furniture" className="ms-3 product-name ">
-            <Link to={"/admin/product-details/product-diningset"} className="text-none">
+            <Link to={"/adminhome/product-details/product-diningset"} className="text-none">
               Dining Room Furniture
             </Link>
           </div>
           <div value="Bedroom Furniture" className="ms-3 product-name ">
-            <Link to={"/admin/product-details/product-bedroom"} className="text-none">
+            <Link to={"/adminhome/product-details/product-bedroom"} className="text-none">
               Bedroom Furniture
             </Link>
           </div>
@@ -108,14 +108,14 @@ function Products({ type }) {
                 <td>{product.imageCategory}</td>
                 <td>{product.description}</td>
                 <td>{product.details}</td>
-                <td>
-                  <div>Price: ${product.price}</div>
-                  <div>Offer Price: ${product.offerPrice}</div>
+                <td className="amount">
+                  <div>Price: <span className="text-secondary">${product.price}</span></div>
+                  <div className="mt-5 ">Offer Price: <span className="text-success">${product.offerPrice}</span></div>
                 </td>
-                <td>
+                <td className="edit-del">
                   <Link
-                    to={`/admin/add-edit-product/${product.id}`}
-                    className="btn btn-secondary me-2"
+                    to={`/adminhome/add-edit-product/${product.id}`}
+                    className="btn btn-secondary "
                   >
                     Edit
                   </Link>

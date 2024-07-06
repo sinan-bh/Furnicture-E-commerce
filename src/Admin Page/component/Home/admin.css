@@ -42,7 +42,7 @@
   display: flex;
 
 }
-.category{
+.categorys{
   display: flex;
   border: none;
   justify-content: flex-start;
@@ -69,6 +69,12 @@
   justify-content: center;
   align-items: center;
 }
+.product-name:hover{
+  background-color: cadetblue;
+  border-radius: 25px;
+}
+
+
 .text-none{
   text-decoration: none;
   color: #04211b;
@@ -83,16 +89,70 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 265px;
+ 
 }
 
 .del-edi-btn .btn {
-  width: 80px; /* Set width for consistency */
-  margin-bottom: 10px; /* Space between buttons */
+  width: 80px; 
+  margin-bottom: 10px; 
 }
 
 .productID {
   text-align: center;
+}
+
+.edit-del{
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-evenly;
+}
+
+.dashboard-container {
+  padding: 50px;
+  margin-left: 150px;
+  background-color: #f4f6f9; 
+  width: 80%;
+}
+
+.card-name {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  margin-bottom: 20px;
+}
+
+.card-primary {
+  background: linear-gradient(135deg, #4a90e2, #50a3f4); 
+  color: white;
+}
+
+.card-success {
+  background: linear-gradient(135deg, #34c759, #5cd85b); 
+  color: white;
+}
+
+.card-warning {
+  background: linear-gradient(135deg, #ff9500, #ffb547); 
+  color: white;
+}
+
+.card-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.card-body-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.card-title {
+  font-size: 2.5rem;
+  margin: 0;
 }
 
 

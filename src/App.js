@@ -4,20 +4,20 @@ import Login from "./User Pages/Registration-Login/Login";
 import Registration from "./User Pages/Registration-Login/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./User Pages/Home/Home";
-import NavBar from "./components/NavBar-Footer/NavBar";
-import Collections from "./components/Products/Products";
-import AddCart from "./components/Cart/AddCart";
-import Payment from "./components/Paymet/Payment";
-import Footer from "./components/NavBar-Footer/Footer";
-import SearchItem from "./components/Home/SearchItem";
-import ProductDetails from "./components/Products/ProductDetails";
+import NavBar from "../src/User Pages/component/NavBar-Footer/NavBar";
+import Collections from "../src/User Pages/component/Products/Products";
+import AddCart from "../src/User Pages/component/Cart/AddCart";
+import Payment from "../src/User Pages/component/Paymet/Payment";
+import Footer from "../src/User Pages/component/NavBar-Footer/Footer";
+import SearchItem from "../src/User Pages/component/Home/SearchItem";
+import ProductDetails from "../src/User Pages/component/Products/ProductDetails";
 import Admin from "./Admin Page/AdminHome/Admin";
 import CartContext from "./context/CartContext";
-import AdminHome from "./Admin Page/component/Home/AdminHome";
+import Reg from "./User Pages/Registration-Login/Reg";
 
 function App() {
   const location = useLocation();
-  const hideNavAndFooter = location.pathname.includes("/admin");
+  const hideNavAndFooter = location.pathname.includes("/adminhome");
 
   return (
     <div className="App">
@@ -52,6 +52,7 @@ function App() {
                 <Route path="/searchItem" element={<SearchItem />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registration" element={<Registration />} />
+                <Route path="/reg" element={<Reg />} />
               </Routes>
               <Footer />
             </div>

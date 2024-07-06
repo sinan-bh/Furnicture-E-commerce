@@ -4,27 +4,24 @@ import { useNavigate } from "react-router-dom";
 
 export const addContext = createContext(null);
 
-const getDefualtCart = () => {
-  const cart = {};
-  for (let i = 1; i < Dataset.length + 1; i++) {
-    cart[i] = 0;
-  }
-  return cart;
-};
+
 function CartContext(props) {
 
-
-  const [cartItem, setCartItem] = useState(getDefualtCart());
+  const [cartItem, setCartItem] = useState({});
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [userDatas,setUserDatas] = useState([])
+  const [userOrder,setUserOrder] = useState({})
 
 
   const [log, setLog] = useState({
+    id:'',
     lname: "",
     lpass: "",
   });
+
+
 
 
   const navigate = useNavigate();
@@ -44,16 +41,101 @@ function CartContext(props) {
     }, 0);
     setPrice(totalPrice);
     setCount(totalCount);
+   
   }, [cartItem]);
 
+ 
 
-  const addToCart = (productID) => {
+
+  const addToCart = async(productID) => {
     if (!log.lname) {
       navigate("/login");
     } else {
-      setCartItem((prev) => ({ ...prev, [productID]: prev[productID] + 1 }));
+      setCartItem((prev) => {
+        if (prev[productID]) {
+          
+         return { ...prev, [productID]: prev[productID] + 1 }
+        }
+         return { ...prev, [productID]: 1 }
+        })
     }
   };
+
+
+  useEffect(()=>{
+
+    const setCart = async()=>{
+
+      try {
+
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({cart: cartItem}),
+        };
+  
+        const url = `http://localhost:8000/user/${log.id}`
+  
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        } 
+      } catch (error) {
+        console.error("Failed to add/edit product:", error);
+      }
+      
+    }
+    setCart()
+
+  },[cartItem])
+
+  useEffect(()=>{
+    if (log.id) {
+
+    const url = `http://localhost:8000/user/${log.id}`
+
+    fetch(url)
+      .then(res=>res.json())
+      .then(data=> setCartItem(data.cart))
+
+    }
+   
+
+  },[log.id])
+
+  useEffect(()=>{
+
+    const setOrder = async()=>{
+
+      try {
+
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({order: userOrder}),
+        };
+  
+        const url = `http://localhost:8000/user/${log.id}`
+  
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        } 
+      } catch (error) {
+        console.error("Failed to add/edit product:", error);
+      }
+      
+    }
+    setOrder()
+
+  },[userOrder])
+
+  
+
 
 
   const removeFromCart = (productID) => {
@@ -76,7 +158,7 @@ function CartContext(props) {
 
 
   const removeAllItem = () => {
-    setCartItem(getDefualtCart());
+    setCartItem({});
   };
 
   
@@ -96,7 +178,8 @@ function CartContext(props) {
     setLog,
     setUserDatas,
     setCartItem,
-    getDefualtCart
+    setUserOrder,
+    
   };
 
 

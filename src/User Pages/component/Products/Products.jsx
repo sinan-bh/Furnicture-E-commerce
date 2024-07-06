@@ -1,11 +1,31 @@
 import React from "react";
-import { Dataset } from "../../assets/data-set/dataSet";
-import "./Style.css";
+// import { Dataset } from "../../assets/data-set/dataSet";
+import "./products.css";
 import List from "./List";
+import useFetch from "../../../Custom Hook/useFetch";
 
 function Collections({ type }) {
+
+  const {
+    data: products,
+    loading,
+    error,
+  } = useFetch("http://localhost:8000/products");
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message || JSON.stringify(error)}</div>;
+  }
+
+  if (!products || products.length === 0) {
+    return <div>No products found.</div>;
+  }
+
   const list =
-    type === "All" ? Dataset : Dataset.filter((list) => list.type === type);
+    type === "All" ? products : products.filter((list) => list.type === type);
 
   return (
     <div className="container  card-list pb-5 mb-5">

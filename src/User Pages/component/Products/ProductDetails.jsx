@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import "./Style.css";
-import { addContext } from "../../context/CartContext";
+import "./products.css";
+import { addContext } from "../../../context/CartContext";
 
 function ProductDetails() {
 

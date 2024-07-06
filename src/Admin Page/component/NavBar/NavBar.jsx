@@ -8,15 +8,21 @@ function NavBarAdmin() {
     <nav className="navbar">
       <div className="container-fluid">
         <div className="navbar-admin ">
-          <Link to="/adminhome" className="fw-bold text-decoration-none mb-3">
+          <div className="mb-5 nav-hover">
+          <Link to="/adminhome" className="fw-bold text-decoration-none mb-3 text-secondary">
             Home
           </Link>
-          <Link to="/admin/userdatas" className="fw-bold text-decoration-none mb-3">
+          </div>
+          <div className="mb-5 nav-hover">
+          <Link to="/adminhome/userdatas" className="fw-bold text-decoration-none mb-3  text-secondary">
             User
           </Link>
-          <Link to="/admin/product-details" className="fw-bold text-decoration-none mb-3">
+          </div>
+          <div className=" nav-hover">
+          <Link to="/adminhome/product-details" className="fw-bold text-decoration-none mb-3 text-secondary">
             Products
           </Link>
+          </div>
         </div>
       </div>
     </nav>

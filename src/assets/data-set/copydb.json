@@ -1,4 +1,15 @@
 {
+
+    "user": [
+      {
+        "name": "sinan",
+        "email": "sajusinan406",
+        "uname": "sinan",
+        "pass1": "123",
+        "pass2": "123",
+        "type": "user"
+      }
+    ],
     "products": [
       {
         "id": 1,

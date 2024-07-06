@@ -1,6 +1,6 @@
 import React, { useState,useContext } from "react";
 import "./Style.css";
-import { addContext } from "../../context/CartContext";
+import { addContext } from "../../../context/CartContext";
 
 
 function CardItems({ item }) {

@@ -5,7 +5,6 @@ import "./form.css";
 function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     id: id ,
     image: "",
@@ -14,8 +13,7 @@ function AddEditProduct() {
     details: "",
     price: "",
     offerPrice: "",
-    type: "",
-    // type: 
+    type: "", 
   });
 
   useEffect(() => {
@@ -45,7 +43,7 @@ function AddEditProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!id || id ==='') {
+      if (!id) {
         const uniqueId = Date.now().toString();
         setFormData({
           ...formData,
@@ -69,7 +67,7 @@ function AddEditProduct() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      navigate("/admin/product-details"); 
+      navigate("/adminhome/product-details"); 
     } catch (error) {
       console.error("Failed to add/edit product:", error);
     }

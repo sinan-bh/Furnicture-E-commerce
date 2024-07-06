@@ -15,6 +15,8 @@ function AdminContext(props) {
         error,
         setData: setProducts,
       } = useFetch("http://localhost:8000/products");
+
+   
     
 
     const [product, setProduct] = useState({

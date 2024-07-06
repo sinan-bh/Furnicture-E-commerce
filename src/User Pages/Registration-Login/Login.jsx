@@ -1,24 +1,27 @@
 import React, { useContext, useState } from "react";
- import "./login.css";
-import { Link, useNavigate} from "react-router-dom";
+import "./login.css";
+import { Link, useNavigate } from "react-router-dom";
 import { addContext } from "../../context/CartContext";
 import { AdminDetails } from "../../assets/data-set/Admin-Datas";
+import useFetch from "../../Custom Hook/useFetch";
 
 function Login() {
-  const datas = JSON.parse(localStorage.getItem("registrationData"));
 
- 
+  const {
+    data: userData
+  } = useFetch("http://localhost:8000/user");
+
 
   const [errors, setErrors] = useState({});
-  const [formValue,setFormValue] = useState({
-    lname : '',
-    lpass : ''
-  })
+  const [formValue, setFormValue] = useState({
+    lname: "",
+    lpass: "",
+  });
 
-  const {setLog,setUserDatas } = useContext(addContext)
+  const { setLog, setUserDatas } = useContext(addContext);
 
   const navigate = useNavigate();
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValue({
@@ -37,22 +40,25 @@ function Login() {
   const onSubmit = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      if (!datas || datas.length === 0) {
-        alert('Please Register');
-        navigate('/registration');
+      if (!userData || userData.length === 0) {
+        alert("Please Register");
+        navigate("/registration");
       } else {
-        const user = datas.find(user => user.uname === formValue.lname && user.pass1 === formValue.lpass);
-        const adminDatas = AdminDetails.filter(item=> item.admin === 'admin' && item.pass === '123');
-        setUserDatas(user)
+        const user = userData.find(
+          (user) =>
+            user.uname === formValue.lname && user.pass1 === formValue.lpass
+        );
+        const adminDatas = AdminDetails.find((item) => item.type === "admin");
+        setUserDatas(user);
         if (user) {
-          setLog(formValue)
+          setLog({...formValue,id: user.id});
           alert("Login Successfully");
-          navigate('/');
-        } else if (adminDatas) {
-          setLog(formValue)
+          navigate("/");
+        } else if (adminDatas.type === formValue.lname) {
+          setLog(formValue);
           alert("Login Successfully");
-          navigate('/admin');
-        } else{
+          navigate("/adminhome");
+        } else {
           alert("Username or Password is Incorrect");
         }
       }
@@ -60,7 +66,6 @@ function Login() {
       setErrors(validationErrors);
     }
   };
-  
 
   return (
     <div className="login">
@@ -80,7 +85,9 @@ function Login() {
                     onChange={handleChange}
                     required
                   />
-                  {errors.lname && <div className="text-danger">{errors.lname}</div>}
+                  {errors.lname && (
+                    <div className="text-danger">{errors.lname}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -92,7 +99,9 @@ function Login() {
                     onChange={handleChange}
                     required
                   />
-                  {errors.lpass && <div className="text-danger">{errors.lpass}</div>}
+                  {errors.lpass && (
+                    <div className="text-danger">{errors.lpass}</div>
+                  )}
                 </div>
                 <button
                   type="button"
@@ -101,8 +110,11 @@ function Login() {
                 >
                   Login
                 </button>
-                <Link to={'/registration'}>
-                  <button type="button" className="btn-navy btn-block form-group p-1">
+                <Link to={"/registration"}>
+                  <button
+                    type="button"
+                    className="btn-navy btn-block form-group p-1"
+                  >
                     Sign In
                   </button>
                 </Link>

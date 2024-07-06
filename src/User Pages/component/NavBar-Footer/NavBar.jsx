@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
-import { addContext } from "../../context/CartContext";
+import { addContext } from "../../../context/CartContext";
 import { CiSearch } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
-import Logo from "../../assets/img/logo/logo.png";
+import Logo from "../../../assets/img/logo/logo.png";
 
 const Navbar = () => {
   //State
@@ -68,7 +68,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setLog(log.lname !== log.name);
-    setCartItem(getDefualtCart());
+    setCartItem({});
     alert("Logo Out");
     navigate("/");
   };

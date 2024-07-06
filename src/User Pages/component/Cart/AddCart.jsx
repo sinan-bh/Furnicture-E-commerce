@@ -1,21 +1,41 @@
-import React, { useContext } from "react";
-import { Dataset } from "../../assets/data-set/dataSet";
-import { addContext } from "../../context/CartContext";
+import React, { useContext, useState } from "react";
+// import { Dataset } from "../../../assets/data-set/dataSet";
+import { addContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
 import "./Style.css";
+import useFetch from "../../../Custom Hook/useFetch";
 
 
 
 function AddCart() {
+
   const { cartItem, price, count, removeAllItem } = useContext(addContext);
   const navigate = useNavigate();
 
-
- 
     const handleCheckout = () => {
         navigate("/payment");
     }
+
+    const {
+      data: products,
+      loading,
+      error,
+    } = useFetch("http://localhost:8000/products");
+  
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+  
+    if (error) {
+      return <div>Error: {error.message || JSON.stringify(error)}</div>;
+    }
+  
+    if (!products || products.length === 0) {
+      return <div>No products found.</div>;
+    }
+  
+  
  
 
   const hasItemsInCart = Object.values(cartItem).some((item) => item !== 0);
@@ -35,8 +55,8 @@ function AddCart() {
               Remove all
             </a>
           </div>
-          {Dataset.map((card) => {
-            if (cartItem[card.id] !== 0) {
+          {products.map((card) => {
+            if (cartItem[card.id]  ) {
               return <CardItems key={card.id} item={card} />;
             }
             return null;
