@@ -3,7 +3,7 @@ import "./Style.css";
 import { addContext } from "../../../context/CartContext";
 
 function Payment() {
-  const { log, price,setUserOrder } = useContext(addContext);
+  const { log, price } = useContext(addContext);
   const [formData, setFormData] = useState({
     name: log.lname || "",
     address: "",
@@ -40,7 +40,6 @@ function Payment() {
 
   const handlePay = () => {
     if (validateForm()) {
-      setUserOrder(formData)
       alert("Pay successfully");
     }
   };

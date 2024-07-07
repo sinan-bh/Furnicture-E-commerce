@@ -7,7 +7,6 @@
 }
 
 
-
 .adminhome {
   margin: 50px 110px;
   width: 85vw;
@@ -116,11 +115,7 @@
   justify-content: space-evenly;
 }
 
-.dashboard-container {
-  margin-top: 50px;
-  margin-left: 150px;
-  width: 80%;
-}
+/* 
 
 .card-name {
   border: none;
@@ -160,7 +155,104 @@
 .card-title-admin {
   font-size: 2.5rem;
   margin: 0;
+} */
+
+
+.react-calendar__navigation{
+  text-align: center;
+}
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__label,
+.react-calendar__tile{
+  border: none;
+  margin: 6px;
 }
 
+abbr[title]{
+  text-decoration: none;
+  margin: 6px;
+}
+.react-calendar{
+ margin-left: 230px;
+ padding: 25px;
+}
+.clander-name{
+  margin-left: 25%;
+}
+.calender{
+  width: 50%;
+  height: 400px;
+  text-align: center;
+}
+.highlight {
+  background: #1976d2;
+  color: white;
 
+}
+
+.calender .react-calendar__tile--active {
+  background: #1976d2;
+  color: white;
+
+}
+
+.dashboard-category {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.dashboard-category .card-container-bg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.dashboard-category .card {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.dashboard-category .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dashboard-category .card-header .icon {
+  background-color: #e0f7fa;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.dashboard-category .card-body h2 {
+  margin: 10px 0;
+  font-size: 2em;
+}
+
+.dashboard-category .positive {
+  color: #4caf50;
+}
+
+.table-prd .category-border{
+  width: 400px;
+  /* margin-left: 50px; */
+}
+.table-prd .table{
+  height: 332px;
+  text-align: center;
+  
+}
+.table-prd .table td,th{
+  padding-top: 35px;
+}
 

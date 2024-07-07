@@ -1,6 +1,6 @@
 import React from 'react';
 import './UserDetails.css';
-import useFetch from '../../../Custom Hook/useFetch';
+import useFetch from '../../../../Custom Hook/useFetch';
 import { useParams } from 'react-router-dom';
 
 function UserDetails() {

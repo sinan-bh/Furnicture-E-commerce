@@ -12,8 +12,7 @@ function CartContext(props) {
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [userDatas,setUserDatas] = useState([])
-  const [userOrder,setUserOrder] = useState({})
-
+ 
 
   const [log, setLog] = useState({
     id:'',
@@ -105,38 +104,6 @@ function CartContext(props) {
 
   },[log.id])
 
-  useEffect(()=>{
-
-    const setOrder = async()=>{
-
-      try {
-
-        const options = {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({order: userOrder}),
-        };
-  
-        const url = `http://localhost:8000/user/${log.id}`
-  
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        } 
-      } catch (error) {
-        console.error("Failed to add/edit product:", error);
-      }
-      
-    }
-    setOrder()
-
-  },[userOrder])
-
-  
-
-
 
   const removeFromCart = (productID) => {
     setCartItem((prev) => {
@@ -178,7 +145,6 @@ function CartContext(props) {
     setLog,
     setUserDatas,
     setCartItem,
-    setUserOrder,
     
   };
 

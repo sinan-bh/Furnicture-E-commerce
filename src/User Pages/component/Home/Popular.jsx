@@ -10,7 +10,7 @@ const popularProducts = [
       "https://i.pinimg.com/564x/be/61/0b/be610b47a66e0a9cc5d9599796675681.jpg",
     name: "Sofa",
     price: 649.0,
-    offerPrice: 454.3, // Sample generated value
+    offerPrice: 454.3, 
     details:
       "Enhance your living room with the Friheten Sleeper Sectional in Skiftebo Dark Gray. This versatile sofa offers spacious seating and convenient storage, perfect for small spaces. The sleeper feature provides a comfortable bed for guests, while the modern design complements various decor styles.",
   },

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-// import { Dataset } from "../../../assets/data-set/dataSet";
 import List from "../Products/List";
 import "./home.css";
 import { addContext } from "../../../context/CartContext";
@@ -7,7 +6,6 @@ import useFetch from "../../../Custom Hook/useFetch";
 
 function SearchItem() {
   const { searchTerm } = useContext(addContext);
-
 
   const {
     data: products,
@@ -27,8 +25,10 @@ function SearchItem() {
     return <div>No products found.</div>;
   }
 
-  const list = products.filter((item) =>
-    item.type.toLowerCase().includes(searchTerm.toLowerCase())
+  const list = products.filter(
+    (item) =>
+      item.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.imageCategory.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

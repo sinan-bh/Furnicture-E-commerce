@@ -11,7 +11,16 @@ function Reg() {
         uname: "",
         pass1: "",
         pass2: "",
+        date:new Date().toISOString().split("T")[0],
         type : "user",
+        cart:{},
+        order:{
+          id:"",
+          image:"",
+          name:"",
+          quantity:"0",
+          status:"",
+        }
     })
 
 
@@ -52,6 +61,9 @@ function Reg() {
     const validationErrors = validate();
     e.preventDefault();
     try {
+
+      // const currentDate = new Date().toISOString().split("T")[0];
+      // const userRegistration = { ...usrReg, date: currentDate };
 
       const options = {
         method: 'POST',

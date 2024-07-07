@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 import "./admin.css";
 import { Link } from "react-router-dom";
@@ -10,6 +10,8 @@ function Products({ type }) {
     error,
     setData: setProducts,
   } = useFetch("http://localhost:8000/products");
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelete = async (id) => {
     try {
@@ -39,8 +41,13 @@ function Products({ type }) {
     return <div>No products found.</div>;
   }
 
-  const list =
-    type === "All" ? products : products.filter((list) => list.type === type);
+  const filteredProducts = products.filter(
+    (product) =>
+      type === "All" || product.type === type
+  ).filter(
+    (product) =>
+      product.imageCategory.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="adminhome">
@@ -51,38 +58,44 @@ function Products({ type }) {
         {type === "Bedroom Furniture" && "Bedroom Furniture"}
       </h2>
       <div className="AddBtn">
-          <button className="btn btn-success mb-2">
-            <Link to={"/adminhome/add-edit-product"} className="text-none text-white">Add New Product</Link>
-          </button>
-        </div>
-      <div className="">
-        <div className="categorys ">
-          <div className="category-name">Select category</div>
-          <div className="category-type">
-          <div value="All" className=" product-name ms-3  ">
+        <button className="btn btn-success mb-2">
+          <Link to={"/adminhome/add-edit-product"} className="text-none text-white">Add New Product</Link>
+        </button>
+      </div>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by product name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="form-control search-input"
+        />
+      </div>
+      <div className="categorys ">
+        <div className="category-name">Select category</div>
+        <div className="category-type">
+          <div value="All" className=" product-name ms-3">
             <Link to={"/adminhome/product-details"} className="text-none">All Products</Link>
           </div>
-          <div value="Living Room Furniture" className="ms-3 product-name ">
+          <div value="Living Room Furniture" className="ms-3 product-name">
             <Link to={"/adminhome/product-details/product-lvingroom"} className="text-none">
               Living Room Furniture
             </Link>
           </div>
-          <div value="Dining Room Furniture" className="ms-3 product-name ">
+          <div value="Dining Room Furniture" className="ms-3 product-name">
             <Link to={"/adminhome/product-details/product-diningset"} className="text-none">
               Dining Room Furniture
             </Link>
           </div>
-          <div value="Bedroom Furniture" className="ms-3 product-name ">
+          <div value="Bedroom Furniture" className="ms-3 product-name">
             <Link to={"/adminhome/product-details/product-bedroom"} className="text-none">
               Bedroom Furniture
             </Link>
           </div>
-          </div>
         </div>
-        
       </div>
       <div>
-        <table className="table  table-hover table-success table-striped">
+        <table className="table table-hover table-success table-striped">
           <thead>
             <tr>
               <th scope="col">ProductId</th>
@@ -95,7 +108,7 @@ function Products({ type }) {
             </tr>
           </thead>
           <tbody>
-            {list.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id}>
                 <td>{product.id}</td>
                 <td>
@@ -110,12 +123,12 @@ function Products({ type }) {
                 <td>{product.details}</td>
                 <td className="amount">
                   <div>Price: <span className="text-secondary">${product.price}</span></div>
-                  <div className="mt-5 ">Offer Price: <span className="text-success">${product.offerPrice}</span></div>
+                  <div className="mt-5">Offer Price: <span className="text-success">${product.offerPrice}</span></div>
                 </td>
                 <td className="edit-del">
                   <Link
                     to={`/adminhome/add-edit-product/${product.id}`}
-                    className="btn btn-secondary "
+                    className="btn btn-secondary"
                   >
                     Edit
                   </Link>

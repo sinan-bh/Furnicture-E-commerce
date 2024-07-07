@@ -44,6 +44,7 @@ function UserDatas() {
               <th>Name</th>
               <th>E-mail</th>
               <th>Username</th>
+              <th>Date</th>
               <th>USer Details</th>
             </tr>
           </thead>
@@ -54,6 +55,7 @@ function UserDatas() {
                 <td>{list.name}</td>
                 <td>{list.email}</td>
                 <td>{list.uname}</td>
+                <td>{list.date}</td>
                 <td><button className="btn btn-secondary" onClick={()=>handleClick(list.id)}>Click here</button></td>
               </tr>
             ))}

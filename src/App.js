@@ -1,7 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Login from "./User Pages/Registration-Login/Login";
-import Registration from "./User Pages/Registration-Login/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./User Pages/Home/Home";
 import NavBar from "../src/User Pages/component/NavBar-Footer/NavBar";
@@ -51,8 +50,7 @@ function App() {
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/searchItem" element={<SearchItem />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="/reg" element={<Reg />} />
+                <Route path="/registration" element={<Reg />} />
               </Routes>
               <Footer />
             </div>

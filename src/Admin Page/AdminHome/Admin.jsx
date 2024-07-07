@@ -6,16 +6,16 @@ import UserDatas from "../component/Home/UserDatas";
 import Products from "../component/Home/Products";
 import AdminContext from "../../context/AdminContext";
 import AddEditProduct from "../component/Edit&AddProduct/AddEditProduct";
-import UserDetails from "../component/UserDetails/UserDetails";
+import UserDetails from "../component/Home/UserDetails/UserDetails";
 import '../component/Home/admin.css'
 import Logo from "../../assets/img/logo/logo.png";
 
 function Admin() {
   return (
     <div className="body-admin">
-      <h1 className=" card-Header ">
+      <div className=" card-Header ">
         <img src={Logo} alt="" />
-      </h1>
+      </div>
       <div className="">
       <AdminContext>
         <NavBarAdmin />
