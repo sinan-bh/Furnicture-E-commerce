@@ -14,17 +14,18 @@
   
   .nav-hover{
     border: none;
-    border-radius: 25px;
+    border-radius: 15px;
     background-color: lightseagreen;
-    width: 100px;
-    transition: width 2s;
+    width: 50px;
+    transition: width 1.5s ease-out;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 10px;
+  
   }
   .nav-hover:hover{
-    
-    border-radius: 25px;
-    width: 150px;
+    border-radius: 15px;
+    width: 80px;
   }
+

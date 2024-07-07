@@ -106,11 +106,10 @@
     align-items: center;
     justify-content: center;
     position: sticky;
-    right: 300px;
+    right: 250px;
     border-color: #87acba1f;
     border: none;
     text-decoration: underline;
-    /* text-decoration-line: overline; */
   }
   
   .search-bar input {

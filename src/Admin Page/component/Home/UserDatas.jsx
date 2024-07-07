@@ -33,6 +33,9 @@ function UserDatas() {
 
   return (
     <div className="adminhome ">
+      <div>  <h2 className="text-center mb-5">
+        Users Details
+      </h2></div>
       <div>
         <table className="table table-hover table-success table-striped ">
           <thead className="thead-dark">

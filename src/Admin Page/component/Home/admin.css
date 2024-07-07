@@ -1,5 +1,15 @@
+.card-Header{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 .adminhome {
-  margin: 100px 150px;
+  margin: 50px 110px;
   width: 85vw;
 }
 
@@ -46,7 +56,7 @@
   display: flex;
   border: none;
   justify-content: flex-start;
-  background-color: aquamarine;
+  background-color: rgba(100, 109, 103, 0.368);
 
 }
 .category-type{
@@ -55,7 +65,7 @@
   justify-content: space-evenly;
 }
 .category-name{
-  background-color: rgb(108, 173, 11);
+  background-color: rgb(184, 217, 208);
   border: none;
   width: 150px;
   display: flex;
@@ -63,15 +73,13 @@
   justify-content: center;
 }
 .product-name{
-  background-color: aquamarine;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .product-name:hover{
-  background-color: cadetblue;
-  border-radius: 25px;
+  background-color: rgb(184, 217, 208);
 }
 
 
@@ -109,9 +117,8 @@
 }
 
 .dashboard-container {
-  padding: 50px;
+  margin-top: 50px;
   margin-left: 150px;
-  background-color: #f4f6f9; 
   width: 80%;
 }
 
@@ -150,9 +157,10 @@
   height: 100px;
 }
 
-.card-title {
+.card-title-admin {
   font-size: 2.5rem;
   margin: 0;
 }
+
 
 
