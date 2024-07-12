@@ -4,6 +4,8 @@ import "./admin.css";
 import { Link } from "react-router-dom";
 
 function Products({ type }) {
+
+  const [searchQuery, setSearchQuery] = useState("");
   const {
     data: products,
     loading,
@@ -11,9 +13,9 @@ function Products({ type }) {
     setData: setProducts,
   } = useFetch("http://localhost:8000/products");
 
-  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelete = async (id) => {
+    alert('Deleted')
     try {
       const response = await fetch(`http://localhost:8000/products/${id}`, {
         method: "DELETE",
@@ -62,7 +64,7 @@ function Products({ type }) {
           <Link to={"/adminhome/add-edit-product"} className="text-none text-white">Add New Product</Link>
         </button>
       </div>
-      <div className="search-container">
+      <div className="search-container-products mb-3">
         <input
           type="text"
           placeholder="Search by product name..."
@@ -95,7 +97,7 @@ function Products({ type }) {
         </div>
       </div>
       <div>
-        <table className="table table-hover table-success table-striped">
+        <table className="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">ProductId</th>

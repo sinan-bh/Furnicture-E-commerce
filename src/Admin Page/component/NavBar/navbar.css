@@ -15,9 +15,9 @@
   .nav-hover{
     border: none;
     border-radius: 15px;
-    background-color: lightseagreen;
+    background-color: #87acba1f;
     width: 50px;
-    transition: width 1.5s ease-out;
+    transition: width 0.5s ease-out;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,4 +28,5 @@
     border-radius: 15px;
     width: 80px;
   }
+
 

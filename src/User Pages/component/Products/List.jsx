@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./products.css";
-import { addContext } from "../../../context/CartContext";
+import { userContext } from "../../../context/CartContext";
 
 function List({ list }) {
   const {
@@ -14,7 +14,7 @@ function List({ list }) {
   } = list;
 
   
-  const { addToCart } = useContext(addContext);
+  const { addToCart } = useContext(userContext);
 
   return (
     <div className=" card-item">

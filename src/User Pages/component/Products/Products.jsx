@@ -1,5 +1,4 @@
 import React from "react";
-// import { Dataset } from "../../assets/data-set/dataSet";
 import "./products.css";
 import List from "./List";
 import useFetch from "../../../Custom Hook/useFetch";

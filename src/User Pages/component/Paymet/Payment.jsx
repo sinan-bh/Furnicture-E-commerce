@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import "./Style.css";
-import { addContext } from "../../../context/CartContext";
+import { userContext } from "../../../context/CartContext";
 
 function Payment() {
-  const { log, price } = useContext(addContext);
+  const { price } = useContext(userContext);
+  const username = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
-    name: log.lname || "",
+    name: username.lname || "",
     address: "",
     state: "",
     email: "",

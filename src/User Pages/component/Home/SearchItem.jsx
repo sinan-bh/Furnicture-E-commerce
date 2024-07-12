@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import List from "../Products/List";
 import "./home.css";
-import { addContext } from "../../../context/CartContext";
+import { userContext } from "../../../context/CartContext";
 import useFetch from "../../../Custom Hook/useFetch";
 
 function SearchItem() {
-  const { searchTerm } = useContext(addContext);
+  const { searchTerm } = useContext(userContext);
 
   const {
     data: products,

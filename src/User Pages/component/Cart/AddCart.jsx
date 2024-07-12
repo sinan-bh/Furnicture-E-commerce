@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-// import { Dataset } from "../../../assets/data-set/dataSet";
-import { addContext } from "../../../context/CartContext";
+import React, { useContext } from "react";
+import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
 import "./Style.css";
@@ -10,7 +9,7 @@ import useFetch from "../../../Custom Hook/useFetch";
 
 function AddCart() {
 
-  const { cartItem, price, count, removeAllItem } = useContext(addContext);
+  const { cartItem, price, count, removeAllItem } = useContext(userContext);
   const navigate = useNavigate();
 
     const handleCheckout = () => {
@@ -23,6 +22,7 @@ function AddCart() {
       error,
     } = useFetch("http://localhost:8000/products");
   
+  
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -34,9 +34,7 @@ function AddCart() {
     if (!products || products.length === 0) {
       return <div>No products found.</div>;
     }
-  
-  
- 
+   
 
   const hasItemsInCart = Object.values(cartItem).some((item) => item !== 0);
 

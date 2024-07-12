@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
-import { addContext } from "../../context/CartContext";
+import { userContext } from "../../context/CartContext";
 import { AdminDetails } from "../../assets/data-set/Admin-Datas";
 import useFetch from "../../Custom Hook/useFetch";
 
@@ -18,7 +18,8 @@ function Login() {
     lpass: "",
   });
 
-  const { setLog, setUserDatas } = useContext(addContext);
+  const { setUserDatas } = useContext(userContext);
+
 
   const navigate = useNavigate();
 
@@ -51,11 +52,12 @@ function Login() {
         const adminDatas = AdminDetails.find((item) => item.type === "admin");
         setUserDatas(user);
         if (user) {
-          setLog({...formValue,id: user.id});
           alert("Login Successfully");
+          localStorage.setItem('currentUser',JSON.stringify({...formValue,id : user.id}))
+          localStorage.setItem('isLogin',JSON.stringify(true))
           navigate("/");
         } else if (adminDatas.type === formValue.lname) {
-          setLog(formValue);
+          localStorage.setItem('isAdmin',JSON.stringify(true))
           alert("Login Successfully");
           navigate("/adminhome");
         } else {

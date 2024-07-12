@@ -2,9 +2,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./admin.css";
 import useFetch from "../../../Custom Hook/useFetch";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function UserDatas() {
 
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate()
 
 
@@ -31,13 +33,26 @@ function UserDatas() {
     navigate(`/adminhome/userdatas/${id}`)
   }
 
+  const filteredUsers = user.filter((list) =>
+    list.date.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="adminhome ">
       <div>  <h2 className="text-center mb-5">
         Users Details
       </h2></div>
+      <div className="search-container-products mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by date"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div>
-        <table className="table table-hover table-success table-striped ">
+        <table className="table table-hover table-striped ">
           <thead className="thead-dark">
             <tr>
               <th>Index</th>
@@ -49,7 +64,7 @@ function UserDatas() {
             </tr>
           </thead>
           <tbody>
-            {user.map((list, index) => (
+            {filteredUsers.map((list, index) => (
               <tr key={index}>
                 <td>{index}</td>
                 <td>{list.name}</td>

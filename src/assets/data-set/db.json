@@ -10,7 +10,8 @@
       "type": "user",
       "date": "2024-06-30",
       "cart": {
-        "4": 4
+        "2": 1,
+        "22": 1
       },
       "order": {
         "id": "1",
@@ -29,7 +30,10 @@
       "pass2": "123",
       "type": "user",
       "date": "2024-07-01",
-      "cart": {},
+      "cart": {
+        "2": 1,
+        "8": 1
+      },
       "order": {
         "id": "2",
         "image": "https://i.pinimg.com/474x/44/b0/0a/44b00af06f2cc9f994b2256651fa4050.jpg",
@@ -87,12 +91,48 @@
         "5": 2,
         "7": 1
       },
-      "order":{
-        "id":"",
-        "image":"",
-        "name":"",
-        "quantity":"0",
-        "status":""
+      "order": {
+        "id": "",
+        "image": "",
+        "name": "",
+        "quantity": "0",
+        "status": ""
+      }
+    },
+    {
+      "id": "1720438143002",
+      "name": "basil",
+      "email": "basil@gmail.com",
+      "uname": "basil",
+      "pass1": "123",
+      "pass2": "123",
+      "date": "2024-07-08",
+      "type": "user",
+      "cart": {},
+      "order": {
+        "id": "",
+        "image": "",
+        "name": "",
+        "quantity": "0",
+        "status": ""
+      }
+    },
+    {
+      "id": "1720515943017",
+      "name": "fasalu",
+      "email": "sinanbh9605@gmail.com",
+      "uname": "fasalu",
+      "pass1": "123",
+      "pass2": "123",
+      "date": "2024-07-09",
+      "type": "user",
+      "cart": {},
+      "order": {
+        "id": "",
+        "image": "",
+        "name": "",
+        "quantity": "0",
+        "status": ""
       }
     }
   ],
@@ -103,22 +143,11 @@
       "image": "https://i.pinimg.com/564x/be/61/0b/be610b47a66e0a9cc5d9599796675681.jpg",
       "imageCategory": "Sofa",
       "description": "Friheten Sleeper Sectional, 3-seat with storage",
-      "price": "649",
+      "price": "700",
       "quantity": 10,
       "offerPrice": 454.3,
       "details": "Enhance your living room with the Friheten Sleeper Sectional in Skiftebo Dark Gray. This versatile sofa offers spacious seating and convenient storage, perfect for small spaces. The sleeper feature provides a comfortable bed for guests, while the modern design complements various decor styles.",
       "category": "Living Room Furniture"
-    },
-    {
-      "id": "2",
-      "type": "Dining Room Furniture",
-      "image": "https://i.pinimg.com/474x/23/86/7d/23867da35f96d83e0255d2e67e80ba6b.jpg",
-      "imageCategory": "Dining Set",
-      "description": "Nordviken Table and 6 Chairs",
-      "price": 799,
-      "quantity": 5,
-      "offerPrice": 639.2,
-      "details": "Create a classic dining experience with the Nordviken Table and 6 Chairs in Antique Stain. This dining set features a sturdy table and comfortable chairs, perfect for family meals or gatherings. The timeless design and durable construction ensure long-lasting enjoyment."
     },
     {
       "id": "3",
@@ -427,6 +456,16 @@
       "quantity": 8,
       "offerPrice": 83.3,
       "details": "Acacia wood bench, sturdy and durable, suitable for indoor or outdoor use."
+    },
+    {
+      "id": "b670",
+      "image": "vlkld",
+      "imageCategory": "kdlc",
+      "description": "flkf",
+      "details": "klfdm",
+      "price": "456",
+      "offerPrice": "234",
+      "type": "Dining Room Furniture"
     }
   ]
 }

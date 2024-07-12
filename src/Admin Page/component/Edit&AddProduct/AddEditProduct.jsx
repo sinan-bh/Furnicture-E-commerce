@@ -6,27 +6,27 @@ function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    id: id ,
+    id: id,
     image: "",
     imageCategory: "",
     description: "",
     details: "",
     price: "",
     offerPrice: "",
-    type: "", 
+    type: "",
   });
 
   useEffect(() => {
     if (id) {
       fetch(`http://localhost:8000/products/${id}`)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           setFormData({
             ...data,
-            type: "edit"
+            type: "edit",
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Failed to fetch product data:", error);
         });
     }
@@ -36,30 +36,22 @@ function AddEditProduct() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!id) {
-        const uniqueId = Date.now().toString();
-        setFormData({
-          ...formData,
-          id: uniqueId
-        });
-      }
-
       const options = {
-        method: id ? 'PUT' : 'POST',
+        method: id ? "PUT" : "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       };
 
-      const url = id 
+      const url = id
         ? `http://localhost:8000/products/${id}`
         : "http://localhost:8000/products";
 
@@ -67,7 +59,7 @@ function AddEditProduct() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      navigate("/adminhome/product-details"); 
+      navigate("/adminhome/product-details");
     } catch (error) {
       console.error("Failed to add/edit product:", error);
     }
@@ -75,91 +67,109 @@ function AddEditProduct() {
 
   return (
     <div className="add-edit-product-form">
-      <h3>{id ? "Edit Product" : "Add New Product"}</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Image URL:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="image"
-            value={formData.image}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Image Category:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="imageCategory"
-            value={formData.imageCategory}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Description:</label>
-          <textarea
-            className="form-control"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Details:</label>
-          <textarea
-            className="form-control"
-            name="details"
-            value={formData.details}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Price:</label>
-          <input
-            type="number"
-            className="form-control"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Offer Price:</label>
-          <input
-            type="number"
-            className="form-control"
-            name="offerPrice"
-            value={formData.offerPrice}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Category:</label>
-          <select
-            className="form-control"
-            name="type"
-            value={formData.type}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">Select category</option>
-            <option value="Living Room Furniture">Living Room Furniture</option>
-            <option value="Dining Room Furniture">Dining Room Furniture</option>
-            <option value="Bedroom Furniture">Bedroom Furniture</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          {id ? "Save Changes" : "Add Product"}
-        </button>
-      </form>
+      <div>
+        <h3 className="text-center ms-5 ps-5">
+          {id ? "Edit Product" : "Add New Product"}
+        </h3>
+        <form onSubmit={handleSubmit}>
+          <div className="d-flex ">
+            <div className="">
+              <div className="form-group">
+                <label>Image URL:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="image"
+                  value={formData.image}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Description:</label>
+                <textarea
+                  className="form-control"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Price:</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="">
+              <div className="form-group">
+                <label>Image Category:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="imageCategory"
+                  value={formData.imageCategory}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Details:</label>
+                <textarea
+                  className="form-control"
+                  name="details"
+                  value={formData.details}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Offer Price:</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="offerPrice"
+                  value={formData.offerPrice}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div className="selectCategory">
+            <div className="form-group">
+              <label>Category:</label>
+              <select
+                className="form-control"
+                name="type"
+                value={formData.type}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select category</option>
+                <option value="Living Room Furniture">
+                  Living Room Furniture
+                </option>
+                <option value="Dining Room Furniture">
+                  Dining Room Furniture
+                </option>
+                <option value="Bedroom Furniture">Bedroom Furniture</option>
+              </select>
+            </div>
+          </div>
+          <div className="add-btn ms-5 ps-5 mt-3">
+            <button type="submit" className="btn btn-secondary ms-5">
+              {id ? "Save Changes" : "Add Product"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -2,33 +2,25 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
-import { addContext } from "../../../context/CartContext";
+import { userContext } from "../../../context/CartContext";
 import { CiSearch } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
 import Logo from "../../../assets/img/logo/logo.png";
 
 const Navbar = () => {
-  //State
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
-  //Context
 
-  const {
-    cartItem,
-    searchTerm,
-    setSearchTerm,
-    log,
-    setLog,
-    setCartItem,
-    getDefualtCart,
-  } = useContext(addContext);
+  const { cartItem, searchTerm, setSearchTerm } = useContext(userContext);
 
   const navigate = useNavigate();
 
-  //Search
+  const username = JSON.parse(localStorage.getItem("currentUser"));
+
+  const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -39,14 +31,8 @@ const Navbar = () => {
     }
   };
 
-  //Total Cart Items Added
-
-  const count = Object.keys(cartItem).reduce(
-    (total, key) => (cartItem[key] !== 0 ? total + 1 : total),
-    0
-  );
-
-  //NavBar Scrolling
+  const count = Object.keys(cartItem).length;
+  console.log(count);
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {
@@ -64,11 +50,8 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-  //Log Out
-
   const handleLogout = () => {
-    setLog(log.lname !== log.name);
-    setCartItem({});
+    localStorage.removeItem("isLogin");
     alert("Logo Out");
     navigate("/");
   };
@@ -140,7 +123,7 @@ const Navbar = () => {
           </div>
           <div className="car-log">
             <div>
-              {log.lname ? (
+              {isLogin ? (
                 <Link to="/addcart" className="">
                   <button type="button" className="cart-link ">
                     <IoCartSharp className="icon" />
@@ -153,13 +136,13 @@ const Navbar = () => {
                 <div></div>
               )}
             </div>
-            {log.lname ? (
+            {isLogin ? (
               <button
                 type="button"
                 className="log-btn fw-bold"
                 onClick={handleLogout}
               >
-                {log.lname}
+                {username.lname}
                 <CiLogout />
               </button>
             ) : (

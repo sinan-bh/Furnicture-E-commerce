@@ -1,16 +1,35 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import "./products.css";
-import { addContext } from "../../../context/CartContext";
+import { addContext, userContext } from "../../../context/CartContext";
+import useFetch from "../../../Custom Hook/useFetch";
 
 function ProductDetails() {
 
   
-  const { addToCart, Dataset } = useContext(addContext);
+  const { addToCart, Dataset } = useContext(userContext);
 
   const { productID } = useParams();
+  const {
+    data: products,
+    loading,
+    error,
+  } = useFetch("http://localhost:8000/products");
 
-  const cart = Dataset.find((item) => item.id === Number(productID));
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message || JSON.stringify(error)}</div>;
+  }
+
+  if (!products || products.length === 0) {
+    return <div>No products found.</div>;
+  }
+
+  const cart = products.find((item) => item.id === productID);
 
   return (
     <div className="container product mt-5">

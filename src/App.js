@@ -12,7 +12,7 @@ import SearchItem from "../src/User Pages/component/Home/SearchItem";
 import ProductDetails from "../src/User Pages/component/Products/ProductDetails";
 import Admin from "./Admin Page/AdminHome/Admin";
 import CartContext from "./context/CartContext";
-import Reg from "./User Pages/Registration-Login/Reg";
+import Registration from "./User Pages/Registration-Login/Registration";
 
 function App() {
   const location = useLocation();
@@ -21,46 +21,43 @@ function App() {
   return (
     <div className="App">
       <CartContext>
-        {
-          !hideNavAndFooter ? (
-            <div>
-              <NavBar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/allproducts">
-                  <Route index element={<Collections type="All" />} />
-                  <Route
-                    path="livingroom"
-                    element={<Collections type="Living Room Furniture" />}
-                  />
-                  <Route
-                    path="diningset"
-                    element={<Collections type="Dining Room Furniture" />}
-                  />
-                  <Route
-                    path="bedroom"
-                    element={<Collections type="Bedroom Furniture" />}
-                  />
-                  <Route
-                    path="/allproducts:productID"
-                    element={<ProductDetails />}
-                  />
-                </Route>
-                <Route path="/addcart" element={<AddCart />} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/searchItem" element={<SearchItem />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registration" element={<Reg />} />
-              </Routes>
-              <Footer />
-            </div>
-          ) : (
-            <div>
-              <Admin />
-            </div>
-          )
-        }
-        
+        {!hideNavAndFooter ? (
+          <div>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/allproducts">
+                <Route index element={<Collections type="All" />} />
+                <Route
+                  path="livingroom"
+                  element={<Collections type="Living Room Furniture" />}
+                />
+                <Route
+                  path="diningset"
+                  element={<Collections type="Dining Room Furniture" />}
+                />
+                <Route
+                  path="bedroom"
+                  element={<Collections type="Bedroom Furniture" />}
+                />
+                <Route
+                  path="/allproducts:productID"
+                  element={<ProductDetails />}
+                />
+              </Route>
+              <Route path="/addcart" element={<AddCart />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/searchItem" element={<SearchItem />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registration" element={<Registration />} />
+            </Routes>
+            <Footer />
+          </div>
+        ) : (
+          <div>
+            <Admin />
+          </div>
+        )}
       </CartContext>
     </div>
   );

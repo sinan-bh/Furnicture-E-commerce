@@ -9,8 +9,10 @@ import AddEditProduct from "../component/Edit&AddProduct/AddEditProduct";
 import UserDetails from "../component/Home/UserDetails/UserDetails";
 import '../component/Home/admin.css'
 import Logo from "../../assets/img/logo/logo.png";
+import ProtectedRoute from "./ProtectedAdmin";
 
 function Admin() {
+
   return (
     <div className="body-admin">
       <div className=" card-Header ">
@@ -20,17 +22,17 @@ function Admin() {
       <AdminContext>
         <NavBarAdmin />
         <Routes>
-          <Route path="/adminhome" element={<AdminHome />} />
-          <Route path="/adminhome/userdatas" element={<UserDatas />} />
-          <Route path="/adminhome/userdatas/:id" element={<UserDetails />} />
+        <Route path="/adminhome/*" element={<ProtectedRoute element={<AdminHome />} />} />
+          <Route path="/adminhome/userdatas"element={<ProtectedRoute element={<UserDatas />} />} />
+          <Route path="/adminhome/userdatas/:id" element={<ProtectedRoute element={<UserDetails />} />} />
           <Route path="/adminhome/product-details"  >
-            <Route index element={<Products type='All' />} />
+            <Route index element={<ProtectedRoute element={<Products type='All' />} />}/>
             <Route path="product-lvingroom" element={<Products type='Living Room Furniture' />} />
             <Route path="product-diningset" element={<Products type='Dining Room Furniture' />} />
-            <Route path="product-bedroom" element={<Products type='Bedroom Furniture' />} />
+            <Route path="product-bedroom" element={<Products type='Bedroom Furniture' />} /> 
           </Route>
-          <Route path="/adminhome/add-edit-product" element={<AddEditProduct />} />
-          <Route path="/adminhome/add-edit-product/:id" element={<AddEditProduct />} />
+          <Route path="/adminhome/add-edit-product" element={<ProtectedRoute element={<AddEditProduct />} />} />
+          <Route path="/adminhome/add-edit-product/:id" element={<ProtectedRoute element={<AddEditProduct />} />} />
         </Routes>
       </AdminContext>
       </div>
