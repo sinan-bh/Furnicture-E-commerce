@@ -37,6 +37,7 @@ function Products({ type }) {
 
   if (error) {
     return <div>Error: {error.message || JSON.stringify(error)}</div>;
+    
   }
 
   if (!products || products.length === 0) {
