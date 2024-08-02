@@ -9,10 +9,8 @@ import { CiLogin } from "react-icons/ci";
 import Logo from "../../../assets/img/logo/logo.png";
 
 const Navbar = () => {
-
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
-
 
   const { cartItem, searchTerm, setSearchTerm } = useContext(userContext);
 
@@ -56,6 +54,12 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
       <div className="navbar-container">
@@ -65,60 +69,62 @@ const Navbar = () => {
               <img src={Logo} alt="Logo" />
             </Link>
           </div>
-          <div className="navbar-menu d-flex">
-            <Link to="/" className="navbar-link fw-bold">
-              Home
-            </Link>
-            <div className="Category">
-              <div className="Catogarylink">
-                <div className="text m-2 px-2">
-                  <Link
-                    to="/allproducts"
-                    className="fw-bold text-decoration-none"
-                    style={{ color: "rgb(84,98,102)" }}
-                  >
-                    All Products
-                  </Link>
-                </div>
-                <div className="text m-2 px-2">
-                  <Link
-                    to="/allproducts/livingroom"
-                    className="fw-bold text-decoration-none"
-                    style={{ color: "rgb(84,98,102)" }}
-                  >
-                    Living Room
-                  </Link>
-                </div>
-                <div className="text m-2 px-2">
-                  <Link
-                    to="/allproducts/diningset"
-                    className="fw-bold text-decoration-none"
-                    style={{ color: "rgb(84,98,102)" }}
-                  >
-                    Dining Set
-                  </Link>
-                </div>
-                <div className="text mt-2 px-2">
-                  <Link
-                    to="/allproducts/bedroom"
-                    className="fw-bold text-decoration-none"
-                    style={{ color: "rgb(84,98,102)" }}
-                  >
-                    Bed Room
-                  </Link>
+          <div className="display-nav d-flex">
+            <div className="navbar-menu d-flex">
+              <Link to="/" className="navbar-link fw-bold">
+                Home
+              </Link>
+              <div className="Category">
+                <div className="Catogarylink">
+                  <div className="text m-2 px-2">
+                    <Link
+                      to="/allproducts"
+                      className="fw-bold text-decoration-none"
+                      style={{ color: "rgb(84,98,102)" }}
+                    >
+                      All Products
+                    </Link>
+                  </div>
+                  <div className="text m-2 px-2">
+                    <Link
+                      to="/allproducts/livingroom"
+                      className="fw-bold text-decoration-none"
+                      style={{ color: "rgb(84,98,102)" }}
+                    >
+                      Living Room
+                    </Link>
+                  </div>
+                  <div className="text m-2 px-2">
+                    <Link
+                      to="/allproducts/diningset"
+                      className="fw-bold text-decoration-none"
+                      style={{ color: "rgb(84,98,102)" }}
+                    >
+                      Dining Set
+                    </Link>
+                  </div>
+                  <div className="text mt-2 px-2">
+                    <Link
+                      to="/allproducts/bedroom"
+                      className="fw-bold text-decoration-none"
+                      style={{ color: "rgb(84,98,102)" }}
+                    >
+                      Bed Room
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="search-bar fw-bold">
-            <input
-              type="text"
-              placeholder="Search here...."
-              value={searchTerm}
-              onChange={handleChange}
-            />
-            <div className="searchBtn">
-              <CiSearch />
+            <div className="search-bar fw-bold">
+              <input
+                type="text"
+                placeholder="Search here...."
+                value={searchTerm}
+                onChange={handleChange}
+              />
+              <div className="searchBtn">
+                <CiSearch />
+              </div>
             </div>
           </div>
           <div className="car-log">
@@ -154,6 +160,23 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <div className="menu-toggle-hide">
+      <div className="menu-toggle" onClick={toggleMenu}>
+      ☰
+      </div>
+
+      <div className={`off-canvas-container ${isOpen === false ? 'menu-open' : ''}`}>
+        <div className="off-canvas-menu">
+          <Link to={'/'} onClick={toggleMenu}>Home</Link>
+          <Link to={'/allproducts'} onClick={toggleMenu}>All Products</Link>
+          <Link to={'/allproducts/livingroom'} onClick={toggleMenu}>Living Room</Link>
+          <Link to={'/allproducts/diningset'} onClick={toggleMenu}>Dining Room</Link>
+          <Link to={'/allproducts/bedroom'} onClick={toggleMenu}>Bed Room</Link>
+        </div>
+        <div className="content">
+        </div>
+      </div>
+    </div>
     </nav>
   );
 };

@@ -72,14 +72,14 @@ function CartContext(props) {
   }, [cartItem]);
 
   useEffect(() => {
-    if (currentUser.id) {
+    if (currentUser) {
       const url = `http://localhost:8000/user/${currentUser.id}`;
 
       fetch(url)
         .then((res) => res.json())
         .then((data) => setCartItem(data.cart));
     }
-  }, [currentUser.id]);
+  }, [currentUser]);
 
   const removeFromCart = (productID) => {
     setCartItem((prev) => {

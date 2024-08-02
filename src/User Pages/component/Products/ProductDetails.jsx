@@ -7,7 +7,7 @@ import useFetch from "../../../Custom Hook/useFetch";
 function ProductDetails() {
 
   
-  const { addToCart, Dataset } = useContext(userContext);
+  const { addToCart } = useContext(userContext);
 
   const { productID } = useParams();
   const {
