@@ -49,9 +49,13 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   const handleLogout = () => {
-    localStorage.removeItem("isLogin");
-    alert("Logo Out");
-    navigate("/");
+    const confirm = window.confirm("Do you want to Logout?")
+    if (confirm) {
+      
+      localStorage.removeItem("isLogin");
+      alert("Logo Out");
+      navigate("/");
+    }
   };
 
   const [isOpen, setIsOpen] = useState(false);

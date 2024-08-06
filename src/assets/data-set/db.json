@@ -9,11 +9,7 @@
       "pass2": "123",
       "type": "user",
       "date": "2024-06-30",
-      "cart": {
-        "8": 1,
-        "22": 1,
-        "23": 1
-      },
+      "cart": {},
       "order": {
         "id": "1",
         "image": "https://i.pinimg.com/474x/23/86/7d/23867da35f96d83e0255d2e67e80ba6b.jpg",
