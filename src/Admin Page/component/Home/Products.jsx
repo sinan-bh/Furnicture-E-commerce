@@ -15,21 +15,25 @@ function Products({ type }) {
 
 
   const handleDelete = async (id) => {
-    alert('Deleted')
-    try {
-      const response = await fetch(`http://localhost:8000/products/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+    const confirm = window.confirm('Do You Want Delete Product....?')
+    if (confirm) {
+      
+      alert('Deleted')
+      try {
+        const response = await fetch(`http://localhost:8000/products/${id}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.id !== id)
+        );
+      } catch (error) {
+        console.error("Failed to delete product:", error);
       }
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== id)
-      );
-    } catch (error) {
-      console.error("Failed to delete product:", error);
+    };
     }
-  };
 
   if (loading) {
     return <div>Loading...</div>;
