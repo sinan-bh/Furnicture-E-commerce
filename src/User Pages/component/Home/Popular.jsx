@@ -96,12 +96,12 @@ const popularProducts = [
 function Popular() {
   return (
     <div className="category">
-      <div className="container card card-container m-5">
+      <div className="container card  mt-5">
         <h2 className="text-center mt-4">Popular Products</h2>
         <div className="  p-5 ">
-          <div className="row ms-3 ">
+          <div className=" ms-3 grid-style">
             {popularProducts.map((list) => (
-              <div key={list.id} className="col-md-3 mb-4">
+              <div key={list.id} className=" mb-4">
                 <Link to={`/allproducts/${list.id}`}>
                   <img
                     src={list.image}

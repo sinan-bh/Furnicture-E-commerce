@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { IoIosArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { IoCartSharp } from "react-icons/io5";
@@ -166,7 +167,7 @@ const Navbar = () => {
       </div>
       <div className="menu-toggle-hide">
       <div className="menu-toggle" onClick={toggleMenu}>
-      ☰
+      <IoIosArrowDropdown />
       </div>
 
       <div className={`off-canvas-container ${isOpen === false ? 'menu-open' : ''}`}>

@@ -32,29 +32,27 @@ function ProductDetails() {
   const cart = products.find((item) => item.id === productID);
 
   return (
-    <div className="container product mt-5">
-      <div className="  mt-5 ">
-        <div className="d-flex">
-          <div key={cart.id} className="cart-image card">
+    <div className=" product mt-5">
+      <div className="flex-style mt-5 ">
+          <div key={cart.id} className="cart-image ">
             <img src={cart.image} alt={cart.imageCategory} />
           </div>
-          <div className="card text-center cart-product pt-5">
+          <div className=" cart-product">
             <h2 className="text-success">{cart.imageCategory}</h2>
-            <p className="pt-3 description text-start">{cart.details}</p>
+            <p className=" text-start">{cart.details}</p>
             <div className="addtocart">
               <div>
                 <h5 className="text-success">$ {cart.offerPrice}</h5>
                 <del className="text-secondary">$ {cart.price} </del>
               </div>
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary mt-3"
                 onClick={() => addToCart(productID)}
               >
                 Add To Cart
               </button>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );
