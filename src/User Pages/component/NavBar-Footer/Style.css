@@ -269,6 +269,10 @@
     top: -100px;
   }
 
+  .navbar-menu{
+    display: none;
+  }
+
   .search-bar{
     display: flex;
     align-items: center;
@@ -279,17 +283,7 @@
     border: none;
   }
 
-  .navbar-link:hover,
-  .log-btn:hover,
-  .cart-link:hover,
-  .nav-icon:hover,
-  .search-bar input:hover,
-  .Catogarylink .text:hover {
-    background-color: #1ba8c41b;
-    border: 1px solid rgb(84,98,102);
-    transform: scale(1.1);
-    box-shadow: 5px 3px 5px rgb(163, 159, 159);
-  }
+
 
   .menu-toggle-hide{
     visibility: visible;
