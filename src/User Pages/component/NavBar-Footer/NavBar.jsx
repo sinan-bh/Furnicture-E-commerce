@@ -66,15 +66,15 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
-      <div className="navbar-container">
+      <div className="">
         <div className="navbar">
           <div className="nav-icon">
             <Link to={"/"}>
               <img src={Logo} alt="Logo" />
             </Link>
           </div>
-          <div className="display-nav d-flex">
-            <div className="navbar-menu d-flex">
+          <div className="display-nav ">
+            <div className="navbar-menu">
               <Link to="/" className="navbar-link fw-bold">
                 Home
               </Link>

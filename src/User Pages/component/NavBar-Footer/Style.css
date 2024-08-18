@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: top 0.3s;
+    transition: top 0.8s;
     display: flex;
     justify-content: center;
   }
@@ -15,7 +15,7 @@
   }
   
   .navbar-hide {
-    top: -60px;
+    top: -100px;
   }
   
   .nav-icon {
@@ -41,9 +41,9 @@
   }
   
   .navbar-container {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     /* padding: 10px 20px; */
   }
   
@@ -186,7 +186,7 @@
     justify-content: flex-end;
     width: 100px;
     top: 15px;
-    right: 100px;
+    right: 50px;
     position: fixed;
   
   }
@@ -351,20 +351,21 @@
   .user-login{
     display: none;
   }
-  .menu-toggle {
+  /* .menu-toggle {
     position: fixed;
     top: 13px;
     right: 80px;
     font-size: 24px;
     cursor: pointer;
     z-index: 1000; 
-  }
-  .search-bar {
+  } */
+   .search-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
-    right: 210px;
+    position: fixed;
+    top: 15px;
+    right: 165px;
     border-color: #87acba1f;
     border: none;
   }
@@ -383,7 +384,7 @@
     position: absolute;
     margin-left: 100px;
     border: none;
-  }
+  } 
   
   
   .icon {
