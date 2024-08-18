@@ -251,17 +251,22 @@
 @media (max-width : 1200px){
 
   .navbar {
-    max-width: 1200px;
+    position: absolute;
+    width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: top 0.3s;
+    transition: top 0.8s;
     display: flex;
     justify-content: center;
   }
-
-  .navbar-menu{
-    visibility: hidden;
+  
+  .navbar-show {
+    top: 0;
+  }
+  
+  .navbar-hide {
+    top: -100px;
   }
 
   .search-bar{
@@ -272,6 +277,18 @@
     right: 220px;
     border-color: #87acba1f;
     border: none;
+  }
+
+  .navbar-link:hover,
+  .log-btn:hover,
+  .cart-link:hover,
+  .nav-icon:hover,
+  .search-bar input:hover,
+  .Catogarylink .text:hover {
+    background-color: #1ba8c41b;
+    border: 1px solid rgb(84,98,102);
+    transform: scale(1.1);
+    box-shadow: 5px 3px 5px rgb(163, 159, 159);
   }
 
   .menu-toggle-hide{
@@ -288,8 +305,8 @@
   .off-canvas-menu {
     position: absolute;
     top: 50px;
-    left: 250px; 
-    width: 250px;
+    right: 0px; 
+    width: 200px;
     height: auto;
     background-color: #3d3d3d34;
     color: #f0e9e9;
@@ -311,7 +328,6 @@
     color: white;
   }
   
-  /* Toggle button */
   .menu-toggle {
     position: fixed;
     top: 13px;
@@ -321,7 +337,6 @@
     z-index: 1000; 
   }
   
-  /* When the menu is open */
   .menu-open {
     display: none; 
   }
@@ -332,7 +347,6 @@
     width: 100%;
   }
   .nav-icon{
-    /* display: none; */
     left: 0px;
     top: 15px;
     position: fixed;
@@ -351,14 +365,7 @@
   .user-login{
     display: none;
   }
-  /* .menu-toggle {
-    position: fixed;
-    top: 13px;
-    right: 80px;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1000; 
-  } */
+
    .search-bar {
     display: flex;
     align-items: center;
@@ -391,6 +398,38 @@
     font-size: 20px;
   }
 
+  .off-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    transition: transform 0.3s ease;
+  }
+  
+  .off-canvas-menu {
+    position: absolute;
+    top: 50px;
+    right: 0px; 
+    width: 200px;
+    height: auto;
+    background-color: #3d3d3d34;
+    color: #f0e9e9;
+    transition: left 0.3s ease;
+  }
+  
+  .off-canvas-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #3d3d3df1;
+    display: block;
+    transition: background 0.3s;
+  }
+  
+  .off-canvas-menu a:hover {
+    background-color: #575757;
+    color: white;
+  }
 }
 /* .menu-open .off-canvas-menu {
   left: 0; 

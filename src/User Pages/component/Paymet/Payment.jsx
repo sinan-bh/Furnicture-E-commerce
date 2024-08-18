@@ -50,7 +50,7 @@ function Payment() {
       <div className="payment-card">
         <h2 className="payment-title">Check Out</h2>
         <form>
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
             <div className="card-details">
               <div className="form-group">
                 <label>Name</label>
@@ -86,7 +86,7 @@ function Payment() {
                 {errors.state && <span className="error">{errors.state}</span>}
               </div>
             </div>
-            <div className="card-details ms-5">
+            <div className="card-details">
               <div className="form-group">
                 <label>E-Mail</label>
                 <input
@@ -128,14 +128,14 @@ function Payment() {
               className="finish-pay-btn me-3"
               onClick={handleUpdate}
             >
-              update
+              Update
             </button>
             <button
               type="button"
               className="finish-pay-btn"
               onClick={handlePay}
             >
-              pay ${price}
+              Pay ${price}
             </button>
           </div>
         </form>

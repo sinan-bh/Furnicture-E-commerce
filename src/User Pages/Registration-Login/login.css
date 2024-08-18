@@ -2,24 +2,28 @@
 
 .registration {
   width: 100vw;
-  height: 100vh;
+  min-height: 100%;
+  margin-top: 100px;
   background: #dddada;
 }
+
 .form-group {
-  width: 300px;
-  margin: 10px 0 0 150px;
+  width: 80%;
+  margin: 10px auto;
 }
 
 .registration .cardSize {
-  width: 700px;
-  margin: 150px 0 0 -50px;
-  padding: 50px;
+  width: 90%;
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
   overflow: hidden;
   border: none;
   box-shadow: 15px -10px 10px rgb(163, 159, 159);
   border-radius: 15px;
   background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcC00NjQtdGQtMDE3MC0wNF8xLmpwZw.jpg");
 }
+
 .cardSize::before {
   content: "";
   position: absolute;
@@ -30,6 +34,7 @@
   backdrop-filter: blur(5px);
   z-index: 1;
 }
+
 .cardSize .card-body {
   position: relative;
   z-index: 2;
@@ -41,6 +46,24 @@
   color: rgb(246, 238, 238);
 }
 
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .registration .cardSize {
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .registration .form-group {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .registration .card-body {
+    padding: 10px;
+  }
+}
+
+
 /* End Registration */
 
 /* Login */
@@ -49,11 +72,14 @@
   width: 100vw;
   height: 100vh;
   background: #fbf9f5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; 
 }
+
 .login .cardSize {
-  margin-top: 180px;
-  padding: 100px;
-  overflow: hidden;
+  padding: 50px; 
   border: none;
   border-radius: 15px;
   box-shadow: 15px -10px 10px rgb(163, 159, 159);
@@ -65,6 +91,7 @@
     -1px 0px 0px #e7e1e1, 1px 10px 20px #d5cfcf;
   color: rgb(15, 12, 12);
 }
+
 .login .btn-navy {
   background-color: #d7dde3ab;
   border-color: #061525;
@@ -73,4 +100,42 @@
   font-weight: bold;
 }
 
-/*End  Login */
+
+@media (max-width: 768px) {
+  .login .cardSize {
+    padding: 30px; 
+    margin-top: 100px; 
+  }
+
+  .login .form-group input {
+    padding: 10px; 
+    font-size: 16px; 
+  }
+
+  .login .btn-navy {
+    padding: 10px; 
+    font-size: 16px; 
+  }
+
+  .login .text-outline {
+    font-size: 24px; 
+    text-shadow: 4px 6px 3px #f2ececa6, 0px 0px 0px #ece4e4ad,
+      -1px 0px 0px #e7e1e1, 1px 5px 10px #d5cfcf;
+  }
+}
+
+@media (max-width: 576px) {
+  .login .cardSize {
+    padding: 20px; 
+    margin-top: 50px; 
+  }
+
+  .login .text-outline {
+    font-size: 20px; 
+  }
+
+  .login .btn-navy {
+    padding: 8px; 
+    font-size: 14px; 
+  }
+}
