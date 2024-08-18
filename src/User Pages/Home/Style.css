@@ -17,7 +17,15 @@ body {
 
 @media (max-width: 993px){
   .home-img{
-    max-width: 100%;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+}
+@media (max-width: 576px){
+  .home-img{
+    width: 100%;
     height: auto;
     margin: 0;
     padding: 0;

@@ -44,7 +44,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
   }
   
   .navbar-menu {
@@ -186,7 +186,7 @@
     justify-content: flex-end;
     width: 100px;
     top: 15px;
-    right: 50px;
+    right: 100px;
     position: fixed;
   
   }
@@ -328,9 +328,37 @@
 }
 
 @media (max-width: 576px) {
+  .navbar{
+    width: 100%;
+  }
   .nav-icon{
+    /* display: none; */
+    left: 0px;
+    top: 15px;
+    position: fixed;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(84,98,102);
+    background-color: #87acba1f;
+    border-radius: 15px;
+    transition: transform 0.3s;
+    font-weight: bolder;
+    font-size: larger;
+  }
+  .user-login{
     display: none;
   }
+  .menu-toggle {
+    position: fixed;
+    top: 13px;
+    right: 80px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000; 
+  }
+
 }
 /* .menu-open .off-canvas-menu {
   left: 0; 

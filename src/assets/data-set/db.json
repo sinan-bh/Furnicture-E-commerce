@@ -48,10 +48,7 @@
       "pass2": "123",
       "type": "user",
       "date": "2024-07-01",
-      "cart": {
-        "8": 1,
-        "22": 1
-      },
+      "cart": {},
       "order": {
         "id": "3",
         "image": "https://i.pinimg.com/474x/ba/48/14/ba48145126dfae00af0cddd5185c03a6.jpg",

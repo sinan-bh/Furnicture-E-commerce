@@ -50,9 +50,8 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   const handleLogout = () => {
-    const confirm = window.confirm("Do you want to Logout?")
+    const confirm = window.confirm("Do you want to Logout?");
     if (confirm) {
-      
       localStorage.removeItem("isLogin");
       alert("Logo Out");
       navigate("/");
@@ -153,7 +152,7 @@ const Navbar = () => {
                 className="log-btn fw-bold"
                 onClick={handleLogout}
               >
-                {username.lname}
+                <span className="user-login">{username.lname}</span>
                 <CiLogout />
               </button>
             ) : (
@@ -165,23 +164,36 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="menu-toggle-hide">
-      <div className="menu-toggle" onClick={toggleMenu}>
-      <IoIosArrowDropdown />
-      </div>
+      <div className="container menu-toggle-hide">
+        <div className="menu-toggle" onClick={toggleMenu}>
+          <IoIosArrowDropdown />
+        </div>
 
-      <div className={`off-canvas-container ${isOpen === false ? 'menu-open' : ''}`}>
-        <div className="off-canvas-menu">
-          <Link to={'/'} onClick={toggleMenu}>Home</Link>
-          <Link to={'/allproducts'} onClick={toggleMenu}>All Products</Link>
-          <Link to={'/allproducts/livingroom'} onClick={toggleMenu}>Living Room</Link>
-          <Link to={'/allproducts/diningset'} onClick={toggleMenu}>Dining Room</Link>
-          <Link to={'/allproducts/bedroom'} onClick={toggleMenu}>Bed Room</Link>
-        </div>
-        <div className="content">
+        <div
+          className={`off-canvas-container ${
+            isOpen === false ? "menu-open" : ""
+          }`}
+        >
+          <div className="off-canvas-menu">
+            <Link to={"/"} onClick={toggleMenu}>
+              Home
+            </Link>
+            <Link to={"/allproducts"} onClick={toggleMenu}>
+              All Products
+            </Link>
+            <Link to={"/allproducts/livingroom"} onClick={toggleMenu}>
+              Living Room
+            </Link>
+            <Link to={"/allproducts/diningset"} onClick={toggleMenu}>
+              Dining Room
+            </Link>
+            <Link to={"/allproducts/bedroom"} onClick={toggleMenu}>
+              Bed Room
+            </Link>
+          </div>
+          <div className="content"></div>
         </div>
       </div>
-    </div>
     </nav>
   );
 };
