@@ -358,6 +358,36 @@
     cursor: pointer;
     z-index: 1000; 
   }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    right: 220px;
+    border-color: #87acba1f;
+    border: none;
+  }
+  
+  .search-bar input {
+    height: 34px;
+    width: 100px;
+    border: none;
+    border-color:  rgb(84,98,102);
+    border-radius: 15px;
+    background-color: #87acba1f;
+  
+  }
+  
+  .searchBtn{
+    position: absolute;
+    margin-left: 100px;
+    border: none;
+  }
+  
+  
+  .icon {
+    font-size: 20px;
+  }
 
 }
 /* .menu-open .off-canvas-menu {
