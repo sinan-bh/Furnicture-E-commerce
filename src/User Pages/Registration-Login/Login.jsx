@@ -6,20 +6,13 @@ import { AdminDetails } from "../../assets/data-set/Admin-Datas";
 import useFetch from "../../Custom Hook/useFetch";
 
 function Login() {
-
-  const {
-    data: userData
-  } = useFetch("http://localhost:8000/user");
-
-
   const [errors, setErrors] = useState({});
   const [formValue, setFormValue] = useState({
-    lname: "",
-    lpass: "",
+    uname: "",
+    pass: "",
   });
 
   const { setUserDatas } = useContext(userContext);
-
 
   const navigate = useNavigate();
 
@@ -33,36 +26,46 @@ function Login() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formValue.lname) newErrors.lname = "Username is required";
-    if (!formValue.lpass) newErrors.lpass = "Password is required";
+    if (!formValue.uname) newErrors.uname = "Username is required";
+    if (!formValue.pass) newErrors.pass = "Password is required";
     return newErrors;
   };
 
-  const onSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      if (!userData || userData.length === 0) {
-        alert("Please Register");
-        navigate("/registration");
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValue),
+      };
+
+      const url = "http://localhost:3000/users/login";
+
+      const response = await fetch(url, options);
+      const result = await response.json();
+      console.log(result);
+
+      const { status, uname, token } = result;
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const adminDatas = AdminDetails.find((item) => item.type === "admin");
+      if (status === "success") {
+        setUserDatas({ status, uname });
+        alert("Login Successfully");
+        // localStorage.setItem('currentUser',JSON.stringify({...uname,id : user.id}))
+        // localStorage.setItem('isLogin',JSON.stringify(true))
+        navigate("/");
+      } else if (adminDatas.type === formValue.uname) {
+        localStorage.setItem("isAdmin", JSON.stringify(true));
+        alert("Login Successfully");
+        navigate("/adminhome");
       } else {
-        const user = userData.find(
-          (user) =>
-            user.uname === formValue.lname && user.pass1 === formValue.lpass
-        );
-        const adminDatas = AdminDetails.find((item) => item.type === "admin");
-        setUserDatas(user);
-        if (user) {
-          alert("Login Successfully");
-          localStorage.setItem('currentUser',JSON.stringify({...formValue,id : user.id}))
-          localStorage.setItem('isLogin',JSON.stringify(true))
-          navigate("/");
-        } else if (adminDatas.type === formValue.lname) {
-          localStorage.setItem('isAdmin',JSON.stringify(true))
-          alert("Login Successfully");
-          navigate("/adminhome");
-        } else {
-          alert("Username or Password is Incorrect");
-        }
+        alert("Username or Password is Incorrect");
       }
     } else {
       setErrors(validationErrors);
@@ -76,19 +79,19 @@ function Login() {
           <div className="card cardSize">
             <div className="card-body d-flex justify-content-center align-items-center">
               <h2 className="text-outline text-white fw-bold">LOGIN PAGE</h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
                     className="form-control"
                     id="username"
                     placeholder="Username"
-                    name="lname"
+                    name="uname"
                     onChange={handleChange}
                     required
                   />
-                  {errors.lname && (
-                    <div className="text-danger">{errors.lname}</div>
+                  {errors.uname && (
+                    <div className="text-danger">{errors.uname}</div>
                   )}
                 </div>
                 <div className="form-group">
@@ -97,18 +100,17 @@ function Login() {
                     className="form-control"
                     id="password"
                     placeholder="Password"
-                    name="lpass"
+                    name="pass"
                     onChange={handleChange}
                     required
                   />
-                  {errors.lpass && (
-                    <div className="text-danger">{errors.lpass}</div>
+                  {errors.pass && (
+                    <div className="text-danger">{errors.pass}</div>
                   )}
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   className="btn-navy btn-block form-group p-1"
-                  onClick={onSubmit}
                 >
                   Login
                 </button>

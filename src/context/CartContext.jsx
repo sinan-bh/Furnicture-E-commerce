@@ -26,9 +26,9 @@ function CartContext(props) {
 
     const totalPrice = Object.keys(cartItem).reduce((total, id) => {
       const price = products.find(
-        (value) => value.id === Number(id)
+        (value) => value.id === id
       )?.offerPrice;
-      return total + cartItem[id] * price;
+      return total + cartItem[id] * price.toFixed();
     }, 0);
     setPrice(totalPrice);
     setCount(totalCount);
@@ -101,6 +101,13 @@ function CartContext(props) {
   const removeAllItem = () => {
     setCartItem({});
   };
+
+  useEffect(()=>{
+
+    const count = Object.keys(cartItem).length;
+    setCount(count)
+    console.log(count);
+  },[])
 
   const contextValue = {
     products,

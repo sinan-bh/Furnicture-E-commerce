@@ -2,25 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Reg() {
-  const uniqueId = Date.now().toString();
   const [usrReg, setUsrReg] = useState({
-    id: uniqueId,
     name: "",
     email: "",
     uname: "",
-    pass1: "",
-    pass2: "",
-    date: new Date().toISOString().split("T")[0],
-    type: "user",
-    cart: {},
-    order: {
-      id: "",
-      image: "",
-      name: "",
-      quantity: "0",
-      status: "",
-    },
+    pass: "",
   });
+
+  console.log(usrReg);
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -42,16 +31,11 @@ function Reg() {
       newErrors.email = "Email is invalid";
     }
     if (!usrReg.uname) newErrors.uname = "Username is required";
-    if (!usrReg.pass1) newErrors.pass1 = "Password is required";
-    if (!usrReg.pass2) {
-      newErrors.pass2 = "Confirm Password is required";
-    } else if (usrReg.pass1 !== usrReg.pass2) {
-      newErrors.pass2 = "Passwords do not match";
-    }
+    if (!usrReg.pass) newErrors.pass1 = "Password is required";
     return newErrors;
   };
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     const validationErrors = validate();
     e.preventDefault();
     try {
@@ -63,7 +47,7 @@ function Reg() {
         body: JSON.stringify(usrReg),
       };
 
-      const url = "http://localhost:8000/user";
+      const url = "http://localhost:3000/users/registration";
 
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -86,7 +70,7 @@ function Reg() {
               <h1 className="text-outline text-white fw-bold ">
                 User Registration
               </h1>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
@@ -131,31 +115,18 @@ function Reg() {
                     type="password"
                     className="form-control"
                     placeholder="Password 1"
-                    name="pass1"
-                    value={usrReg.pass1}
+                    name="pass"
+                    value={usrReg.pass}
                     onChange={handleChange}
                   />
-                  {errors.pass1 && (
-                    <div className="text-danger">{errors.pass1}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Confirm Password"
-                    name="pass2"
-                    value={usrReg.pass2}
-                    onChange={handleChange}
-                  />
-                  {errors.pass2 && (
-                    <div className="text-danger">{errors.pass2}</div>
+                  {errors.pass && (
+                    <div className="text-danger">{errors.pass}</div>
                   )}
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   className="btn btn-secondary btn-block form-group"
-                  onClick={onSubmit}
+                  // onClick={onSubmit}
                 >
                   Submit
                 </button>

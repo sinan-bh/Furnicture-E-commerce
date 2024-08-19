@@ -13,7 +13,7 @@ const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
-  const { cartItem, searchTerm, setSearchTerm } = useContext(userContext);
+  const { count, searchTerm, setSearchTerm } = useContext(userContext);
 
   const navigate = useNavigate();
 
@@ -30,8 +30,7 @@ const Navbar = () => {
     }
   };
 
-  const count = Object.keys(cartItem).length;
-  console.log(count);
+
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {

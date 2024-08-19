@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./products.css";
 import List from "./List";
 import useFetch from "../../../Custom Hook/useFetch";
@@ -10,6 +10,8 @@ function Collections({ type }) {
     loading,
     error,
   } = useFetch("http://localhost:8000/products");
+
+ 
 
   if (loading) {
     return <div>Loading...</div>;
