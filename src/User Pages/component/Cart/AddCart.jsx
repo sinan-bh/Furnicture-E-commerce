@@ -1,47 +1,62 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
 import "./Style.css";
-import useFetch from "../../../Custom Hook/useFetch";
-
 
 
 function AddCart() {
 
-  const { cartItem, price, count, removeAllItem, userDatas } = useContext(userContext);
+  const { removeAllItem } = useContext(userContext);
   const navigate = useNavigate();
+  const [user,setUser] = useState()
 
-    const handleCheckout = () => {
-        navigate("/payment");
-    }
+  console.log(user);
+  
+ 
+  
+  const handleCheckout = () => {
+    navigate("/payment");
+  }
+  
+  const data = JSON.parse(localStorage.getItem('currentUser'))
+  useEffect(() => {
 
-    const {user} = userDatas
+
+    if (data && data.userID) {
+      const userID = data.userID
+
+        const FetchData = async () => {
+          const res = await fetch(`http://localhost:3000/users/cart/${userID}`)
+          const data = await res.json()
+          console.log(data);
+          
+          setUser(data);        
+        }
+        FetchData()
+      }
+    }, []);
+
+    const carts = user?.filter(item=> item.prodid)
+    console.log(carts);
+
+    const totalItem = carts?.reduce((total,item)=> total + item.quantity,0)    
+
+    const totalPrice = carts?.reduce((total, item) => {  
+      console.log(item.quantity);
+          
+      const price = carts?.find((value) => value.prodid === item.prodid)      
+      return total + item.quantity * price.prodid.offerPrice.toFixed();
+    }, 0);
+
+    console.log(totalPrice);
     
-    const {
-      data: cart,
-      loading,
-      error,
-    } = useFetch(`http://localhost:3000/users/cart/${user._id}`);
-  
-  
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-  
-    if (error) {
-      return <div>Error: {error.message || JSON.stringify(error)}</div>;
-    }
-  
-    if (!cart || cart.length === 0) {
-      return <div>No cart found.</div>;
-    }
     
-   const carts = cart.map(item=> item.prodid)
-   console.log(carts);
+ 
    
-
-  const hasItemsInCart = carts.some((item) => item !== 0);
+  const hasItemsInCart = carts?.some((item) => item !== 0);
+  console.log(hasItemsInCart);
+  
 
   return (
     <div className="container">
@@ -66,8 +81,8 @@ function AddCart() {
           })}
           <hr />
           <div className="cart-summary">
-            <h6>Sub-Total ({count} items)</h6>
-            <h6>${price}</h6>
+            <h6>Sub-Total ({totalItem} items)</h6>
+            <h6>${totalPrice}</h6>
           </div>
           <div className="text-end">
             <button className="btn btn-secondary" onClick={handleCheckout}>

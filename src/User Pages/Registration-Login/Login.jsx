@@ -59,9 +59,9 @@ function Login() {
       }
       const adminDatas = AdminDetails.find((item) => item.type === "admin");
       if (status === "success") {
-        setUserDatas({user: user});
+        // setUserDatas({user: user});
         alert("Login Successfully");
-        localStorage.setItem('currentUser',JSON.stringify({uname}))
+        localStorage.setItem('currentUser',JSON.stringify({username:uname, userID:user._id}))
         localStorage.setItem('isLogin',JSON.stringify(true))
         navigate("/");
       } else if (adminDatas.type === formValue.uname) {

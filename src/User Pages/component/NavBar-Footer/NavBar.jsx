@@ -14,14 +14,12 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
   const { count, searchTerm, setSearchTerm } = useContext(userContext);
-
   const navigate = useNavigate();
-
-  const username = JSON.parse(localStorage.getItem("currentUser"));
-  console.log(username);
-  
-
+  const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
+
+ console.log(count);
+ 
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -31,6 +29,7 @@ const Navbar = () => {
       navigate("/searchItem");
     }
   };
+
 
 
 
@@ -153,7 +152,7 @@ const Navbar = () => {
                 className="log-btn fw-bold"
                 onClick={handleLogout}
               >
-                <span className="user-login">{username.uname}</span>
+                <span className="user-login">{data.username}</span>
                 <CiLogout />
               </button>
             ) : (

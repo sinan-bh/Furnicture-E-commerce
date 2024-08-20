@@ -6,15 +6,13 @@ import useFetch from "../../../Custom Hook/useFetch";
 
 function ProductDetails() {
 
-  
   const { addToCart } = useContext(userContext);
-
   const { productID } = useParams();
   const {
     data: products,
     loading,
     error,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch(`http://localhost:3000/users/products/${productID}`);
 
 
   if (loading) {
@@ -29,25 +27,25 @@ function ProductDetails() {
     return <div>No products found.</div>;
   }
 
-  const cart = products.find((item) => item.id === productID);
+  // const cart = products.find((item) => item.id === productID);
 
   return (
     <div className=" product mt-5">
       <div className="flex-style mt-5 ">
-          <div key={cart.id} className="cart-image ">
-            <img src={cart.image} alt={cart.imageCategory} />
+          <div key={products.id} className="cart-image ">
+            <img src={products.image} alt={products.title} />
           </div>
           <div className=" cart-product">
-            <h2 className="text-success">{cart.imageCategory}</h2>
-            <p className=" text-start">{cart.details}</p>
+            <h2 className="text-success">{products.title}</h2>
+            <p className=" text-start">{products.details}</p>
             <div className="addtocart">
               <div>
-                <h5 className="text-success">$ {cart.offerPrice}</h5>
-                <del className="text-secondary">$ {cart.price} </del>
+                <h5 className="text-success">$ {products.offerPrice}</h5>
+                <del className="text-secondary">$ {products.price} </del>
               </div>
               <button
                 className="btn btn-secondary mt-3"
-                onClick={() => addToCart(productID)}
+                onClick={() => addToCart(products._id)}
               >
                 Add To Cart
               </button>
