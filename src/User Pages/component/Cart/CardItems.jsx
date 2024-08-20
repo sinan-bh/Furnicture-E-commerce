@@ -3,7 +3,7 @@ import "./Style.css";
 import { userContext } from "../../../context/CartContext";
 
 function CardItems({ item }) {
-  const { id, image, imageCategory, price, offerPrice } = item;
+  const { _id, image, title, price, offerPrice } = item;
 
   const { cartItem, addToCart, removeFromCart, removeItem } =
     useContext(userContext);
@@ -18,19 +18,19 @@ function CardItems({ item }) {
         <div className="item-container">
           <img src={image} alt="" className="img-fluid rounded-start" />
           <div className="item-details">
-            <h6 className="mb-1">{imageCategory}</h6>
+            <h6 className="mb-1">{title}</h6>
           </div>
           <div className="item-controls">
             <button
               className="btn btn-outline-secondary btn-sm"
-              onClick={() => removeFromCart(id)}
+              onClick={() => removeFromCart(_id)}
             >
               -
             </button>
-            <span className="mx-2">{cartItem[id]}</span>
+            <span className="mx-2">{cartItem[_id]}</span>
             <button
               className="btn btn-outline-secondary btn-sm"
-              onClick={() => addToCart(id)}
+              onClick={() => addToCart(_id)}
             >
               +
             </button>
@@ -44,7 +44,7 @@ function CardItems({ item }) {
             <a
               href="#"
               className="text-danger text-decoration-none"
-              onClick={() => handleRemoveItem(id)}
+              onClick={() => handleRemoveItem(_id)}
             >
               Remove
             </a>

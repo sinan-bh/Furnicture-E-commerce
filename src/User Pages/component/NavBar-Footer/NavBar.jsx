@@ -18,6 +18,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const username = JSON.parse(localStorage.getItem("currentUser"));
+  console.log(username);
+  
 
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
@@ -151,7 +153,7 @@ const Navbar = () => {
                 className="log-btn fw-bold"
                 onClick={handleLogout}
               >
-                <span className="user-login">{username.lname}</span>
+                <span className="user-login">{username.uname}</span>
                 <CiLogout />
               </button>
             ) : (

@@ -5,9 +5,9 @@ import { userContext } from "../../../context/CartContext";
 
 function List({ list }) {
   const {
-    id: productID,
+    _id: productID,
+    title,
     image,
-    imageCategory,
     description,
     price,
     offerPrice,
@@ -33,7 +33,7 @@ function List({ list }) {
             to={`/allproducts/${productID}`}
             className="text-decoration-none"
           >
-            <h5 className="card-title">{imageCategory}</h5>
+            <h5 className="card-title">{title}</h5>
           </Link>
           <p className="card-text mt-2">{description}</p>
           <p className="card-text ">

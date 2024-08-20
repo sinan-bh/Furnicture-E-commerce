@@ -9,14 +9,17 @@ function CartContext(props) {
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [userDatas, setUserDatas] = useState([]);
+  const [userDatas, setUserDatas] = useState();
+
+  // console.log(userDatas.user._id);
+  
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
   const navigate = useNavigate();
 
-  const { data: products } = useFetch("http://localhost:8000/products");
+  const { data: products } = useFetch("http://localhost:3000/users/products");
 
   useEffect(() => {
     const totalCount = Object.keys(cartItem).reduce(
@@ -38,48 +41,48 @@ function CartContext(props) {
     if (!isLogin) {
       navigate("/login");
     } else {
-      setCartItem((prev) => {
-        if (prev[productID]) {
-          return { ...prev, [productID]: prev[productID] + 1 };
-        }
-        return { ...prev, [productID]: 1 };
-      });
+    //   setCartItem((prev) => {
+    //     if (prev[productID]) {
+    //       return { ...prev, [productID]: prev[productID] + 1 };
+    //     }
+    //     return { ...prev, [productID]: 1 };
+    //   });
+    // }
+    if (userDatas) {
+      
+      const options ={
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id: productID}),
+      };
+
+      const {user} = userDatas
+  
+      const url = `http://localhost:3000/users/cart/${user._id}`;
+  
+      const response = await fetch(url, options);
+      const result = await response.json();
+      console.log(result);
+      
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      }
     }
   };
 
-  useEffect(() => {
-    const Cart = async () => {
-      try {
-        const options = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ cart: cartItem }),
-        };
 
-        const url = `http://localhost:8000/user/${currentUser.id}`;
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     const url = `http://localhost:8000/user/${currentUser.id}`;
 
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-      } catch (error) {
-        console.error("Failed to add/edit product:", error);
-      }
-    };
-    Cart();
-  }, [cartItem]);
-
-  useEffect(() => {
-    if (currentUser) {
-      const url = `http://localhost:8000/user/${currentUser.id}`;
-
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => setCartItem(data.cart));
-    }
-  }, [currentUser]);
+  //     fetch(url)
+  //       .then((res) => res.json())
+  //       .then((data) => setCartItem(data.cart));
+  //   }
+  // }, [currentUser]);
 
   const removeFromCart = (productID) => {
     setCartItem((prev) => {
@@ -92,10 +95,10 @@ function CartContext(props) {
   };
 
   const removeItem = (productID) => {
-    setCartItem((prev) => {
-      const newCart = { ...prev, [productID]: 0 };
-      return newCart;
-    });
+    // setCartItem((prev) => {
+    //   const newCart = { ...prev, [productID]: 0 };
+    //   return newCart;
+    // });
   };
 
   const removeAllItem = () => {

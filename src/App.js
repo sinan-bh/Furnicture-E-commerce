@@ -30,15 +30,15 @@ function App() {
                 <Route index element={<Collections type="All" />} />
                 <Route
                   path="livingroom"
-                  element={<Collections type="Living Room Furniture" />}
+                  element={<Collections type="livingroom" />}
                 />
                 <Route
                   path="diningset"
-                  element={<Collections type="Dining Room Furniture" />}
+                  element={<Collections type="diningroom" />}
                 />
                 <Route
                   path="bedroom"
-                  element={<Collections type="Bedroom Furniture" />}
+                  element={<Collections type="bedroom" />}
                 />
                 <Route
                   path="/allproducts:productID"

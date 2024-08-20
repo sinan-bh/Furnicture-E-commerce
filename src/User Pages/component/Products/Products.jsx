@@ -9,7 +9,7 @@ function Collections({ type }) {
     data: products,
     loading,
     error,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch("http://localhost:3000/users/products");
 
  
 
@@ -25,20 +25,23 @@ function Collections({ type }) {
     return <div>No products found.</div>;
   }
 
+  console.log(products);
+  
+
   const list =
-    type === "All" ? products : products.filter((list) => list.type === type);
+    type === "All" ? products : products.filter((list) => list.category === type);
 
   return (
     <div className="container  card-list pb-5 mb-5">
       <h2 className="categories-head text-center">
         {type === "All" && "All Products"}
-        {type === "Living Room Furniture" && "Living Room Furniture"}
-        {type === "Dining Room Furniture" && "Dining Room Furniture"}
-        {type === "Bedroom Furniture" && "Bedroom Furniture"}
+        {type === "livingroom" && "Living Room Furniture"}
+        {type === "diningroom" && "Dining Room Furniture"}
+        {type === "bedroom" && "Bedroom Furniture"}
       </h2>
       <div className=" furcategories">
         {list.map((item) => (
-          <List key={item.id} list={item}></List>
+          <List key={item._id} list={item}></List>
         ))}
       </div>
     </div>

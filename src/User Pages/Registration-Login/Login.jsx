@@ -46,19 +46,23 @@ function Login() {
       const url = "http://localhost:3000/users/login";
 
       const response = await fetch(url, options);
+      console.log(response);
+      
       const result = await response.json();
       console.log(result);
 
-      const { status, uname, token } = result;
+      const { status, uname, token, user } = result;
+      console.log(user);
+      
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const adminDatas = AdminDetails.find((item) => item.type === "admin");
       if (status === "success") {
-        setUserDatas({ status, uname });
+        setUserDatas({user: user});
         alert("Login Successfully");
-        // localStorage.setItem('currentUser',JSON.stringify({...uname,id : user.id}))
-        // localStorage.setItem('isLogin',JSON.stringify(true))
+        localStorage.setItem('currentUser',JSON.stringify({uname}))
+        localStorage.setItem('isLogin',JSON.stringify(true))
         navigate("/");
       } else if (adminDatas.type === formValue.uname) {
         localStorage.setItem("isAdmin", JSON.stringify(true));

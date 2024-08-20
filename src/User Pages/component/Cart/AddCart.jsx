@@ -9,18 +9,20 @@ import useFetch from "../../../Custom Hook/useFetch";
 
 function AddCart() {
 
-  const { cartItem, price, count, removeAllItem } = useContext(userContext);
+  const { cartItem, price, count, removeAllItem, userDatas } = useContext(userContext);
   const navigate = useNavigate();
 
     const handleCheckout = () => {
         navigate("/payment");
     }
 
+    const {user} = userDatas
+    
     const {
-      data: products,
+      data: cart,
       loading,
       error,
-    } = useFetch("http://localhost:8000/products");
+    } = useFetch(`http://localhost:3000/users/cart/${user._id}`);
   
   
     if (loading) {
@@ -31,12 +33,15 @@ function AddCart() {
       return <div>Error: {error.message || JSON.stringify(error)}</div>;
     }
   
-    if (!products || products.length === 0) {
-      return <div>No products found.</div>;
+    if (!cart || cart.length === 0) {
+      return <div>No cart found.</div>;
     }
+    
+   const carts = cart.map(item=> item.prodid)
+   console.log(carts);
    
 
-  const hasItemsInCart = Object.values(cartItem).some((item) => item !== 0);
+  const hasItemsInCart = carts.some((item) => item !== 0);
 
   return (
     <div className="container">
@@ -53,9 +58,9 @@ function AddCart() {
               Remove all
             </a>
           </div>
-          {products.map((card) => {
-            if (cartItem[card.id]  ) {
-              return <CardItems key={card.id} item={card} />;
+          {carts.map((card) => {
+            if (card) {
+              return <CardItems key={card._id} item={card} />;
             }
             return null;
           })}
