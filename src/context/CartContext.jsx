@@ -10,6 +10,8 @@ function CartContext(props) {
   const [count, setCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [userDatas, setUserDatas] = useState({});
+  const [cartLength,setCartLength] = useState(count)
+
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
@@ -39,6 +41,8 @@ function CartContext(props) {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+
+        setCartLength((count)=> count + 1)
       }
     }
   };
@@ -97,12 +101,12 @@ function CartContext(props) {
       const { userID } = data;
       const res = await fetch(`http://localhost:3000/users/cart/${userID}`);
       const result = await res.json();
-      setCount(result.length-1);
-      console.log(result.length);
+      setCount(result.length);
+      console.log(result);
       
     };
     cartCount();
-  }, [cart]);
+  }, []);
 
   const contextValue = {
     products,
@@ -111,6 +115,7 @@ function CartContext(props) {
     count,
     searchTerm,
     userDatas,
+    cartLength,
     addToCart,
     addFromCart,
     removeFromCart,

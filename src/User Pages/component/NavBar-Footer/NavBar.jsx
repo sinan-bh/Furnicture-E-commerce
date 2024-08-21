@@ -13,12 +13,12 @@ const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 
-  const { count, searchTerm, setSearchTerm } = useContext(userContext);
+  const { cartLength, searchTerm, setSearchTerm } = useContext(userContext);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
- console.log(count);
+ console.log(cartLength);
  
 
   const handleChange = (e) => {
@@ -137,8 +137,8 @@ const Navbar = () => {
                 <Link to="/addcart" className="">
                   <button type="button" className="cart-link ">
                     <IoCartSharp className="icon" />
-                    {count > 0 && (
-                      <div className="totaldiv fw-bold">{count}</div>
+                    {cartLength > 0 && (
+                      <div className="totaldiv fw-bold">{cartLength}</div>
                     )}
                   </button>
                 </Link>
