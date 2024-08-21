@@ -18,7 +18,7 @@ const Navbar = () => {
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
- console.log(cartLength);
+ console.log("new Feature branch commit");
  
 
   const handleChange = (e) => {
