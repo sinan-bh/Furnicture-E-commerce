@@ -3,7 +3,7 @@ import "./Style.css";
 import { userContext } from "../../../context/CartContext";
 
 function Payment() {
-  const { price } = useContext(userContext);
+  const { price,order } = useContext(userContext);
   const username = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
     name: username.lname || "",
@@ -13,6 +13,10 @@ function Payment() {
     phone: "",
     city: "",
   });
+
+  
+
+  const data = JSON.parse(localStorage.getItem("currentUser"));
 
   const [errors, setErrors] = useState({});
 
@@ -33,15 +37,57 @@ function Payment() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (validateForm()) {
+     
+
       alert("Updated");
     }
   };
 
-  const handlePay = () => {
+  const handlePay = async () => {
     if (validateForm()) {
-      alert("Pay successfully");
+
+      const { order_id, currency, total_ammount } = order.order;
+
+    const options = {
+      key: 'rzp_test_54robFK9s1sJwo', 
+      amount: total_ammount* 100,
+      currency,
+      order_id,
+      name: 'Plush Paradise',
+      description: 'Purchase Description',
+      // image: 'https://your-logo-url.com/logo.png', 
+      handler: function (response) {
+        console.log(response);
+        const userID = data.userID
+        fetch(`http://localhost:3000/users/verify_payment/${userID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          }),
+        })
+          .then((res) => res.text())
+          .then((text) => alert(text));
+      },
+      prefill: {
+        name: 'Your Customer Name',
+        email: 'faslu@gamil.com',
+        contact: '9876543210',
+      },
+      theme: {
+        color: '#F37254',
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+
     }
   };
 
