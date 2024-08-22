@@ -12,14 +12,27 @@ import Logo from "../../../assets/img/logo/logo.png";
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
-
-  const { cartLength, searchTerm, setSearchTerm } = useContext(userContext);
+  const [cartLength, setCartLength] = useState(0);
+  const {  searchTerm, setSearchTerm } = useContext(userContext);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
-  const isLogin = JSON.parse(localStorage.getItem("isLogin"));
+  const isLogin = JSON.parse(localStorage.getItem("isLogin")); 
 
- console.log("new Feature branch commit");
- 
+useEffect(() => {
+  const fetchCartLength = async () => {
+    if (isLogin && data) {
+      const { userID } = data;
+      const response = await fetch(`http://localhost:3000/users/cart/${userID}`);
+      if (response.ok) {
+        const result = await response.json();
+        setCartLength(result.length); 
+      } else {
+        console.error("Failed to fetch cart data");
+      }
+    }
+  };
+  fetchCartLength();
+}, [isLogin, data]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);

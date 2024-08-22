@@ -4,59 +4,83 @@ import CardItems from "./CardItems";
 import { useNavigate } from "react-router-dom";
 import "./Style.css";
 
-
 function AddCart() {
-
-  const { removeAllItem } = useContext(userContext);
+  const { removeAllItem, cart, setOrder } = useContext(userContext);
   const navigate = useNavigate();
-  const [user,setUser] = useState()
+  const [user, setUser] = useState([]);
+  const [price, setPrice] = useState(() => {
+    return parseFloat(localStorage.getItem("cartPrice")) || 0;
+  });
+  const [count, setCount] = useState(() => {
+    return parseInt(localStorage.getItem("cartCount")) || 0;
+  });
 
-  console.log(user);
-  
- 
-  
-  const handleCheckout = () => {
-    navigate("/payment");
-  }
-  
-  const data = JSON.parse(localStorage.getItem('currentUser'))
+  const data = JSON.parse(localStorage.getItem("currentUser"));
+
   useEffect(() => {
-
-
     if (data && data.userID) {
-      const userID = data.userID
+      const userID = data.userID;
 
-        const FetchData = async () => {
-          const res = await fetch(`http://localhost:3000/users/cart/${userID}`)
-          const data = await res.json()
-          console.log(data);
-          
-          setUser(data);        
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`http://localhost:3000/users/cart/${userID}`);
+          const data = await res.json();
+          setUser(data);
+        } catch (error) {
+          console.error("Error fetching cart data:", error);
         }
-        FetchData()
-      }
-    }, []);
+      };
+      fetchData();
+    }
+  }, [data]);
 
-    const carts = user?.filter(item=> item.prodid)
-    console.log(carts);
+  useEffect(() => {
+    if (cart.data && user.length > 0) {
+      const carts = user.filter((item) => item.prodid);
 
-    const totalItem = carts?.reduce((total,item)=> total + item.quantity,0)    
+      const totalItem = cart.data.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      setCount(totalItem);
+      localStorage.setItem("cartCount", totalItem);
 
-    const totalPrice = carts?.reduce((total, item) => {  
-      console.log(item.quantity);
-          
-      const price = carts?.find((value) => value.prodid === item.prodid)      
-      return total + item.quantity * price.prodid.offerPrice.toFixed();
-    }, 0);
+      const totalPrice = cart.data.reduce((total, item) => {
+        const priceItem = carts.find(
+          (value) => value.prodid._id === item.prodid
+        );
+        if (priceItem) {
+          return total + item.quantity * priceItem.prodid.offerPrice;
+        }
+        return total;
+      }, 0);
 
-    console.log(totalPrice);
-    
-    
- 
-   
-  const hasItemsInCart = carts?.some((item) => item !== 0);
-  console.log(hasItemsInCart);
-  
+      setPrice(totalPrice);
+      localStorage.setItem("cartPrice", totalPrice.toFixed(2));
+    }
+  }, [cart, user]);
+
+  const handleCheckout = async () => {
+    const userID = data.userID;
+    const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: price.toFixed(2) * 100,
+      }),
+    });
+
+    const order = await response.json();
+    setOrder(order)
+    console.log(order);
+
+    navigate("/payment");
+  };
+
+  const carts = user?.filter((item) => item.prodid);
+  const hasItemsInCart = carts?.length > 0;
 
   return (
     <div className="container">
@@ -81,8 +105,8 @@ function AddCart() {
           })}
           <hr />
           <div className="cart-summary">
-            <h6>Sub-Total ({totalItem} items)</h6>
-            <h6>${totalPrice}</h6>
+            <h6>Sub-Total ({count} items)</h6>
+            <h6>${price.toFixed(2)}</h6>
           </div>
           <div className="text-end">
             <button className="btn btn-secondary" onClick={handleCheckout}>
