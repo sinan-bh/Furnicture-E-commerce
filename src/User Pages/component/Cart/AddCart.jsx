@@ -68,7 +68,7 @@ function AddCart() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount: price.toFixed(2) * 100,
+        amount: price,
       }),
     });
 
@@ -106,7 +106,7 @@ function AddCart() {
           <hr />
           <div className="cart-summary">
             <h6>Sub-Total ({count} items)</h6>
-            <h6>${price.toFixed(2)}</h6>
+            <h6>${price}</h6>
           </div>
           <div className="text-end">
             <button className="btn btn-secondary" onClick={handleCheckout}>

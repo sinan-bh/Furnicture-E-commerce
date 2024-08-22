@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import "./Style.css";
 import { userContext } from "../../../context/CartContext";
+import Logo from "../../../assets/img/logo/logo.png";
+
 
 function Payment() {
-  const { price,order } = useContext(userContext);
+  const { order } = useContext(userContext);
   const username = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
     name: username.lname || "",
@@ -14,6 +16,8 @@ function Payment() {
     city: "",
   });
 
+  console.log("check");
+  
   
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
@@ -44,20 +48,19 @@ function Payment() {
       alert("Updated");
     }
   };
+  const { order_id, currency, total_ammount } = order.order;
 
   const handlePay = async () => {
     if (validateForm()) {
 
-      const { order_id, currency, total_ammount } = order.order;
-
     const options = {
       key: 'rzp_test_54robFK9s1sJwo', 
-      amount: total_ammount* 100,
+      amount: total_ammount,
       currency,
       order_id,
       name: 'Plush Paradise',
       description: 'Purchase Description',
-      // image: 'https://your-logo-url.com/logo.png', 
+      image: Logo, 
       handler: function (response) {
         console.log(response);
         const userID = data.userID
@@ -76,9 +79,10 @@ function Payment() {
           .then((text) => alert(text));
       },
       prefill: {
-        name: 'Your Customer Name',
-        email: 'faslu@gamil.com',
-        contact: '9876543210',
+        name: formData.name,
+        email: formData.email,
+        contact: formData.phone,
+        address: formData.address
       },
       theme: {
         color: '#F37254',
@@ -181,7 +185,7 @@ function Payment() {
               className="finish-pay-btn"
               onClick={handlePay}
             >
-              Pay ${price}
+              Pay ${total_ammount/100}
             </button>
           </div>
         </form>
