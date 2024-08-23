@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import "./Style.css";
+import { FaRegHeart } from "react-icons/fa";
 import { IoCartSharp } from "react-icons/io5";
 import { userContext } from "../../../context/CartContext";
 import { CiSearch } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
 import Logo from "../../../assets/img/logo/logo.png";
+import "./Style.css";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const [cartLength, setCartLength] = useState(0);
+  const [wishlistLength, setWishListLength] = useState(0);
   const {  searchTerm, setSearchTerm } = useContext(userContext);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
@@ -32,6 +34,24 @@ useEffect(() => {
     }
   };
   fetchCartLength();
+}, [isLogin, data]);
+
+useEffect(() => {
+  const fetchWishListLength = async () => {
+    if (isLogin && data) {
+      const { userID } = data;
+      const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`);
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.data.length);
+        
+        setWishListLength(result.data.length); 
+      } else {
+        console.error("Failed to fetch cart data");
+      }
+    }
+  };
+  fetchWishListLength();
 }, [isLogin, data]);
 
   const handleChange = (e) => {
@@ -159,6 +179,20 @@ useEffect(() => {
                 <div></div>
               )}
             </div>
+            <div className="wishlist-icon">
+              {isLogin ? (
+                <Link to="/wishlist" className="">
+                  <button type="button" className="cart-link ">
+                    <FaRegHeart  className="icon" />
+                    {wishlistLength > 0 && (
+                      <div className="totaldiv fw-bold">{wishlistLength}</div>
+                    )}
+                  </button>
+                </Link>
+              ) : (
+                <div></div>
+              )}
+            </div>
             {isLogin ? (
               <button
                 type="button"
@@ -202,6 +236,9 @@ useEffect(() => {
             </Link>
             <Link to={"/allproducts/bedroom"} onClick={toggleMenu}>
               Bed Room
+            </Link>
+            <Link to={"/wishlist"} onClick={toggleMenu}>
+              Wish List {wishlistLength}
             </Link>
           </div>
           <div className="content"></div>

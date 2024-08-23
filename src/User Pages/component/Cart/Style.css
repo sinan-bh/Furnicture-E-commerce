@@ -1,111 +1,230 @@
-/* General container for the cart */
-.container {
-  padding: 15px;
+/* Order Status Button */
+.orderstatus {
+  display: block;
+  margin: 150px auto 5px auto; /* Center the button horizontally */
+  padding: 12px 24px;
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+  max-width: 300px;
+  transition: background-color 0.3s ease;
+  width: 90%; /* Make the button responsive */
+  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
-/* Cart container */
+.orderstatus:hover {
+  background-color: #495057;
+}
+
+/* Cart Container */
 .cart-container {
   max-width: 100%;
-  margin: 100px auto;
+  margin: 150px auto;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Item container adjustments for mobile */
-.item-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.cart-container h2 {
+  color: #343a40;
+  text-align: center;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
+.cart-container a {
+  text-decoration: none;
+  color: #dc3545;
+}
+
+.cart-container a:hover {
+  text-decoration: underline;
+}
+
+/* Item Container */
+.item-container {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .item-container img {
-  width: 80px;
+  width: 80px; /* Adjust width as needed */
   height: 80px;
-  margin-bottom: 10px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
 }
 
 .item-details {
-  text-align: center;
-  margin: 10px 0;
+  flex: 1;
 }
 
-.item-price {
-  text-align: center;
-  margin-top: 10px;
+.item-details h6 {
+  font-size: 18px;
+  color: #212529;
+  font-weight: 500;
 }
 
-/* Item controls adjustments for mobile */
 .item-controls {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  align-items: center;
+  margin: 0 20px;
 }
 
-/* Empty cart message for mobile */
-.empt-cart {
-  margin: 100px auto;
-  width: 100%;
-  max-width: 500px;
-  height: 300px;
+.item-controls button {
+  width: 35px;
+  height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  background: transparent;
+  background-color: white;
+  border: 2px solid #343a40;
+  border-radius: 5px;
+  color: #343a40;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Cart summary adjustments for mobile */
+.item-controls button:hover {
+  background-color: #343a40;
+  color: white;
+}
+
+.item-price {
+  text-align: right;
+  flex: 1;
+  padding-left: 20px;
+}
+
+.item-price h6 {
+  color: #28a745;
+  font-size: 16px;
+}
+
+.item-price del {
+  font-size: 14px;
+  color: #999;
+}
+
+.item-price p {
+  margin-top: 5px;
+}
+
+.item-remove {
+  text-align: right;
+}
+
+.item-remove a {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+.item-remove a:hover {
+  text-decoration: underline;
+}
+
+/* Cart Summary */
 .cart-summary {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  text-align: center;
 }
 
-/* Checkout button adjustments for mobile */
-.cart-container .text-end {
+.cart-summary h6 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+}
+
+.cart-summary p {
+  font-size: 16px;
+  color: #495057;
+}
+
+/* Checkout Button */
+.text-end {
   text-align: center;
   margin-top: 20px;
 }
 
-/* Responsive adjustments */
-@media (min-width: 576px) {
+.text-end button {
+  padding: 12px 20px;
+  background-color: #343a40;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.text-end button:hover {
+  background-color: #495057;
+}
+
+/* Empty Cart Styling */
+.empt-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  background: none;
+  border: none;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
   .cart-container {
-      max-width: 540px;
-      margin: 100px auto;
+    padding: 15px;
   }
+
   .item-container {
-      flex-direction: row;
+    flex-direction: column;
+    align-items: flex-start;
   }
+
   .item-details {
-      flex: 1;
-      text-align: left;
-      margin: 0 15px;
+    text-align: left;
+    margin-bottom: 10px;
   }
+
   .item-price {
-      text-align: right;
-      margin-left: 10px;
+    text-align: left;
+    padding-left: 0;
   }
+
+  .item-controls {
+    margin: 10px 0;
+  }
+
   .cart-summary {
-      flex-direction: row;
-      justify-content: space-between;
+    flex-direction: column;
+    margin-top: 15px;
   }
-  .cart-container .text-end {
-      text-align: right;
+
+  .text-end {
+    text-align: center;
   }
 }
 
-@media (min-width: 768px) {
-  .cart-container {
-      max-width: 700px;
-      margin: 150px auto;
+@media (max-width: 576px) {
+  .item-container img {
+    max-width: 70px;
   }
-}
 
-@media (min-width: 1200px) {
-  .cart-container {
-      margin: 200px auto;
+  .item-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
   }
 }

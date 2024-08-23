@@ -10,10 +10,8 @@ function Payment() {
   const [formData, setFormData] = useState({
     name: username.lname || "",
     address: "",
-    state: "",
     email: "",
     phone: "",
-    city: "",
   });
 
   console.log("check");
@@ -33,10 +31,8 @@ function Payment() {
     let formErrors = {};
     if (!formData.name) formErrors.name = "Name is required";
     if (!formData.address) formErrors.address = "Address is required";
-    if (!formData.state) formErrors.state = "State is required";
     if (!formData.email) formErrors.email = "Email is required";
     if (!formData.phone) formErrors.phone = "Phone number is required";
-    if (!formData.city) formErrors.city = "City is required";
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
@@ -113,28 +109,7 @@ function Payment() {
                 />
                 {errors.name && <span className="error">{errors.name}</span>}
               </div>
-              <div className="form-group">
-                <label>Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-                {errors.address && <span className="error">{errors.address}</span>}
-              </div>
-              <div className="form-group">
-                <label>State</label>
-                <input
-                  type="text"
-                  name="state"
-                  placeholder="State"
-                  value={formData.state}
-                  onChange={handleChange}
-                />
-                {errors.state && <span className="error">{errors.state}</span>}
-              </div>
+              
             </div>
             <div className="card-details">
               <div className="form-group">
@@ -160,26 +135,19 @@ function Payment() {
                 {errors.phone && <span className="error">{errors.phone}</span>}
               </div>
               <div className="form-group">
-                <label>City</label>
-                <input
+                <label>Address</label>
+                <textarea
                   type="text"
-                  name="city"
-                  placeholder="City"
-                  value={formData.city}
+                  name="address"
+                  placeholder="Address"
+                  value={formData.address}
                   onChange={handleChange}
                 />
-                {errors.city && <span className="error">{errors.city}</span>}
+                {errors.address && <span className="error">{errors.address}</span>}
               </div>
             </div>
           </div>
           <div className="pay">
-            <button
-              type="button"
-              className="finish-pay-btn me-3"
-              onClick={handleUpdate}
-            >
-              Update
-            </button>
             <button
               type="button"
               className="finish-pay-btn"

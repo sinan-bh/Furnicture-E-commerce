@@ -40,13 +40,6 @@
     border-radius: 10px;
   }
   
-  .navbar-container {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
-    /* padding: 10px 20px; */
-  }
-  
   .navbar-menu {
     display: flex;
     align-items: center;
@@ -334,6 +327,10 @@
   .menu-open {
     display: none; 
   }
+
+  .wishlist-icon{
+    display: none;
+  }
 }
 
 @media (max-width: 576px) {
@@ -425,8 +422,6 @@
     color: white;
   }
 }
-/* .menu-open .off-canvas-menu {
-  left: 0; 
-} */
+
 
   

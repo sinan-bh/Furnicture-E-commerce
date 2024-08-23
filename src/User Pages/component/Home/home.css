@@ -59,15 +59,22 @@
 
   /* Search */
 
-  /* .container {
-    padding: 20px;
-    margin: 0 auto;
-  } */
+  .container {
+    padding: 50px;
+    margin: 50px auto;
+  }
   
   .pt-5 {
     padding-top: 3rem;
   }
   
+  .list-not{
+    margin-top: 250px;
+    width: 300px;
+    font-weight: bolder;
+    border: none;
+  }
+
   .mt-5 {
     margin-top: 3rem;
   }

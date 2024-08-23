@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 
 function AddCart() {
@@ -83,6 +83,8 @@ function AddCart() {
   const hasItemsInCart = carts?.length > 0;
 
   return (
+    <div>
+      {/* <Link to={'/orderstatus'} className="orderstatus btn btn-secondary">Order Products Status</Link> */}
     <div className="container">
       {hasItemsInCart ? (
         <div className="cart-container">
@@ -119,6 +121,8 @@ function AddCart() {
           <h2>Your cart is empty...!</h2>
         </div>
       )}
+    </div>
+    
     </div>
   );
 }

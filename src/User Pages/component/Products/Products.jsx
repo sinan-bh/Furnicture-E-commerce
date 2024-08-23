@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./products.css";
 import List from "./List";
 import useFetch from "../../../Custom Hook/useFetch";
+
 
 function Collections({ type }) {
 
