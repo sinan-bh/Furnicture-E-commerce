@@ -19,8 +19,8 @@
   
   .furcategories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
     margin-top: 30px;
   }
   
@@ -44,7 +44,7 @@
  
   .card-item img {
     width: 100%;
-    height: 250px; 
+    height: 200px; 
     object-fit: cover;
     border-bottom: 2px solid rgba(42, 99, 111, 0.5);
   }

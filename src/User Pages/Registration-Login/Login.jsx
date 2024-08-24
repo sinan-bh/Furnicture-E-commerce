@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
-import "./login.css";
-import { Link, useNavigate } from "react-router-dom";
-import { userContext } from "../../context/CartContext";
+
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './login.css';
 import { AdminDetails } from "../../assets/data-set/Admin-Datas";
-import useFetch from "../../Custom Hook/useFetch";
+import AlertBox from '../component/popup box/AlertBox'; 
 
 function Login() {
   const [errors, setErrors] = useState({});
   const [formValue, setFormValue] = useState({
-    uname: "",
-    pass: "",
+    uname: '',
+    pass: '',
   });
 
-  const { setUserDatas } = useContext(userContext);
+  const [alert, setAlert] = useState(null);
 
   const navigate = useNavigate();
 
@@ -26,8 +26,8 @@ function Login() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formValue.uname) newErrors.uname = "Username is required";
-    if (!formValue.pass) newErrors.pass = "Password is required";
+    if (!formValue.uname) newErrors.uname = 'Username is required';
+    if (!formValue.pass) newErrors.pass = 'Password is required';
     return newErrors;
   };
 
@@ -36,40 +36,40 @@ function Login() {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       const options = {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formValue),
+        credentials: 'include',
       };
 
-      const url = "http://localhost:3000/users/login";
+      const url = 'http://localhost:3000/users/login';
 
       const response = await fetch(url, options);
-      console.log(response);
-      
       const result = await response.json();
-      console.log(result);
 
       const { status, uname, token, user } = result;
-      console.log(user);
-      
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        setAlert({ type: 'error', message: 'Login failed' });
+        setTimeout(() => setAlert(null), 1000);
+        return;
       }
-      const adminDatas = AdminDetails.find((item) => item.type === "admin");
-      if (status === "success") {
-        // setUserDatas({user: user});
-        alert("Login Successfully");
-        localStorage.setItem('currentUser',JSON.stringify({username:uname, userID:user._id}))
-        localStorage.setItem('isLogin',JSON.stringify(true))
-        navigate("/");
-      } else if (adminDatas.type === formValue.uname) {
-        localStorage.setItem("isAdmin", JSON.stringify(true));
-        alert("Login Successfully");
-        navigate("/adminhome");
+
+      const adminDatas = AdminDetails.find((item) => item.type === 'admin');
+      if (status === 'success') {
+        setAlert({ type: 'success', message: 'Login successful' });
+        localStorage.setItem('currentUser', JSON.stringify({ username: uname, userID: user._id }));
+        localStorage.setItem('isLogin', JSON.stringify(true));
+        setTimeout(() => navigate('/'), 1000);
+      } else if (adminDatas && adminDatas.type === formValue.uname) {
+        localStorage.setItem('isAdmin', JSON.stringify(true));
+        setAlert({ type: 'success', message: 'Login successfully' });
+        setTimeout(() => navigate('/adminhome'), 1000);
       } else {
-        alert("Username or Password is Incorrect");
+        setAlert({ type: 'error', message: 'Username or Password is Incorrect' });
+        setTimeout(() => setAlert(null), 1000);
       }
     } else {
       setErrors(validationErrors);
@@ -78,11 +78,18 @@ function Login() {
 
   return (
     <div className="login">
+      {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="">
           <div className="card cardSize">
             <div className="card-body d-flex justify-content-center align-items-center">
-              <h2 className="text-outline text-white fw-bold">LOGIN PAGE</h2>
+              <h2 className="text-outline fw-bold">LOGIN PAGE</h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input

@@ -12,6 +12,10 @@ function Collections({ type }) {
     error,
   } = useFetch("http://localhost:3000/users/products");
 
+  const {
+    data: category,
+  } = useFetch(`http://localhost:3000/users/products?category=${type}`);
+
  
 
   if (loading) {
@@ -25,12 +29,10 @@ function Collections({ type }) {
   if (!products || products.length === 0) {
     return <div>No products found.</div>;
   }
-
-  console.log(products);
   
 
   const list =
-    type === "All" ? products : products.filter((list) => list.category === type);
+    type === "All" ? products : category;
 
   return (
     <div className="container  card-list pb-5 mb-5">
@@ -41,7 +43,7 @@ function Collections({ type }) {
         {type === "bedroom" && "Bedroom Furniture"}
       </h2>
       <div className=" furcategories">
-        {list.map((item) => (
+        {list?.map((item) => (
           <List key={item._id} list={item}></List>
         ))}
       </div>

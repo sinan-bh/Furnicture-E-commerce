@@ -15,7 +15,13 @@ const Wishlist = () => {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/users/wishlist/${userID}`
+            `http://localhost:3000/users/wishlist/${userID}`,{
+              method: "GET",
+              headers:{
+                "Content-Type": "Application/json"
+              },
+              credentials: 'include',
+            }
           );
           const data = await res.json();
           setUser(data);

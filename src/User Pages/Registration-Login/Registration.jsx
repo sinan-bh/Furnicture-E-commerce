@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// src/components/Reg.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AlertBox from '../component/popup box/AlertBox'; 
+import './login.css'; 
 
 function Reg() {
   const [usrReg, setUsrReg] = useState({
-    name: "",
-    email: "",
-    uname: "",
-    pass: "",
+    name: '',
+    email: '',
+    uname: '',
+    pass: '',
   });
 
-  console.log(usrReg);
-
   const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,52 +26,62 @@ function Reg() {
 
   const validate = () => {
     const newErrors = {};
-    if (!usrReg.name) newErrors.name = "Name is required";
+    if (!usrReg.name) newErrors.name = 'Name is required';
     if (!usrReg.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(usrReg.email)) {
-      newErrors.email = "Email is invalid";
+      newErrors.email = 'Email is invalid';
     }
-    if (!usrReg.uname) newErrors.uname = "Username is required";
-    if (!usrReg.pass) newErrors.pass1 = "Password is required";
+    if (!usrReg.uname) newErrors.uname = 'Username is required';
+    if (!usrReg.pass) newErrors.pass = 'Password is required';
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
-    const validationErrors = validate();
     e.preventDefault();
-    try {
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(usrReg),
-      };
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(usrReg),
+        };
 
-      const url = "http://localhost:3000/users/registration";
+        const url = 'http://localhost:3000/users/registration';
 
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        setAlert({ type: 'success', message: 'Registration Complete' });
+        setTimeout(() => navigate('/login'), 1000);
+      } catch (error) {
+        console.error('Failed to register:', error);
+        setAlert({ type: 'error', message: 'Registration failed' });
+        setTimeout(() => setAlert(null), 1000);
       }
-      alert("Registration Complete");
-      navigate("/login");
-    } catch (error) {
-      console.error("Failed to add/edit product:", error);
+    } else {
       setErrors(validationErrors);
     }
   };
 
   return (
     <div className="registration me-5">
+      {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="">
           <div className="card cardSize">
-            <div className="card-body d-flex  justify-content-center align-items-center">
-              <h1 className="text-outline text-white fw-bold ">
-                User Registration
-              </h1>
+            <div className="card-body d-flex justify-content-center align-items-center">
+              <h1 className="text-outline fw-bold">User Registration</h1>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
@@ -114,7 +126,7 @@ function Reg() {
                   <input
                     type="password"
                     className="form-control"
-                    placeholder="Password 1"
+                    placeholder="Password"
                     name="pass"
                     value={usrReg.pass}
                     onChange={handleChange}
@@ -125,8 +137,7 @@ function Reg() {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-secondary btn-block form-group"
-                  // onClick={onSubmit}
+                  className="btn-navy btn-block form-group"
                 >
                   Submit
                 </button>

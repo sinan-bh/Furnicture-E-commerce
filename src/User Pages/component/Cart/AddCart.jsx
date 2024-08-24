@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 
 function AddCart() {
-  const { removeAllItem, cart, setOrder } = useContext(userContext);
+  const { cart, setOrder, setCartProduct } = useContext(userContext);
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [price, setPrice] = useState(() => {
@@ -23,34 +23,44 @@ function AddCart() {
 
       const fetchData = async () => {
         try {
-          const res = await fetch(`http://localhost:3000/users/cart/${userID}`);
-          const data = await res.json();
-          setUser(data);
+          const res = await fetch(`http://localhost:3000/users/cart/${userID}`,{
+            method: "GET",
+            headers:{
+              "Content-Type": "Application/json"
+            },
+            credentials: 'include',
+          });
+          const product = await res.json();
+          console.log(product);
+          
+          setUser(product);
+          setCartProduct(data)
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
       };
       fetchData();
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     if (cart.data && user.length > 0) {
-      const carts = user.filter((item) => item.prodid);
+      const carts = user?.filter((item) => item.prodid);
 
-      const totalItem = cart.data.reduce(
+      const totalItem = cart?.data.reduce(
         (total, item) => total + item.quantity,
         0
       );
-      setCount(totalItem);
+      setCount(totalItem === 0 ? 1 : totalItem);
+      
       localStorage.setItem("cartCount", totalItem);
-
-      const totalPrice = cart.data.reduce((total, item) => {
-        const priceItem = carts.find(
+            
+      const totalPrice = cart?.data?.reduce((total, item) => {
+        const priceItem = carts?.find(
           (value) => value.prodid._id === item.prodid
         );
         if (priceItem) {
-          return total + item.quantity * priceItem.prodid.offerPrice;
+          return item.quantity > 0 ? total + item.quantity * priceItem.prodid.offerPrice : priceItem.prodid.offerPrice;
         }
         return total;
       }, 0);
@@ -70,6 +80,7 @@ function AddCart() {
       body: JSON.stringify({
         amount: price,
       }),
+      credentials: 'include',
     });
 
     const order = await response.json();
@@ -91,13 +102,13 @@ function AddCart() {
           <h2 className="text-center">Your Carts Are...!</h2>
           <div className="d-flex justify-content-between">
             <h5 className="mb-3">Shopping Cart</h5>
-            <a
+            {/* <a
               href="#"
               className="text-danger float-end"
               onClick={removeAllItem}
             >
               Remove all
-            </a>
+            </a> */}
           </div>
           {carts.map((card) => {
             if (card) {

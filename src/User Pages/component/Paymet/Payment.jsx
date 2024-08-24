@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import "./Style.css";
 import { userContext } from "../../../context/CartContext";
 import Logo from "../../../assets/img/logo/logo.png";
-
+import AlertBox from "../popup box/AlertBox"; 
+import { useNavigate } from "react-router-dom";
 
 function Payment() {
   const { order } = useContext(userContext);
@@ -14,13 +15,10 @@ function Payment() {
     phone: "",
   });
 
-  console.log("check");
-  
-  
-
-  const data = JSON.parse(localStorage.getItem("currentUser"));
+  const navigate = useNavigate()
 
   const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,57 +35,50 @@ function Payment() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleUpdate = async () => {
-    if (validateForm()) {
-     
-
-      alert("Updated");
-    }
-  };
   const { order_id, currency, total_ammount } = order.order;
 
   const handlePay = async () => {
     if (validateForm()) {
+      const options = {
+        key: 'rzp_test_54robFK9s1sJwo',
+        amount: total_ammount,
+        currency,
+        order_id,
+        name: 'Plush Paradise',
+        description: 'Purchase Description',
+        image: Logo,
+        handler: function (response) {
+          console.log(response);
+          const userID = JSON.parse(localStorage.getItem("currentUser")).userID;
+          fetch(`http://localhost:3000/users/verify_payment/${userID}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          })
+            .then((res) => res.text())
+            .then((text) => setAlert({ message: text, type: "success" }))
+            .then(()=> setTimeout(() => setAlert(null), 2000))
+            .catch(() => setAlert({ message: "Payment verification failed", type: "error" }));
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+          address: formData.address
+        },
+        theme: {
+          color: '#F37254',
+        },
+      };
 
-    const options = {
-      key: 'rzp_test_54robFK9s1sJwo', 
-      amount: total_ammount,
-      currency,
-      order_id,
-      name: 'Plush Paradise',
-      description: 'Purchase Description',
-      image: Logo, 
-      handler: function (response) {
-        console.log(response);
-        const userID = data.userID
-        fetch(`http://localhost:3000/users/verify_payment/${userID}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          }),
-        })
-          .then((res) => res.text())
-          .then((text) => alert(text));
-      },
-      prefill: {
-        name: formData.name,
-        email: formData.email,
-        contact: formData.phone,
-        address: formData.address
-      },
-      theme: {
-        color: '#F37254',
-      },
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
-
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
     }
   };
 
@@ -95,6 +86,13 @@ function Payment() {
     <div className="payment-container">
       <div className="payment-card">
         <h2 className="payment-title">Check Out</h2>
+        {alert && (
+          <AlertBox
+            message={alert.message}
+            type={alert.type}
+            onClose={() => setAlert(null)}
+          />
+        )}
         <form>
           <div className="d-flex flex-wrap">
             <div className="card-details">
@@ -109,7 +107,6 @@ function Payment() {
                 />
                 {errors.name && <span className="error">{errors.name}</span>}
               </div>
-              
             </div>
             <div className="card-details">
               <div className="form-group">
@@ -153,7 +150,7 @@ function Payment() {
               className="finish-pay-btn"
               onClick={handlePay}
             >
-              Pay ${total_ammount/100}
+              Pay ${total_ammount / 100}
             </button>
           </div>
         </form>

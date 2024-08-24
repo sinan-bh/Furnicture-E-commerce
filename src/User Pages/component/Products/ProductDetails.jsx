@@ -27,7 +27,7 @@ function ProductDetails() {
     return <div>No products found.</div>;
   }
 
-  // const cart = products.find((item) => item.id === productID);
+  
 
   return (
     <div className=" product mt-5">
