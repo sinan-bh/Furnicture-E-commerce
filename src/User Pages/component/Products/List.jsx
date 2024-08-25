@@ -2,23 +2,17 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./products.css";
 import { userContext } from "../../../context/CartContext";
+import { FaHeart } from "react-icons/fa6";
+import { MdShoppingCart } from "react-icons/md";
 
 function List({ list }) {
-  const {
-    _id: productID,
-    title,
-    image,
-    description,
-    price,
-    offerPrice,
-  } = list;
+  const { _id: productID, title, image, description, price, offerPrice } = list;
 
-  
-  const { addToCart } = useContext(userContext);
+  const { addToCart, addWishList } = useContext(userContext);
 
   return (
     <div className=" card-item">
-      <div class=" col-md-6">
+      <div>
         <Link to={`/allproducts/${productID}`}>
           <img
             src={image}
@@ -43,12 +37,20 @@ function List({ list }) {
             </small>
           </p>
         </div>
-        <button
-          className="btn-list btn  m-3"
-          onClick={() => addToCart(productID)}
-        >
-          ADD TO CART
-        </button>
+        <div className="wish-cart">
+          <div
+            className="btn-save"
+            onClick={() => addWishList(productID)}
+          >
+            <FaHeart size={20}/>
+          </div>
+          <div
+            className="btn-list"
+            onClick={() => addToCart(productID)}
+          >
+            <MdShoppingCart size={20}/>
+          </div>
+        </div>
       </div>
     </div>
   );

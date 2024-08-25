@@ -1,9 +1,11 @@
+
 .payment-container {
-  max-width: 700px;
-  margin: 100px auto;
+  max-width: 650px;
+  margin: 150px auto;
   padding: 20px;
-  background: transparent;
-  border-radius: 10px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,110 +13,125 @@
 }
 
 .payment-card {
-  background-color: rgb(84, 98, 102);
-  color: #e9eff0;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 12px;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.payment-title {
-  font-size: 1.5em;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.card-details {
-  background-color: transparent;
-  padding-top: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
-.card-details .form-group {
-  margin-bottom: 15px;
+.payment-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.card-details {
   width: 100%;
 }
 
-.card-details .form-group label {
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 8px;
   display: block;
-  color: #f4f5f5;
-  margin-bottom: 5px;
 }
 
-.card-details .form-group input {
+.form-group input,
+.form-group textarea {
   width: 100%;
-  padding: 10px;
-  background-color: #fff;
-  color: rgb(84, 98, 102);
-  border: 1px solid #e0e6ea;
-  border-radius: 5px;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 1em;
+  color: #333;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #ff6f61;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: vertical; 
+  font-family: inherit; 
 }
 
 .pay {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  width: 100%;
 }
 
 .finish-pay-btn {
-  flex: 1 1 45%;
-  padding: 15px;
-  background-color: #d2e0e2ca;
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6f61;
   border: none;
-  border-radius: 5px;
-  color: #121212;
+  border-radius: 8px;
+  color: white;
+  font-size: 1em;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .finish-pay-btn:hover {
-  background-color: #00b3cc;
+  background-color: #ff3d2e;
+  transform: translateY(-3px);
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .payment-container {
     padding: 10px;
-    margin: 10px;
+    margin: 150px;
   }
 
   .payment-card {
-    padding: 15px;
+    padding: 25px;
   }
 
-  .card-details .form-group input {
-    padding: 8px;
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
     font-size: 0.9em;
   }
 
-  .pay {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .finish-pay-btn {
-    flex: 1 1 100%;
-    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 0.9em;
   }
 }
 
 @media (max-width: 480px) {
   .payment-title {
-    font-size: 1.2em;
-    margin-bottom: 15px;
+    font-size: 1.4em;
   }
 
-  .card-details .form-group input {
-    padding: 7px;
+  .form-group input,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 0.85em;
+  }
+
+  .finish-pay-btn {
+    padding: 8px;
     font-size: 0.85em;
   }
 }

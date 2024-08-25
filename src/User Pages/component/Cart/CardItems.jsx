@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./Style.css";
 import { userContext } from "../../../context/CartContext";
 
-function CardItems({ item }) {
+function CardItems({ item, onRemove }) {
   const [qty, setQty] = useState(item.quantity);
 
   
@@ -11,23 +11,27 @@ function CardItems({ item }) {
   const { addFromCart, removeFromCart, removeItem } =
   useContext(userContext);
 
-  const handleAdd = () => {
+  const handleAdd = (id) => {
     setQty(qty + 1); 
-    addFromCart(_id); 
+    addFromCart(id); 
   };
 
-  const handleRemove = () => {
+  const handleRemove = (id) => {
     if (qty > 1) {
       setQty(qty - 1); 
     }
-    removeFromCart(_id); 
+    removeFromCart(id); 
   };
  
     
   const handleRemoveItem = (id) => {
-    removeItem(id); 
-    
+    removeItem(id).then((success) => {
+      if (success) {
+        onRemove(id); 
+      }
+    });
   };
+
   return (
     <div>
       <div className="">
@@ -59,7 +63,7 @@ function CardItems({ item }) {
             <br />
             <a
               href="#"
-              className="text-danger text-decoration-none"
+              className="text-danger"
               onClick={() => handleRemoveItem(_id)}
             >
               Remove

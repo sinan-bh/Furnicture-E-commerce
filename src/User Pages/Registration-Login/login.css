@@ -1,141 +1,151 @@
-/* Registration */
 
-.registration {
-  width: 100vw;
-  min-height: 100%;
-  margin-top: 100px;
-  background: #dddada;
-}
-
-.form-group {
-  width: 80%;
-  margin: 10px auto;
-}
-
-.registration .cardSize {
-  width: 90%;
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
-  overflow: hidden;
-  border: none;
-  box-shadow: 15px -10px 10px rgb(163, 159, 159);
-  border-radius: 15px;
-  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcC00NjQtdGQtMDE3MC0wNF8xLmpwZw.jpg");
-}
-
-.cardSize::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: blur(5px);
-  z-index: 1;
-}
-
-.cardSize .card-body {
-  position: relative;
-  z-index: 2;
-}
-
-.registration .text-outline {
-  text-shadow: 15px 10px 5px #6c6969, 2px 3px 5px #908d8d, -1px 0px 0px #9c8f8f,
-    1px 10px 20px #d5cfcf;
-  color: rgb(246, 238, 238);
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 768px) {
-  .registration .cardSize {
-    margin-top: 20px;
-    padding: 20px;
-  }
-
-  .registration .form-group {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .registration .card-body {
-    padding: 10px;
-  }
-}
-
-
-/* End Registration */
-
-/* Login */
-
-.login {
+.login, .registration {
   width: 100vw;
   height: 100vh;
-  background: #fbf9f5f7;
+  background: linear-gradient(135deg, #d9e4f5 0%, #f7f7f7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px; 
+  padding-top: 80px;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif; 
 }
 
-.login .cardSize {
-  padding: 50px; 
+
+.login .cardSize, .registration .cardSize {
+  padding: 40px 60px; 
   border: none;
-  border-radius: 15px;
-  box-shadow: 15px -10px 10px rgb(163, 159, 159);
-  background-image: url("https://t4.ftcdn.net/jpg/05/65/75/59/360_F_565755935_GLp4UQXwqgB4wYBGorgOVWm6NqU1taTE.jpg");
+  border-radius: 25px;
+  background: #fff;
+  width: 100%;
+  max-width: 800px; 
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
+  font-family: 'Roboto', sans-serif; 
 }
 
-.login .text-outline {
-  text-shadow: 7px 10px 5px #f2ececa6, 1px 0px 0px #ece4e4ad,
-    -1px 0px 0px #e7e1e1, 1px 10px 20px #d5cfcf;
-  color: rgb(15, 12, 12);
+
+.login .cardSize:hover, .registration .cardSize:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.15);
 }
 
-.login .btn-navy {
-  background-color: #d7dde3ab;
-  border-color: #061525;
-  color: #045882;
-  border-radius: 10px;
+
+.login .text-outline, .registration .text-outline {
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 10px 5px 16px rgba(0, 0, 0, 0.1);
+  color: #285989;
+  margin-bottom: 30px;
+  margin-right: 20px;
+  text-align: center;
+  animation: textSlideIn 0.8s ease-out;
+  font-family: 'Poppins', sans-serif; 
+}
+
+
+.login .form-group, .registration .form-group {
+  margin-bottom: 20px;
+}
+
+.login .form-control, .registration .form-control {
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.login .btn-navy, .registration .btn-navy {
+  background-color: #285989;
+  border: none;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  width: 100%;
+  font-size: 18px;
   font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-family: 'Poppins', sans-serif; 
+}
+
+.login .btn-navy:hover, .registration .btn-navy:hover {
+  background-color: #285989;
+  transform: scale(1.05);
 }
 
 
 @media (max-width: 768px) {
-  .login .cardSize {
-    padding: 30px; 
-    margin-top: 100px; 
+  .login .cardSize, .registration .cardSize {
+    padding: 35px 40px; 
+    max-width: 90%;
   }
 
-  .login .form-group input {
-    padding: 10px; 
-    font-size: 16px; 
+  .login .text-outline, .registration .text-outline {
+    font-size: 24px;
   }
 
-  .login .btn-navy {
-    padding: 10px; 
-    font-size: 16px; 
+  .login .form-control, .registration .form-control {
+    padding: 12px;
+    font-size: 14px;
   }
 
-  .login .text-outline {
-    font-size: 24px; 
-    text-shadow: 4px 6px 3px #f2ececa6, 0px 0px 0px #ece4e4ad,
-      -1px 0px 0px #e7e1e1, 1px 5px 10px #d5cfcf;
+  .login .btn-navy, .registration .btn-navy {
+    padding: 12px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 576px) {
-  .login .cardSize {
-    padding: 20px; 
-    margin-top: 50px; 
+  .login .cardSize, .registration .cardSize {
+    padding: 30px 25px; 
+    max-width: 100%;
   }
 
-  .login .text-outline {
-    font-size: 20px; 
+  .login .text-outline, .registration .text-outline {
+    font-size: 20px;
   }
 
-  .login .btn-navy {
-    padding: 8px; 
-    font-size: 14px; 
+  .login .btn-navy, .registration .btn-navy {
+    padding: 10px;
+    font-size: 14px;
   }
 }
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textSlideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes inputFocus {
+  from {
+    border-color: #ced4da;
+  }
+  to {
+    border-color: #007bff;
+  }
+}
+
+
