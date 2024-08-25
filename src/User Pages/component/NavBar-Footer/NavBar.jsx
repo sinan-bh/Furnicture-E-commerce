@@ -149,7 +149,7 @@ const Navbar = () => {
                     <Link
                       to="/allproducts"
                       className="fw-bold text-decoration-none"
-                      style={{ color: "rgb(84,98,102)" }}
+                      style={{ color: "black" }}
                     >
                       All Products
                     </Link>
@@ -158,7 +158,7 @@ const Navbar = () => {
                     <Link
                       to="/allproducts/livingroom"
                       className="fw-bold text-decoration-none"
-                      style={{ color: "rgb(84,98,102)" }}
+                      style={{ color: "black" }}
                     >
                       Living Room
                     </Link>
@@ -167,7 +167,7 @@ const Navbar = () => {
                     <Link
                       to="/allproducts/diningset"
                       className="fw-bold text-decoration-none"
-                      style={{ color: "rgb(84,98,102)" }}
+                      style={{ color: "black" }}
                     >
                       Dining Set
                     </Link>
@@ -176,7 +176,7 @@ const Navbar = () => {
                     <Link
                       to="/allproducts/bedroom"
                       className="fw-bold text-decoration-none"
-                      style={{ color: "rgb(84,98,102)" }}
+                      style={{ color: "black" }}
                     >
                       Bed Room
                     </Link>
@@ -249,18 +249,21 @@ const Navbar = () => {
 
       <div className={`off-canvas-container ${isOpen ? "menu-open" : ""}`}>
         <div className="off-canvas-menu">
-          <div className="menu-item" onClick={toggleMenu}>
-            Save
-          </div>
-          <div className="menu-item" onClick={toggleMenu}>
-            Export to GitHub
-          </div>
-          <div className="menu-item" onClick={toggleMenu}>
-            Delete
-          </div>
-          <div className="menu-item" onClick={toggleMenu}>
-            Share
-          </div>
+          <Link to={'/'} className="menu-item" onClick={toggleMenu}>
+            Home
+          </Link>
+          <Link to={'/allproducts'} className="menu-item" onClick={toggleMenu}>
+            All Products
+          </Link>
+          <Link to={'/livingroom'} className="menu-item" onClick={toggleMenu}>
+          Living Room
+          </Link>
+          <Link to={'/diningset'} className="menu-item" onClick={toggleMenu}>
+            Dining Room
+          </Link>
+          <Link to={'/bedroom'} className="menu-item" onClick={toggleMenu}>
+            Bed Room
+          </Link>
         </div>
       </div>
     </nav>

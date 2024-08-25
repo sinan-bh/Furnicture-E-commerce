@@ -34,10 +34,15 @@ const Wishlist = () => {
     }
   }, []);
 
-  console.log(user);
 
   const handleRemoveItem = async (id) => {
-    removeFromWishList(id);
+    const success = await removeFromWishList(id);
+    if (success) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        data: prevUser.data.filter((item) => item._id !== id),
+      }));
+    }
   };
 
   return (

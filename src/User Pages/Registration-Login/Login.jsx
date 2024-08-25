@@ -50,6 +50,8 @@ function Login() {
       const result = await response.json();
 
       const { status, uname, token, user } = result;
+      console.log(result);
+      
 
       if (!response.ok) {
         setAlert({ type: 'error', message: 'Login failed' });

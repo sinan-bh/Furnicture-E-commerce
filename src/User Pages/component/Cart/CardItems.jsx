@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./Style.css";
 import { userContext } from "../../../context/CartContext";
 
-function CardItems({ item }) {
+function CardItems({ item, onRemove }) {
   const [qty, setQty] = useState(item.quantity);
 
   
@@ -25,9 +25,13 @@ function CardItems({ item }) {
  
     
   const handleRemoveItem = (id) => {
-    removeItem(id); 
-    
+    removeItem(id).then((success) => {
+      if (success) {
+        onRemove(id); 
+      }
+    });
   };
+
   return (
     <div>
       <div className="">

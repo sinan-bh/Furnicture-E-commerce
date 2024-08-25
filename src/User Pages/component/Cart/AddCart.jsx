@@ -90,6 +90,10 @@ function AddCart() {
     navigate("/payment");
   };
 
+  const handleItemRemove = (id) => {
+    setUser(user?.filter(item => item.prodid._id !== id));
+  };
+
   const carts = user?.filter((item) => item.prodid);
   const hasItemsInCart = carts?.length > 0;
 
@@ -102,17 +106,10 @@ function AddCart() {
           <h2 className="text-center">Your Carts Are...!</h2>
           <div className="d-flex justify-content-between">
             <h5 className="mb-3">Shopping Cart</h5>
-            {/* <a
-              href="#"
-              className="text-danger float-end"
-              onClick={removeAllItem}
-            >
-              Remove all
-            </a> */}
           </div>
           {carts.map((card) => {
             if (card) {
-              return <CardItems key={card._id} item={card} />;
+              return <CardItems key={card._id} item={card} onRemove={handleItemRemove}/>;
             }
             return null;
           })}

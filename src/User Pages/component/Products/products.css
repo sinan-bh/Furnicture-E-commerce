@@ -1,6 +1,6 @@
 .card-list {
     background: rgba(240, 240, 240, 0.9);
-    margin-top: 100px;
+    margin-top: 125px;
     width: 100%;
     border: none;
     padding: 20px;
@@ -130,9 +130,10 @@
   
   .cart-product {
     flex-basis: 50%;
+    height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   
   .description {
