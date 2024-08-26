@@ -6,7 +6,7 @@ import AlertBox from "../popup box/AlertBox";
 import { useNavigate } from "react-router-dom";
 
 function Payment() {
-  const { order } = useContext(userContext);
+  // const { order } = useContext(userContext);
   const username = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
     name: username.lname || "",
@@ -16,6 +16,9 @@ function Payment() {
   });
 
   const navigate = useNavigate()
+  const order = JSON.parse(localStorage.getItem('order'))
+  console.log(order.order.order);
+  
 
   const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(null);
@@ -35,7 +38,8 @@ function Payment() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const { order_id, currency, total_ammount } = order.order;
+  const { order_id, currency, total_ammount } = order.order.order;
+
 
   const handlePay = async () => {
     if (validateForm()) {
