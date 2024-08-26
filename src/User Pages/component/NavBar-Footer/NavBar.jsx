@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
@@ -12,6 +12,8 @@ import "./Style.css";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null)
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const [cartLength, setCartLength] = useState(0);
   const [wishlistLength, setWishListLength] = useState(0);
@@ -21,6 +23,20 @@ const Navbar = () => {
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (menuRef.current && !menuRef.current.contains(event.target)) {
+  //       setIsOpen(false);
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+
 
   useEffect(() => {
     const fetchCartLength = async () => {
@@ -95,7 +111,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setConfirm({
-      message: "Do you want to logout?",
+      message: ` Hey ${data.username}, Do you want to logout?`,
       onConfirm: () => {
         localStorage.removeItem("isLogin");
         setAlert({ type: "success", message: "Logged out successfully." });
@@ -109,11 +125,24 @@ const Navbar = () => {
     });
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  useEffect(()=>{
+  
+    const handleMEnuClick = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+              setIsOpen(false);
+            }
+          };
+      
+          document.addEventListener("mousedown", handleMEnuClick);
+          return () => {
+            document.removeEventListener("mousedown", handleMEnuClick);
+          };
+  },[menuRef])
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
+
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -192,7 +221,7 @@ const Navbar = () => {
                 onChange={handleChange}
               />
               <div className="searchBtn">
-                <CiSearch />
+                <CiSearch size={20}/>
               </div>
             </div>
           </div>
@@ -243,11 +272,11 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <div>
       <div className="menu-toggle" onClick={toggleMenu}>
         {isOpen ? <IoIosClose size={30} /> : <IoIosMenu size={30} />}
       </div>
-
-      <div className={`off-canvas-container ${isOpen ? "menu-open" : ""}`}>
+      <div className={`off-canvas-container ${isOpen ? "menu-open" : ""}`} ref={menuRef}>
         <div className="off-canvas-menu">
           <Link to={'/'} className="menu-item" onClick={toggleMenu}>
             Home
@@ -264,7 +293,11 @@ const Navbar = () => {
           <Link to={'/bedroom'} className="menu-item" onClick={toggleMenu}>
             Bed Room
           </Link>
+          <Link className="menu-item" onClick={handleLogout}>
+            Logout
+          </Link>
         </div>
+      </div>
       </div>
     </nav>
   );

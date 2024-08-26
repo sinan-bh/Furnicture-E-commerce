@@ -12,6 +12,7 @@ function Login() {
     pass: '',
   });
 
+  // const 
   const [alert, setAlert] = useState(null);
 
   const navigate = useNavigate();
@@ -61,10 +62,15 @@ function Login() {
 
       const adminDatas = AdminDetails.find((item) => item.type === 'admin');
       if (status === 'success') {
-        setAlert({ type: 'success', message: 'Login successful' });
-        localStorage.setItem('currentUser', JSON.stringify({ username: uname, userID: user._id }));
-        localStorage.setItem('isLogin', JSON.stringify(true));
-        setTimeout(() => navigate('/'), 1000);
+        if (!token) {
+          localStorage.removeItem("isLogin");
+        }else{
+
+          setAlert({ type: 'success', message: 'Login successful' });
+          localStorage.setItem('currentUser', JSON.stringify({ username: uname, userID: user._id }));
+          localStorage.setItem('isLogin', JSON.stringify(true));
+          setTimeout(() => navigate('/'), 1000);
+        }
       } else if (adminDatas && adminDatas.type === formValue.uname) {
         localStorage.setItem('isAdmin', JSON.stringify(true));
         setAlert({ type: 'success', message: 'Login successfully' });

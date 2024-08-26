@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import "./products.css";
-import { addContext, userContext } from "../../../context/CartContext";
+import { userContext } from "../../../context/CartContext";
 import useFetch from "../../../Custom Hook/useFetch";
 
 function ProductDetails() {
@@ -32,7 +32,7 @@ function ProductDetails() {
   return (
     <div className=" product mt-5">
       <div className="flex-style mt-5 ">
-          <div key={products.id} className="cart-image ">
+          <div key={products._id} className="cart-image ">
             <img src={products.image} alt={products.title} />
           </div>
           <div className=" cart-product">
