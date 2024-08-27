@@ -38,6 +38,8 @@ function Payment() {
     return Object.keys(formErrors).length === 0;
   };
 
+  console.log(order.order);
+  
   const { order_id, currency, total_ammount } = order.order.order;
 
 

@@ -15,7 +15,7 @@
   .user-details-table th,
   .user-details-table td {
     padding: 12px 15px;
-    text-align: left;
+    text-align: center;
   }
   
   .user-details-table th {
@@ -43,3 +43,4 @@
     background-color: #e2e6ea;
   }
   
+ 

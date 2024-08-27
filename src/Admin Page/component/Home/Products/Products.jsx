@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import useFetch from "../../../Custom Hook/useFetch";
-import "./admin.css";
+import useFetch from "../../../../Custom Hook/useFetch";
+import "./products.css";
 import { Link } from "react-router-dom";
 
 function Products({ type }) {
@@ -11,7 +11,7 @@ function Products({ type }) {
     loading,
     error,
     setData: setProducts,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch("http://localhost:3000/admin/products");
 
 
   const handleDelete = async (id) => {
@@ -20,7 +20,7 @@ function Products({ type }) {
       
       alert('Deleted')
       try {
-        const response = await fetch(`http://localhost:8000/products/${id}`, {
+        const response = await fetch(`http://localhost:6000/admin/product/${id}`, {
           method: "DELETE",
         });
         if (!response.ok) {
@@ -50,20 +50,21 @@ function Products({ type }) {
 
   const filteredProducts = products.filter(
     (product) =>
-      type === "All" || product.type === type
+      type === "All" || product.category === type
   ).filter(
     (product) =>
-      product.imageCategory.toLowerCase().includes(searchQuery.toLowerCase())
+      product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="adminhome">
       <h2 className="text-center">
         {type === "All" && "All Products"}
-        {type === "Living Room Furniture" && "Living Room Furniture"}
-        {type === "Dining Room Furniture" && "Dining Room Furniture"}
-        {type === "Bedroom Furniture" && "Bedroom Furniture"}
+        {type === "livingroom" && "Living Room Furniture"}
+        {type === "diningroom" && "Dining Room Furniture"}
+        {type === "bedroom" && "Bedroom Furniture"}
       </h2>
+      <div className="search-addBtn">
       <div className="AddBtn">
         <button className="btn btn-success mb-2">
           <Link to={"/adminhome/add-edit-product"} className="text-none text-white">Add New Product</Link>
@@ -77,6 +78,7 @@ function Products({ type }) {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="form-control search-input"
         />
+      </div>
       </div>
       <div className="categorys ">
         <div className="category-name">Select category</div>
@@ -115,17 +117,17 @@ function Products({ type }) {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
+            {filteredProducts.map((product,index) => (
+              <tr key={product._id}>
+                <td>{index + 1}</td>
                 <td>
                   <img
                     src={product.image}
-                    alt={product.imageCategory}
+                    alt={product.title}
                     className="product-image"
                   />
                 </td>
-                <td>{product.imageCategory}</td>
+                <td>{product.title}</td>
                 <td>{product.description}</td>
                 <td>{product.details}</td>
                 <td className="amount">
@@ -134,14 +136,14 @@ function Products({ type }) {
                 </td>
                 <td className="edit-del">
                   <Link
-                    to={`/adminhome/add-edit-product/${product.id}`}
+                    to={`/adminhome/add-edit-product/${product._id}`}
                     className="btn btn-secondary"
                   >
                     Edit
                   </Link>
                   <button
                     className="btn btn-danger"
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => handleDelete(product._id)}
                   >
                     Delete
                   </button>

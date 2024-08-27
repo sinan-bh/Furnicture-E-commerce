@@ -6,23 +6,24 @@ function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    id: id,
+    // id: id,
     image: "",
-    imageCategory: "",
+    title: "",
     description: "",
     details: "",
     price: "",
     offerPrice: "",
     type: "",
+    category: "",
   });
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/products/${id}`)
+      fetch(`http://localhost:3000/admin/product/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setFormData({
-            ...data,
+            ...data.data,
             type: "edit",
           });
         })
@@ -52,10 +53,12 @@ function AddEditProduct() {
       };
 
       const url = id
-        ? `http://localhost:8000/products/${id}`
-        : "http://localhost:8000/products";
+        ? `http://localhost:3000/admin/products/${id}`
+        : "http://localhost:3000/admin/products";
 
       const response = await fetch(url, options);
+      console.log(await response.json());
+      
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -77,7 +80,7 @@ function AddEditProduct() {
               <div className="form-group">
                 <label>Image URL:</label>
                 <input
-                  type="text"
+                  type="file"
                   className="form-control"
                   name="image"
                   value={formData.image}
@@ -109,12 +112,12 @@ function AddEditProduct() {
             </div>
             <div className="">
               <div className="form-group">
-                <label>Image Category:</label>
+                <label>Title:</label>
                 <input
                   type="text"
                   className="form-control"
-                  name="imageCategory"
-                  value={formData.imageCategory}
+                  name="title"
+                  value={formData.title}
                   onChange={handleInputChange}
                   required
                 />
@@ -160,6 +163,25 @@ function AddEditProduct() {
                   Dining Room Furniture
                 </option>
                 <option value="Bedroom Furniture">Bedroom Furniture</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Category:</label>
+              <select
+                className="form-control"
+                name="type"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select category</option>
+                <option value="Living Room Furniture">
+                  livingroom
+                </option>
+                <option value="Dining Room Furniture">
+                  diningroom
+                </option>
+                <option value="Bedroom Furniture">bedroom</option>
               </select>
             </div>
           </div>

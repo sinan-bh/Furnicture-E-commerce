@@ -6,6 +6,7 @@ import { AiFillHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
+import { FaShoppingCart } from "react-icons/fa";
 
 
 
@@ -44,6 +45,14 @@ function NavBarAdmin() {
               className="fw-bold text-decoration-none mb-3 text-secondary"
             >
               <AiFillProduct className="nav-products" />
+            </Link>
+          </div>
+          <div className=" nav-hover mb-5">
+            <Link
+              to="/adminhome/order"
+              className="fw-bold text-decoration-none mb-3 text-secondary"
+            >
+              <FaShoppingCart className="nav-products" />
             </Link>
           </div>
           <div className=" nav-hover" onClick={handleLogout}>

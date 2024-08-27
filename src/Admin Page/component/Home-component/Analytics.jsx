@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 function Analytics() {
-  const { data: user, loading, error } = useFetch("http://localhost:8000/user");
+  const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
   const {
     data: products,
     load,
     err,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch("http://localhost:3000/admin/products");
+
+  const {
+    data: order,
+  } = useFetch("http://localhost:3000/admin/orders/details");
 
   if (loading || load) {
     return <div>Loading...</div>;
@@ -21,11 +25,15 @@ function Analytics() {
     return <div>No products found.</div>;
   }
 
-  const userCount = user.length;
+  console.log(user);
+  
+
+  const userCount = user.data.length;
   const productCount = products.length;
-  const orderCount = user
-    .map((item) => item.order.quantity)
-    .reduce((total, order) => total + Number(order), 0);
+  const orderCount = order?.total_purchase;
+  const totalRevanue = order?.revanue;
+  console.log(order);
+  
 
   return (
     <div>
@@ -50,16 +58,7 @@ function Analytics() {
             <h2>{userCount}</h2>
             <p className="positive">Total Register Users Since last week</p>
           </div>
-        </div>
-        <div className="card">
-          <div className="card-header ps-5">
-            <span>Popular</span>
-          </div>
-          <div className="card-body">
-            <h2>8</h2>
-            <p className="positive">Popular products Since last week</p>
-          </div>
-        </div>
+        </div> 
         <div className="card">
           <div className="card-header ps-5">
             <span>Orders</span>
@@ -67,6 +66,15 @@ function Analytics() {
           <div className="card-body">
             <h2>{orderCount}</h2>
             <p className="positive">Total Orders Since last week</p>
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-header ps-5">
+            <span>Total Revanue</span>
+          </div>
+          <div className="card-body">
+            <h2>$ {totalRevanue}</h2>
+            <p className="positive">Popular products Since last week</p>
           </div>
         </div>
       </div>

@@ -2,12 +2,15 @@ import React from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 function ProductsCount() {
-  const { data: user, loading, error } = useFetch("http://localhost:8000/user");
+  const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
   const {
     data: products,
     load,
     err,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch("http://localhost:3000/admin/products");
+
+  console.log(user);
+  
 
   if (loading || load) {
     return <div>Loading...</div>;
@@ -49,9 +52,9 @@ function ProductsCount() {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Total</th>
-            <th scope="col">Quantity</th>
+            <th scope="col" className="">Category</th>
+            <th scope="col">Total Products</th>
+            <th scope="col">Total Products Items</th>
           </tr>
         </thead>
         <tbody>

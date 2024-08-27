@@ -11,8 +11,9 @@ function CartContext(props) {
   const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
   const [wishList, setWishList] = useState([]);
-  const [cartProduct, setCartProduct] = useState([]);
+  const [cartProduct, setCartProduct] = useState(0);
   const [alert, setAlert] = useState(null); 
+
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
@@ -164,6 +165,7 @@ function CartContext(props) {
     searchTerm,
     userDatas,
     order,
+    cartProduct,
     addToCart,
     addFromCart,
     removeFromCart,

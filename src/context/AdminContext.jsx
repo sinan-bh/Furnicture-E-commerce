@@ -13,7 +13,7 @@ function AdminContext(props) {
     loading,
     error,
     setData: setProducts,
-  } = useFetch("http://localhost:8000/products");
+  } = useFetch("http://localhost:3000/admin/products");
 
   const [product, setProduct] = useState({
     image: "",

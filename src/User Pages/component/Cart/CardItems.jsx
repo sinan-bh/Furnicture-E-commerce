@@ -4,25 +4,29 @@ import { userContext } from "../../../context/CartContext";
 
 function CardItems({ item, onRemove }) {
   const [qty, setQty] = useState(item.quantity);
-
-  
-
   const { _id,title, image,  price, offerPrice } = item.prodid;
-  const { addFromCart, removeFromCart, removeItem } =
+  const { addFromCart, removeFromCart, removeItem, setCartProduct } =
   useContext(userContext);
 
+  setCartProduct(qty)
+
   const handleAdd = (id) => {
-    setQty(qty + 1); 
-    addFromCart(id); 
+    const updatedQty = qty + 1;
+    setQty(updatedQty); 
+    addFromCart(id).then((updatedCart) => {
+      // setCartProduct(updatedCart); 
+    });
   };
 
   const handleRemove = (id) => {
     if (qty > 1) {
-      setQty(qty - 1); 
+      const updatedQty = qty - 1;
+      setQty(updatedQty); 
+      removeFromCart(id).then((updatedCart) => {
+        // setCartProduct(updatedCart); 
+      });
     }
-    removeFromCart(id); 
   };
- 
     
   const handleRemoveItem = (id) => {
     removeItem(id).then((success) => {
