@@ -27,7 +27,7 @@ function Products({ type }) {
           throw new Error("Network response was not ok");
         }
         setProducts((prevProducts) =>
-          prevProducts.filter((product) => product.id !== id)
+          prevProducts.filter((product) => product._id !== id)
         );
       } catch (error) {
         console.error("Failed to delete product:", error);

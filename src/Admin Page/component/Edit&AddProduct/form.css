@@ -1,29 +1,102 @@
+.add-edit-product-form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #555;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #7a5cff;
+    background-color: #fff;
+    outline: none;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .add-btn {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btn {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn:hover {
+    background-color: #555;
+  }
+  
+  .qty-price{
+    display: flex;
+  }
 
-.control{
-    width: 85%;
-    margin: 100px 100px;
-    display: flex;
-    justify-content: center;
-}
-.add-product-form{
-    
-    width: 50%;
-    
-}
-.form-label{
-    width: 200px;
-}
+  .qty {
+    width: 100px;
+  }
 
-.add-edit-product-form{
-    display: flex;
-    justify-content: center;
-    margin-right: 50px;
-}
-.selectCategory{
-    display: flex;
-    justify-content: center;
-}
-.add-btn{
-    display: flex;
-    justify-content: center;
-}
+  @media (max-width: 768px) {
+    .add-edit-product-form {
+      padding: 30px;
+      margin: 20px;
+    }
+  
+    h3 {
+      font-size: 24px;
+    }
+  
+    .btn {
+      font-size: 18px;
+      padding: 14px 30px;
+    }
+  }
+  
