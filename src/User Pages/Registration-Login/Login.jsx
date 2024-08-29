@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
-import { AdminDetails } from "../../assets/data-set/Admin-Datas";
-import AlertBox from '../component/popup box/AlertBox'; 
+import AlertBox from '../../popup box/AlertBox'; 
 
 function Login() {
   const [errors, setErrors] = useState({});

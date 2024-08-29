@@ -57,6 +57,7 @@ function AdminContext(props) {
   const handleAddProduct = (addedProduct) => {
     setProducts([...products, addedProduct]);
   };
+  
 
 
 

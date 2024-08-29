@@ -1,7 +1,7 @@
 // src/components/Reg.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AlertBox from '../component/popup box/AlertBox'; 
+import AlertBox from '../../popup box/AlertBox'; 
 import './login.css'; 
 
 function Reg() {

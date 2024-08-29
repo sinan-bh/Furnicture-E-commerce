@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../Custom Hook/useFetch";
-import AlertBox from "../User Pages/component/popup box/AlertBox"; 
+import AlertBox from "../popup box/AlertBox"; 
 
 export const userContext = createContext(null);
 

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import useFetch from "../../../Custom Hook/useFetch";
+
+import './home-combonent.css'
 
 function Analytics() {
   const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
@@ -23,10 +25,7 @@ function Analytics() {
 
   if (!user || !products || user.length === 0 || products.length === 0) {
     return <div>No products found.</div>;
-  }
-
-  console.log(user);
-  
+  }  
 
   const userCount = user.data.length;
   const productCount = products.length;
@@ -42,7 +41,7 @@ function Analytics() {
       </h1>
       <div className="card-container-bg ">
         <div className="card">
-          <div className="card-header ps-5">
+          <div className="card-header">
             <span>Products</span>
           </div>
           <div className="card-body">
@@ -51,7 +50,7 @@ function Analytics() {
           </div>
         </div>
         <div className="card">
-          <div className="card-header ps-5">
+          <div className="card-header">
             <span>Users</span>
           </div>
           <div className="card-body">
@@ -60,7 +59,7 @@ function Analytics() {
           </div>
         </div> 
         <div className="card">
-          <div className="card-header ps-5">
+          <div className="card-header">
             <span>Orders</span>
           </div>
           <div className="card-body">
@@ -69,11 +68,11 @@ function Analytics() {
           </div>
         </div>
         <div className="card">
-          <div className="card-header ps-5">
+          <div className="card-header">
             <span>Total Revanue</span>
           </div>
           <div className="card-body">
-            <h2>$ {totalRevanue}</h2>
+            <h2>${totalRevanue}</h2>
             <p className="positive">Popular products Since last week</p>
           </div>
         </div>

@@ -6,8 +6,8 @@ import { IoCartSharp } from "react-icons/io5";
 import { userContext } from "../../../context/CartContext";
 import { CiSearch, CiLogout, CiLogin } from "react-icons/ci";
 import Logo from "../../../assets/img/logo/logo.png";
-import ConfirmBox from "../popup box/ConfirmBox";
-import AlertBox from "../popup box/AlertBox";
+import ConfirmBox from "../../../popup box/ConfirmBox";
+import AlertBox from "../../../popup box/AlertBox";
 import "./Style.css";
 
 const Navbar = () => {

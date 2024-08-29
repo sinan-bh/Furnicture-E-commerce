@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import AlertBox from "../../../popup box/AlertBox";
 import "./form.css";
 
 function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [alert, setAlert] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -17,7 +18,6 @@ function AddEditProduct() {
     quantity: "",
   });
 
-  console.log(formData);
 
   const [file, setFile] = useState(null);
 
@@ -80,15 +80,25 @@ function AddEditProduct() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      alert("Updated Product");
-      navigate("/adminhome/product-details");
+      setAlert({ type: 'success', message: id ? 'Product Updated' : 'Product Added' });
+      setTimeout(() => navigate("/adminhome/product-details"), 1000);
+      
     } catch (error) {
       console.error("Failed to add/edit product:", error);
+      setAlert({ type: 'error', message: 'Update failed' });
+        setTimeout(() => setAlert(null), 1000);
     }
   };
 
   return (
     <div className="add-edit-product-form">
+      {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div>
         <h3 className="text-center ">
           {id ? "Edit Product" : "Add New Product"}

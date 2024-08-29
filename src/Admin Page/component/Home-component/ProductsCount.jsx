@@ -1,6 +1,8 @@
 import React from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
+import './home-combonent.css'
+
 function ProductsCount() {
   const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
   const {
@@ -11,6 +13,7 @@ function ProductsCount() {
 
   console.log(user);
   
+  const { data: orders } = useFetch("http://localhost:3000/admin/orders/details")
 
   if (loading || load) {
     return <div>Loading...</div>;
@@ -26,13 +29,13 @@ function ProductsCount() {
 
   const livingRoomItems = products
     .filter((type) => type.type === "Living Room Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    .reduce((total, item) => total + parseInt(item.quantity), 0);
   const diningRoomItems = products
     .filter((type) => type.type === "Dining Room Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    .reduce((total, item) => total + parseInt(item.quantity), 0);
   const bedRoomItems = products
     .filter((type) => type.type === "Bedroom Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    .reduce((total, item) => total + parseInt(item.quantity), 0);
 
   const livingRoom = products.filter(
     (type) => type.type === "Living Room Furniture"
@@ -44,6 +47,9 @@ function ProductsCount() {
     (type) => type.type === "Bedroom Furniture"
   ).length;
 
+  console.log(orders);
+  
+
   return (
     <div>
       <h1 className="text-center">
@@ -54,6 +60,8 @@ function ProductsCount() {
           <tr>
             <th scope="col" className="">Category</th>
             <th scope="col">Total Products</th>
+            <th scope="col">Products Items</th>
+            <th scope="col">Purchased Products</th>
             <th scope="col">Total Products Items</th>
           </tr>
         </thead>
@@ -62,16 +70,22 @@ function ProductsCount() {
             <td>Living Room</td>
             <td>{livingRoom}</td>
             <td>{livingRoomItems}</td>
+            <td>{orders?.livingPurchased}</td>
+            <td>{livingRoomItems - orders?.livingPurchased}</td>
           </tr>
           <tr>
             <td>Dining Room</td>
             <td>{diningRoom}</td>
             <td>{diningRoomItems}</td>
+            <td>{orders?.diningPurchased}</td>
+            <td>{diningRoomItems - orders?.diningPurchased}</td>
           </tr>
           <tr>
             <td>Bed Room</td>
             <td>{bedRoom}</td>
             <td>{bedRoomItems}</td>
+            <td>{orders?.bedPurchased}</td>
+            <td>{bedRoomItems - orders?.bedPurchased}</td>
           </tr>
         </tbody>
       </table>
