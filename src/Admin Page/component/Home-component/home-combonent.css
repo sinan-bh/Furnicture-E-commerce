@@ -1,6 +1,6 @@
-/* Add this CSS to your global or component-specific stylesheet */
 
-/* General styles for card containers */
+
+
 .card-container-bg {
     display: flex;
     flex-wrap: wrap;
@@ -9,30 +9,30 @@
     padding: 20px;
   }
   
-  /* Card styles */
-  .card {
+
+  .card-1 {
+    text-align: center;
+    padding: 10px;
     background-color: #f8f9fa;
     border-radius: 10px;
-    width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    position: relative;
   }
   
-  /* Hover effect for cards */
-  .card:hover {
+  
+  .card-1:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
   }
   
-  /* Animation on card content */
+  
   .card-body {
     opacity: 0;
     animation: fadeInUp 0.8s forwards ease-in-out;
   }
   
-  /* Keyframe for fading in and sliding up */
+  
   @keyframes fadeInUp {
     0% {
       opacity: 0;
@@ -44,55 +44,68 @@
     }
   }
   
-  /* Table styles for ProductsCount component */
-  .table {
+  
+  .productCountTableItem {
     width: 100%;
-    max-width: 100%;
-    border-collapse: collapse;
+    padding: 20px;
     margin: 20px 0;
   }
   
-  .table th, .table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  .productCountTableItem th, .productCountTableItem td {
+    max-width: 100%;
+    padding: 10px 20px 30px 20px ;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #0d0b0b;
   }
   
-  /* Responsive media queries */
+  
   @media (max-width: 768px) {
     .card-container-bg {
       flex-direction: column;
       padding: 10px;
     }
   
-    .card {
+    .card-1 {
       width: 100%;
       margin-bottom: 20px;
     }
   
-    .table th, .table td {
+    .productCountTableItem th, .productCountTableItem td {
       font-size: 14px;
     }
   }
   
   @media (max-width: 1200px) {
-    .card {
+    .card-1 {
       width: 90%;
       margin: auto;
     }
   }
+
+  .productCountTable{
+    margin-left: 25px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   
-  /* Text styling */
+  
   .bold {
     font-weight: bold;
     color: #333;
+  
   }
   
   .positive {
     color: #28a745;
   }
   
-  /* Adding animation to table rows */
+  
+  
   tbody tr {
     opacity: 0;
     animation: fadeIn 0.6s ease-in-out forwards;

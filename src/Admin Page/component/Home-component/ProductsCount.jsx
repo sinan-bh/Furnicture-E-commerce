@@ -51,18 +51,18 @@ function ProductsCount() {
   
 
   return (
-    <div>
-      <h1 className="text-center">
+    <div className="productCountTable">
+      <h1 className="">
         <span className="bold">Products</span>
       </h1>
-      <table className="table">
+      <table className="productCountTableItem">
         <thead>
           <tr>
             <th scope="col" className="">Category</th>
-            <th scope="col">Total Products</th>
+            <th scope="col">Products</th>
             <th scope="col">Products Items</th>
             <th scope="col">Purchased Products</th>
-            <th scope="col">Total Products Items</th>
+            <th scope="col">Total Products</th>
           </tr>
         </thead>
         <tbody>

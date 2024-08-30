@@ -40,36 +40,36 @@ function Analytics() {
         <span className="bold">Analytics</span>
       </h1>
       <div className="card-container-bg ">
-        <div className="card">
-          <div className="card-header">
-            <span>Products</span>
+        <div className="card-1 ">
+          <div className="">
+            <span className="bold">Products</span>
           </div>
           <div className="card-body">
             <h2>{productCount}</h2>
             <p className="positive">Total Products Since last week</p>
           </div>
         </div>
-        <div className="card">
-          <div className="card-header">
-            <span>Users</span>
+        <div className="card-1">
+          <div className="">
+            <span className="bold">Users</span>
           </div>
           <div className="card-body">
             <h2>{userCount}</h2>
             <p className="positive">Total Register Users Since last week</p>
           </div>
         </div> 
-        <div className="card">
-          <div className="card-header">
-            <span>Orders</span>
+        <div className="card-1">
+          <div className="">
+            <span className="bold">Orders</span>
           </div>
           <div className="card-body">
             <h2>{orderCount}</h2>
             <p className="positive">Total Orders Since last week</p>
           </div>
         </div>
-        <div className="card">
-          <div className="card-header">
-            <span>Total Revanue</span>
+        <div className="card-1">
+          <div className="">
+            <span className="bold">Total Revanue</span>
           </div>
           <div className="card-body">
             <h2>${totalRevanue}</h2>

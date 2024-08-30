@@ -6,7 +6,6 @@ import AlertBox from "../../../popup box/AlertBox";
 import { useNavigate } from "react-router-dom";
 
 function Payment() {
-  // const { order } = useContext(userContext);
   const username = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
     name: username.lname || "",
@@ -40,11 +39,12 @@ function Payment() {
 
   console.log(order.order);
   
+  
   const { order_id, currency, total_ammount } = order.order.order;
 
-
+  
   const handlePay = async () => {
-    if (validateForm()) {
+    if (validateForm() && order_id) {
       const options = {
         key: 'rzp_test_54robFK9s1sJwo',
         amount: total_ammount,
@@ -69,6 +69,7 @@ function Payment() {
           })
             .then((res) => res.text())
             .then((text) => setAlert({ message: text, type: "success" }))
+            .then(()=> navigate('/orderstatus'))
             .then(()=> setTimeout(() => setAlert(null), 2000))
             .catch(() => setAlert({ message: "Payment verification failed", type: "error" }));
         },
@@ -85,6 +86,8 @@ function Payment() {
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+    }else{
+      setAlert({ message: 'some thing wrong', type: "info" })
     }
   };
 

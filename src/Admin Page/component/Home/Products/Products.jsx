@@ -1,44 +1,26 @@
 import React, { useEffect, useState } from "react";
-import useFetch from "../../../../Custom Hook/useFetch";
 import ConfirmBox from "../../../../popup box/ConfirmBox";
 import AlertBox from "../../../../popup box/AlertBox";
 import "./products.css";
 import { Link } from "react-router-dom";
 
 function Products({ type }) {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const [alert, setAlert] = useState(null);
   const [confirm, setConfirm] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dependency, setDependency] = useState(false)
-  // const {
-  //   data: products,
-  //   loading,
-  //   error,
-  //   setData: setProducts,
-  // } = useFetch("http://localhost:3000/admin/products");
+  const [dependency, setDependency] = useState(false);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
 
-  // if (error) {
-  //   return <div>Error: {error.message || JSON.stringify(error)}</div>;
-  // }
-
-  // if (!products || products.length === 0) {
-  //   return <div>No products found.</div>;
-  // }
-
-  useEffect(()=> {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(`http://localhost:3000/admin/products`, {
           method: "GET",
           headers: {
-            "Content-Type": "Application/json"
+            "Content-Type": "Application/json",
           },
-          credentials: 'include',
+          credentials: "include",
         });
         const product = await res.json();
         console.log(product);
@@ -49,7 +31,7 @@ function Products({ type }) {
       }
     };
     fetchData();
-  },[dependency])
+  }, [dependency]);
 
   const filteredProducts = products
     .filter((product) => type === "All" || product.category === type)
@@ -77,17 +59,20 @@ function Products({ type }) {
             prevProducts.filter((product) => product._id !== id)
           );
 
-          setDependency(true)
+          setDependency(true);
 
           setAlert({
             type: "success",
             message: "Product deleted successfully",
           });
           setTimeout(() => setAlert(null), 1000);
-          setConfirm(null); 
+          setConfirm(null);
         } catch (error) {
           console.error("Failed to delete product:", error);
-          setAlert({ type: 'error', message: 'Failed to delete the product. Please try again.' });
+          setAlert({
+            type: "error",
+            message: "Failed to delete the product. Please try again.",
+          });
           setConfirm(null);
         }
       },
@@ -96,7 +81,6 @@ function Products({ type }) {
       },
     });
   };
-
 
   return (
     <div className="adminhome">
@@ -191,18 +175,18 @@ function Products({ type }) {
           <tbody>
             {filteredProducts.map((product, index) => (
               <tr key={product._id}>
-                <td>{index + 1}</td>
-                <td>
+                <td data-label="ProductId">{index + 1}</td>
+                <td data-label="Image">
                   <img
                     src={product.image}
                     alt={product.title}
-                    className="product-image"
+                    className="product-images"
                   />
                 </td>
-                <td>{product.title}</td>
-                <td>{product.description}</td>
-                <td>{product.details}</td>
-                <td className="amount">
+                <td data-label="Name">{product.title}</td>
+                <td data-label="Description">{product.description}</td>
+                <td data-label="Details">{product.details}</td>
+                <td data-label="Amount" className="amount">
                   <div>
                     Price:{" "}
                     <span className="text-secondary">${product.price}</span>
@@ -212,7 +196,7 @@ function Products({ type }) {
                     <span className="text-success">${product.offerPrice}</span>
                   </div>
                 </td>
-                <td className="edit-del">
+                <td data-label="Actions" className="edit-del">
                   <Link
                     to={`/adminhome/add-edit-product/${product._id}`}
                     className="btn btn-secondary"

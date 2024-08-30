@@ -165,9 +165,7 @@ input:-moz-placeholder {
   border: none;
 }
 
-.searchBtn:hover {
-  background-color: #0056b3;
-}
+
 
 .icon {
   font-size: 20px;

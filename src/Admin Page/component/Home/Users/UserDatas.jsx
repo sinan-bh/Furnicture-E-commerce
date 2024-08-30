@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function UserDatas() {
-
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     data: user,
@@ -27,8 +26,8 @@ function UserDatas() {
   }
 
   const handleClick = (id) => {
-    navigate(`/adminhome/userdatas/${id}`)
-  }
+    navigate(`/adminhome/userdatas/${id}`);
+  };
 
   const filteredUsers = user.data.filter((list) =>
     list.date.toLowerCase().includes(searchTerm.toLowerCase())
@@ -39,7 +38,7 @@ function UserDatas() {
       <div>
         <h2 className="text-center mb-5">Users Details</h2>
       </div>
-      <div className="search-container-products mb-3">
+      <div className="search-container-user ">
         <input
           type="text"
           placeholder="Search by date"
@@ -61,11 +60,11 @@ function UserDatas() {
           <tbody>
             {filteredUsers.map((list, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{list.name}</td>
-                <td>{list.email}</td>
-                <td>{list.uname}</td>
-                <td>{list.date}</td>
+                <td data-label="Index">{index + 1}</td>
+                <td data-label="Name">{list.name}</td>
+                <td data-label="E-mail">{list.email}</td>
+                <td data-label="Username">{list.uname}</td>
+                <td data-label="Date">{list.date}</td>
               </tr>
             ))}
           </tbody>
