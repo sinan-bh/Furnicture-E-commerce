@@ -28,8 +28,8 @@ function AddEditProduct() {
         .then((data) => {
           setFormData({
             ...data.data,
-            type: "edit",
-          });
+            // type: "edit",
+          })
         })
         .catch((error) => {
           console.error("Failed to fetch product data:", error);
@@ -113,7 +113,7 @@ function AddEditProduct() {
                   className="form-control"
                   name="image"
                   onChange={handleFileChange}
-                  required
+                  required = {!id ? true : false}
                 />
               </div>
               <div className="form-group">
@@ -126,17 +126,7 @@ function AddEditProduct() {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label>Price:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+              
             </div>
             <div className="">
               <div className="form-group">
@@ -161,11 +151,22 @@ function AddEditProduct() {
                 />
               </div>
               <div className="qty-price">
+              <div className="form-group">
+                <label>Price:</label>
+                <input
+                  type="number"
+                  className=""
+                  name="price"
+                  value={formData.price}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
                 <div className="form-group">
                   <label>Offer Price:</label>
                   <input
                     type="number"
-                    className="form-control"
+                    className=""
                     name="offerPrice"
                     value={formData.offerPrice}
                     onChange={handleInputChange}
@@ -206,7 +207,7 @@ function AddEditProduct() {
                 <option value="Bedroom Furniture">Bedroom Furniture</option>
               </select>
             </div>
-            <div className="form-group">
+            <div className="form-group ms-3">
               <label>Category:</label>
               <select
                 className="form-control"

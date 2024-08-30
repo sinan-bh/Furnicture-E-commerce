@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import "./Style.css";
-import { userContext } from "../../../context/CartContext";
 import Logo from "../../../assets/img/logo/logo.png";
 import AlertBox from "../../../popup box/AlertBox"; 
 import { useNavigate } from "react-router-dom";
@@ -36,8 +35,6 @@ function Payment() {
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
-
-  console.log(order.order);
   
   
   const { order_id, currency, total_ammount } = order.order.order;
@@ -159,7 +156,7 @@ function Payment() {
               className="finish-pay-btn"
               onClick={handlePay}
             >
-              Pay ${total_ammount / 100}
+              Pay ${total_ammount}
             </button>
           </div>
         </form>

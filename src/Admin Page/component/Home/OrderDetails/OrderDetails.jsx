@@ -46,7 +46,8 @@ function OrderDetails() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({order_id: orderId, status: updateStatus})
+      body: JSON.stringify({order_id: orderId, status: updateStatus}),
+      credentials: 'include',
     }
 
     const url = 'http://localhost:3000/admin/order'

@@ -1,49 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 import './home-combonent.css'
 
 function ProductsCount() {
-  const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
-  const {
-    data: products,
-    load,
-    err,
-  } = useFetch("http://localhost:3000/admin/products");
+  const [products, setProducts] = useState([]);
+  const [orders, setOrder] = useState([]);
 
-  console.log(user);
-  
-  const { data: orders } = useFetch("http://localhost:3000/admin/orders/details")
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const product = await res.json();
+        console.log(product);
 
-  if (loading || load) {
-    return <div>Loading...</div>;
-  }
+        setProducts(product);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  if (error || err) {
-    return <div>Error: {error.message || JSON.stringify(error)}</div>;
-  }
 
-  if (!user || !products || user.length === 0 || products.length === 0) {
-    return <div>No products found.</div>;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const orders = await res.json();
+
+        setOrder(orders);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const livingRoomItems = products
-    .filter((type) => type.type === "Living Room Furniture")
-    .reduce((total, item) => total + parseInt(item.quantity), 0);
+    ?.filter((type) => type.type === "Living Room Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
   const diningRoomItems = products
-    .filter((type) => type.type === "Dining Room Furniture")
-    .reduce((total, item) => total + parseInt(item.quantity), 0);
+    ?.filter((type) => type.type === "Dining Room Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
   const bedRoomItems = products
-    .filter((type) => type.type === "Bedroom Furniture")
-    .reduce((total, item) => total + parseInt(item.quantity), 0);
+    ?.filter((type) => type.type === "Bedroom Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
 
-  const livingRoom = products.filter(
+  const livingRoom = products?.filter(
     (type) => type.type === "Living Room Furniture"
   ).length;
-  const diningRoom = products.filter(
+  const diningRoom = products?.filter(
     (type) => type.type === "Dining Room Furniture"
   ).length;
-  const bedRoom = products.filter(
+  const bedRoom = products?.filter(
     (type) => type.type === "Bedroom Furniture"
   ).length;
 

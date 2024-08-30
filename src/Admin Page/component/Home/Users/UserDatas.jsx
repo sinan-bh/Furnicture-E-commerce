@@ -1,35 +1,35 @@
 import "./userDatas.css";
 import useFetch from "../../../../Custom Hook/useFetch";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function UserDatas() {
+  const [users,setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const {
-    data: user,
-    error,
-    loading,
-  } = useFetch("http://localhost:3000/admin/allusers");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/allusers`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const users = await res.json();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+        setUsers(users);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  if (error) {
-    return <div>Error: {error.message || JSON.stringify(error)}</div>;
-  }
 
-  if (!user || user.length === 0) {
-    return <div>No products found.</div>;
-  }
-
-  const handleClick = (id) => {
-    navigate(`/adminhome/userdatas/${id}`);
-  };
-
-  const filteredUsers = user.data.filter((list) =>
+  const filteredUsers = users?.data?.filter((list) =>
     list.date.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -58,7 +58,7 @@ function UserDatas() {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((list, index) => (
+            {filteredUsers?.map((list, index) => (
               <tr key={index}>
                 <td data-label="Index">{index + 1}</td>
                 <td data-label="Name">{list.name}</td>

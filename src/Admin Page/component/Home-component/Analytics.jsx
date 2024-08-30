@@ -1,34 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 import './home-combonent.css'
 
 function Analytics() {
-  const { data: user, loading, error } = useFetch("http://localhost:3000/admin/allusers");
-  const {
-    data: products,
-    load,
-    err,
-  } = useFetch("http://localhost:3000/admin/products");
+  const [users,setUsers] = useState([])
+  const [products, setProducts] = useState([]);
+  const [order, setOrder] = useState([]);
 
-  const {
-    data: order,
-  } = useFetch("http://localhost:3000/admin/orders/details");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/allusers`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const users = await res.json();
 
-  if (loading || load) {
-    return <div>Loading...</div>;
-  }
+        setUsers(users);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  if (error || err) {
-    return <div>Error: {error.message || JSON.stringify(error)}</div>;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const product = await res.json();
+        console.log(product);
 
-  if (!user || !products || user.length === 0 || products.length === 0) {
-    return <div>No products found.</div>;
-  }  
+        setProducts(product);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const userCount = user.data.length;
-  const productCount = products.length;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const order = await res.json();
+
+        setOrder(order);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const userCount = users?.data?.length;
+  const productCount = products?.length;
   const orderCount = order?.total_purchase;
   const totalRevanue = order?.revanue;
   console.log(order);
