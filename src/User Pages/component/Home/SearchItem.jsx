@@ -11,7 +11,7 @@ function SearchItem() {
     data: products,
     loading,
     error,
-  } = useFetch("http://localhost:3000/users/products");
+  } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
 
   if (loading) {
     return <div>Loading...</div>;

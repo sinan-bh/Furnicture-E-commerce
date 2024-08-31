@@ -50,7 +50,7 @@ function Reg() {
           body: JSON.stringify(usrReg),
         };
 
-        const url = 'http://localhost:3000/users/registration';
+        const url = 'https://backend-ecommerce-furniture.onrender.com/users/registration';
 
         const response = await fetch(url, options);
         if (!response.ok) {

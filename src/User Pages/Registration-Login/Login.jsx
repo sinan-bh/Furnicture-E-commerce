@@ -11,7 +11,6 @@ function Login() {
     pass: '',
   });
 
-  // const 
   const [alert, setAlert] = useState(null);
 
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ function Login() {
         credentials: 'include',
       };
 
-      const url = 'http://localhost:3000/login';
+      const url = 'https://backend-ecommerce-furniture.onrender.com/login';
 
       const response = await fetch(url, options);
       const result = await response.json();

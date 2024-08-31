@@ -53,7 +53,7 @@ function Payment() {
         handler: function (response) {
           console.log(response);
           const userID = JSON.parse(localStorage.getItem("currentUser")).userID;
-          fetch(`http://localhost:3000/users/verify_payment/${userID}`, {
+          fetch(`https://backend-ecommerce-furniture.onrender.com/users/verify_payment/${userID}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

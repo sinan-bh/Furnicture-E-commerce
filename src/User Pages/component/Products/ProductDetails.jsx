@@ -12,7 +12,7 @@ function ProductDetails() {
     data: products,
     loading,
     error,
-  } = useFetch(`http://localhost:3000/users/products/${productID}`);
+  } = useFetch(`https://backend-ecommerce-furniture.onrender.com/users/products/${productID}`);
 
 
   if (loading) {

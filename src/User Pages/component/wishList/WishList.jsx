@@ -15,7 +15,7 @@ const Wishlist = () => {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/users/wishlist/${userID}`,
+            `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,
             {
               method: "GET",
               headers: {

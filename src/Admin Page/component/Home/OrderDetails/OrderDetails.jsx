@@ -12,7 +12,7 @@ function OrderDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/orders`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -50,7 +50,7 @@ function OrderDetails() {
       credentials: 'include',
     }
 
-    const url = 'http://localhost:3000/admin/order'
+    const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
 
     const response = await fetch(url, option)
 
