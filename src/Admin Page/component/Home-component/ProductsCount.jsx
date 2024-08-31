@@ -10,7 +10,7 @@ function ProductsCount() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/products`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -32,7 +32,7 @@ function ProductsCount() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",

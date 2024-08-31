@@ -23,7 +23,7 @@ function AddEditProduct() {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/admin/product/${id}`,{
+      fetch(`https://backend-ecommerce-furniture.onrender.com/admin/product/${id}`,{
         method: 'GET',
         credentials: 'include'
       })
@@ -75,8 +75,8 @@ function AddEditProduct() {
       };
 
       const url = id
-        ? `http://localhost:3000/admin/products/${id}`
-        : "http://localhost:3000/admin/products";
+        ? `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`
+        : "https://backend-ecommerce-furniture.onrender.com/admin/products";
 
       const response = await fetch(url, options);
 
