@@ -47,7 +47,7 @@ const Navbar = () => {
       }
     };
     fetchCartLength();
-  }, [isLogin,data,trigger]);
+  }, [trigger]);
 
   useEffect(() => {
     const fetchWishListLength = async () => {
@@ -70,7 +70,7 @@ const Navbar = () => {
       }
     };
     fetchWishListLength();
-  }, [isLogin,data,trigger]);
+  }, [trigger]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
