@@ -63,6 +63,7 @@ function CartContext(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ prodid: productID, quantityChange: 1 }),
+        credentials: 'include'
       };
       const { userID } = data;
       const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
@@ -79,6 +80,7 @@ function CartContext(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ prodid: productID, quantityChange: -1 }),
+      credentials: 'include'
     };
     const { userID } = data;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
@@ -93,6 +95,7 @@ function CartContext(props) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include'
     };
     const { userID } = data;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}/${productID}`;
@@ -145,6 +148,7 @@ function CartContext(props) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include'
     };
     const { userID } = data;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}/${productID}`;
