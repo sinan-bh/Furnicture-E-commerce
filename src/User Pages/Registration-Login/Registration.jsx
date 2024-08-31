@@ -8,7 +8,7 @@ function Reg() {
   const [usrReg, setUsrReg] = useState({
     name: '',
     email: '',
-    uname: '',
+    userName: '',
     pass: '',
   });
 
@@ -32,7 +32,7 @@ function Reg() {
     } else if (!/\S+@\S+\.\S+/.test(usrReg.email)) {
       newErrors.email = 'Email is invalid';
     }
-    if (!usrReg.uname) newErrors.uname = 'Username is required';
+    if (!usrReg.userName) newErrors.userName = 'Username is required';
     if (!usrReg.pass) newErrors.pass = 'Password is required';
     return newErrors;
   };
@@ -114,12 +114,12 @@ function Reg() {
                     type="text"
                     className="form-control"
                     placeholder="Username"
-                    name="uname"
-                    value={usrReg.uname}
+                    name="userName"
+                    value={usrReg.userName}
                     onChange={handleChange}
                   />
-                  {errors.uname && (
-                    <div className="text-danger">{errors.uname}</div>
+                  {errors.userName && (
+                    <div className="text-danger">{errors.userName}</div>
                   )}
                 </div>
                 <div className="form-group">

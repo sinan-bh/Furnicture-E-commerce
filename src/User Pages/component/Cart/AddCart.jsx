@@ -7,7 +7,7 @@ import "./Style.css";
 function AddCart() {
   const { cart, setOrder, cartProduct } = useContext(userContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
 
@@ -30,7 +30,7 @@ function AddCart() {
           const product = await res.json();
           console.log(product);
 
-          setUser(product);
+          setCartItem(product);
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
@@ -40,17 +40,17 @@ function AddCart() {
   }, [cartProduct]);
 
   useEffect(() => {
-    if (user?.length > 0) {
-      const totalItemCount = user?.reduce((total, item) => total + item.quantity, 0);
+    if (cartItem?.length > 0) {
+      const totalItemCount = cartItem?.reduce((total, item) => total + item.quantity, 0);
       setCount(totalItemCount);
 
-      const totalCartPrice = user?.reduce((total, item) => total + item.quantity * item.prodid.offerPrice, 0);
+      const totalCartPrice = cartItem?.reduce((total, item) => total + item.quantity * item.prodid.offerPrice, 0);
       setPrice(totalCartPrice.toFixed(2));
     } else {
       setCount(0);
       setPrice(0);
     }
-  }, [user,cart]);
+  }, [cartItem,cart]);
 
  
 
@@ -78,10 +78,10 @@ function AddCart() {
   };
 
   const handleItemRemove = (id) => {
-    setUser(user?.filter(item => item.prodid._id !== id));
+    setCartItem(cartItem?.filter(item => item.prodid._id !== id));
   };
 
-  const carts = user?.filter((item) => item.prodid);
+  const carts = cartItem?.filter((item) => item.prodid);
   const hasItemsInCart = carts.length > 0;
 
   

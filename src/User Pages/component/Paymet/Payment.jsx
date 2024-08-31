@@ -5,9 +5,9 @@ import AlertBox from "../../../popup box/AlertBox";
 import { useNavigate } from "react-router-dom";
 
 function Payment() {
-  const username = JSON.parse(localStorage.getItem("currentUser"));
+  const userName = JSON.parse(localStorage.getItem("currentUser"));
   const [formData, setFormData] = useState({
-    name: username.lname || "",
+    name: userName.username || "",
     address: "",
     email: "",
     phone: "",

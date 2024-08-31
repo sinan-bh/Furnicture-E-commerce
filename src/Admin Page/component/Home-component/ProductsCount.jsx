@@ -69,7 +69,6 @@ function ProductsCount() {
     (type) => type.type === "Bedroom Furniture"
   ).length;
 
-  console.log(orders);
   
 
   return (

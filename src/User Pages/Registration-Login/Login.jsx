@@ -7,7 +7,7 @@ import AlertBox from '../../popup box/AlertBox';
 function Login() {
   const [errors, setErrors] = useState({});
   const [formValue, setFormValue] = useState({
-    uname: '',
+    userName: '',
     pass: '',
   });
 
@@ -26,7 +26,7 @@ function Login() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formValue.uname) newErrors.uname = 'Username is required';
+    if (!formValue.userName) newErrors.userName = 'Username is required';
     if (!formValue.pass) newErrors.pass = 'Password is required';
     return newErrors;
   };
@@ -49,7 +49,7 @@ function Login() {
       const response = await fetch(url, options);
       const result = await response.json();
 
-      const { status, uname, token, user, data } = result;
+      const { status, userName, token, user, data } = result;
       console.log(result);
       
 
@@ -59,20 +59,19 @@ function Login() {
         return;
       }
 
-      // const adminDatas = AdminDetails.find((item) => item.type === 'admin');
-      if (formValue.uname === uname) {
+      if (formValue.userName === userName) {
         if (!token) {
           localStorage.removeItem("isLogin");
         }else{
           if (user) {
             setAlert({ type: 'success', message: 'Login successful' });
-            localStorage.setItem('currentUser', JSON.stringify({ username: uname, userID: user._id }));
+            localStorage.setItem('currentUser', JSON.stringify({ username: userName, userID: user._id }));
             localStorage.setItem('isLogin', JSON.stringify(true));
             setTimeout(() => navigate('/'), 1000);
           }
         }
-      } else if (formValue.uname === data) {
-        console.log('uname',uname);
+      } else if (formValue.userName === data) {
+        console.log('userName',userName);
         
         localStorage.setItem('isAdmin', JSON.stringify(true));
         setAlert({ type: 'success', message: 'Login successfully' });
@@ -107,12 +106,12 @@ function Login() {
                     className="form-control"
                     id="username"
                     placeholder="Username"
-                    name="uname"
+                    name="userName"
                     onChange={handleChange}
                     required
                   />
-                  {errors.uname && (
-                    <div className="text-danger">{errors.uname}</div>
+                  {errors.userName && (
+                    <div className="text-danger">{errors.userName}</div>
                   )}
                 </div>
                 <div className="form-group">

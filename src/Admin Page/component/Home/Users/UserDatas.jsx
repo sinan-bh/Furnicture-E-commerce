@@ -63,7 +63,7 @@ function UserDatas() {
                 <td data-label="Index">{index + 1}</td>
                 <td data-label="Name">{list.name}</td>
                 <td data-label="E-mail">{list.email}</td>
-                <td data-label="Username">{list.uname}</td>
+                <td data-label="Username">{list.userName}</td>
                 <td data-label="Date">{list.date}</td>
               </tr>
             ))}

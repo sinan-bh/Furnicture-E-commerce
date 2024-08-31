@@ -10,8 +10,8 @@ function CartContext(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
-  const [wishList, setWishList] = useState([]);
   const [cartProduct, setCartProduct] = useState(0);
+  const [trigger, setTrigger] = useState();
   const [alert, setAlert] = useState(null); 
 
 
@@ -129,7 +129,6 @@ function CartContext(props) {
         const response = await fetch(url, options);
         const result = await response.json();
         if (response.ok) {
-          setWishList(result);
           setAlert({ type: "success", message: "Product added to wishlist." });
           setTimeout(() => setAlert(null), 2000);
         } else {
@@ -166,6 +165,7 @@ function CartContext(props) {
     userDatas,
     order,
     cartProduct,
+    trigger,
     addToCart,
     addFromCart,
     removeFromCart,
@@ -177,6 +177,7 @@ function CartContext(props) {
     addWishList,
     removeFromWishList,
     setCartProduct,
+    setTrigger,
   };
 
   return (

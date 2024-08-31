@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OrderProducts.css";
 
 function OrderProducts() {
-  const [user, setUser] = useState([]);
+  const [order, setOrders] = useState([]);
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -15,8 +15,7 @@ function OrderProducts() {
             `http://localhost:3000/users/order/${userID}`
           );
           const data = await res.json();
-          setUser(data);
-          console.log(data);
+          setOrders(data);
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
@@ -25,9 +24,9 @@ function OrderProducts() {
     }
   }, []);
 
-  console.log(user.data);
+  console.log(order.data);
 
-  const hasItemsInOrder = user?.order?.length > 0;
+  const hasItemsInOrder = order?.order?.length > 0;
 
   return (
     <div className="order-details-container">
@@ -51,10 +50,10 @@ function OrderProducts() {
             </tr>
           </thead>
           <tbody>
-            {user?.order?.map((user) => (
-              <tr key={user._id}>
-                <td>{user.date}</td>
-                {user?.products?.map((item) => (
+            {order?.order?.map((order) => (
+              <tr key={order._id}>
+                <td>{order.date}</td>
+                {order?.products?.map((item) => (
                   <>
                     <td key={item._id}>
                       <img
@@ -67,8 +66,8 @@ function OrderProducts() {
                     <td>{item.category}</td>
                   </>
                 ))}
-                <td>${user.total_ammount}</td>
-                <td>{user.status}</td>
+                <td>${order.total_ammount}</td>
+                <td>{order.status}</td>
               </tr>
             ))}
           </tbody>

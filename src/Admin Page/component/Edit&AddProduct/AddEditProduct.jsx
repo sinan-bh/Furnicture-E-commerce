@@ -23,12 +23,14 @@ function AddEditProduct() {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/admin/product/${id}`)
+      fetch(`http://localhost:3000/admin/product/${id}`,{
+        method: 'GET',
+        credentials: 'include'
+      })
         .then((response) => response.json())
         .then((data) => {
           setFormData({
             ...data.data,
-            // type: "edit",
           })
         })
         .catch((error) => {
@@ -69,6 +71,7 @@ function AddEditProduct() {
       const options = {
         method: id ? "PUT" : "POST",
         body: formDataToSend,
+        credentials: 'include'
       };
 
       const url = id

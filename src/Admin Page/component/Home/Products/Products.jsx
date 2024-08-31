@@ -48,6 +48,7 @@ function Products({ type }) {
             `http://localhost:3000/admin/products/${id}`,
             {
               method: "DELETE",
+              credentials: 'include'
             }
           );
 
