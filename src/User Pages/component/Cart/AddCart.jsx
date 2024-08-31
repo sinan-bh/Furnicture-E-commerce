@@ -1,24 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 
 function AddCart() {
-  const { cart, setOrder, setCartProduct } = useContext(userContext);
+  const { cart, setOrder, cartProduct } = useContext(userContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
-  const [price, setPrice] = useState();
-  const [count, setCount] = useState();
-
-  const cartPrice = parseFloat(localStorage.getItem("cartPrice")) || price;
-  const cartCount = parseInt(localStorage.getItem("cartCount")) || count;
+  const [cartItem, setCartItem] = useState([]);
+  const [price, setPrice] = useState(0);
+  const [count, setCount] = useState(0);
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
+  const userID = data.userID;
+
   useEffect(() => {
-    if (data && data.userID) {
-      const userID = data.userID;
+    if (userID) {
 
       const fetchData = async () => {
         try {
@@ -32,49 +30,33 @@ function AddCart() {
           const product = await res.json();
           console.log(product);
 
-          setUser(product);
-          setCartProduct(data);
+          setCartItem(product);
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
       };
       fetchData();
     }
-  }, []);
+  }, [cartProduct]);
 
   useEffect(() => {
-    if (cart?.data?.length > 0 && user?.length > 0) {
-      const carts = user.filter((item) => item.prodid);
-      const totalItem = cart.data.reduce((total, item) => {
-        const matchingProduct = carts.find(
-          (cartItem) => cartItem.prodid._id === item.prodid
-        );
-        return matchingProduct ? total + item.quantity : total;
-      }, 0);
-      setCount(totalItem === 0 ? 1 : totalItem);
-      localStorage.setItem("cartCount", totalItem);
+    if (cartItem?.length > 0) {
+      const totalItemCount = cartItem?.reduce((total, item) => total + item.quantity, 0);
+      setCount(totalItemCount);
 
-      const totalPrice = cart.data.reduce((total, item) => {
-        const priceItem = carts.find(
-          (cartItem) => cartItem.prodid._id === item.prodid
-        );
-        if (priceItem) {
-          if (item.quantity === 0) {  
-            return total + 1 * priceItem.prodid.offerPrice;
-          }else{
-            return total + item.quantity * priceItem.prodid.offerPrice;
-          }
-        }
-        return total;
-      }, 0);
-
-      setPrice(totalPrice);
-      localStorage.setItem("cartPrice", totalPrice.toFixed(2));
+      const totalCartPrice = cartItem?.reduce((total, item) => total + item.quantity * item.prodid.offerPrice, 0);
+      setPrice(totalCartPrice.toFixed(2));
+    } else {
+      setCount(0);
+      setPrice(0);
     }
-  }, [cart, user]);
+  }, [cartItem,cart]);
+
+ 
 
   const handleCheckout = async () => {
-    const userID = data.userID;
+    console.log(price);
+    
     const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
       method: "POST",
       headers: {
@@ -87,23 +69,26 @@ function AddCart() {
     });
 
     const order = await response.json();
+    console.log(order);
+    
     setOrder(order);
     localStorage.setItem("order", JSON.stringify({ order }));
-    console.log(order);
 
     navigate("/payment");
   };
 
   const handleItemRemove = (id) => {
-    setUser(user.filter(item => item.prodid._id !== id));
+    setCartItem(cartItem?.filter(item => item.prodid._id !== id));
   };
 
-  const carts = user.filter((item) => item.prodid);
+  const carts = cartItem?.filter((item) => item.prodid);
   const hasItemsInCart = carts.length > 0;
+
+  
 
   return (
     <div>
-      {/* <Link to={'/orderstatus'} className="orderstatus btn btn-secondary">Order Products Status</Link> */}
+      <Link to={'/orderstatus'} className="orderstatus btn btn-secondary">Order Products Status</Link>
       <div className="container">
         {hasItemsInCart ? (
           <div className="cart-container">
@@ -119,8 +104,8 @@ function AddCart() {
             })}
             <hr />
             <div className="cart-summary">
-              <h6>Sub-Total ({cartCount} items)</h6>
-              <h6>${cartPrice}</h6>
+              <h6>Sub-Total ({count} items)</h6>
+              <h6>${price}</h6>
             </div>
             <div className="text-end">
               <button className="btn btn-secondary" onClick={handleCheckout}>

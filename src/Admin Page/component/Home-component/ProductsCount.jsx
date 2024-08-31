@@ -1,57 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
+import './home-combonent.css'
+
 function ProductsCount() {
-  const { data: user, loading, error } = useFetch("http://localhost:8000/user");
-  const {
-    data: products,
-    load,
-    err,
-  } = useFetch("http://localhost:8000/products");
+  const [products, setProducts] = useState([]);
+  const [orders, setOrder] = useState([]);
 
-  if (loading || load) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const product = await res.json();
+        console.log(product);
 
-  if (error || err) {
-    return <div>Error: {error.message || JSON.stringify(error)}</div>;
-  }
+        setProducts(product);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  if (!user || !products || user.length === 0 || products.length === 0) {
-    return <div>No products found.</div>;
-  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const orders = await res.json();
+
+        setOrder(orders);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const livingRoomItems = products
-    .filter((type) => type.type === "Living Room Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    ?.filter((type) => type.type === "Living Room Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
   const diningRoomItems = products
-    .filter((type) => type.type === "Dining Room Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    ?.filter((type) => type.type === "Dining Room Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
   const bedRoomItems = products
-    .filter((type) => type.type === "Bedroom Furniture")
-    .reduce((total, item) => total + item.quantity, 0);
+    ?.filter((type) => type.type === "Bedroom Furniture")
+    .reduce((total, item) => total + Number(item.quantity), 0);
 
-  const livingRoom = products.filter(
+  const livingRoom = products?.filter(
     (type) => type.type === "Living Room Furniture"
   ).length;
-  const diningRoom = products.filter(
+  const diningRoom = products?.filter(
     (type) => type.type === "Dining Room Furniture"
   ).length;
-  const bedRoom = products.filter(
+  const bedRoom = products?.filter(
     (type) => type.type === "Bedroom Furniture"
   ).length;
 
+  
+
   return (
-    <div>
-      <h1 className="text-center">
+    <div className="productCountTable">
+      <h1 className="">
         <span className="bold">Products</span>
       </h1>
-      <table className="table">
+      <table className="productCountTableItem">
         <thead>
           <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Total</th>
-            <th scope="col">Quantity</th>
+            <th scope="col" className="">Category</th>
+            <th scope="col">Products</th>
+            <th scope="col">Products Items</th>
+            <th scope="col">Purchased Products</th>
+            <th scope="col">Total Products</th>
           </tr>
         </thead>
         <tbody>
@@ -59,16 +91,22 @@ function ProductsCount() {
             <td>Living Room</td>
             <td>{livingRoom}</td>
             <td>{livingRoomItems}</td>
+            <td>{orders?.livingPurchased}</td>
+            <td>{livingRoomItems - orders?.livingPurchased}</td>
           </tr>
           <tr>
             <td>Dining Room</td>
             <td>{diningRoom}</td>
             <td>{diningRoomItems}</td>
+            <td>{orders?.diningPurchased}</td>
+            <td>{diningRoomItems - orders?.diningPurchased}</td>
           </tr>
           <tr>
             <td>Bed Room</td>
             <td>{bedRoom}</td>
             <td>{bedRoomItems}</td>
+            <td>{orders?.bedPurchased}</td>
+            <td>{bedRoomItems - orders?.bedPurchased}</td>
           </tr>
         </tbody>
       </table>

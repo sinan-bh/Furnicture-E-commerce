@@ -1,0 +1,133 @@
+
+
+
+.card-container-bg {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+
+  .card-1 {
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  
+  .card-1:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .card-body {
+    opacity: 0;
+    animation: fadeInUp 0.8s forwards ease-in-out;
+  }
+  
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  .productCountTableItem {
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .productCountTableItem th, .productCountTableItem td {
+    max-width: 100%;
+    padding: 10px 20px 30px 20px ;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #0d0b0b;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .card-container-bg {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .card-1 {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .productCountTableItem th, .productCountTableItem td {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .card-1 {
+      width: 90%;
+      margin: auto;
+    }
+  }
+
+  .productCountTable{
+    margin-left: 25px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .bold {
+    font-weight: bold;
+    color: #333;
+  
+  }
+  
+  .positive {
+    color: #28a745;
+  }
+  
+  
+  
+  tbody tr {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-in-out forwards;
+    transform: translateY(20px);
+  }
+  
+  tbody tr:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  
+  tbody tr:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  
+  tbody tr:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

@@ -4,8 +4,8 @@ import { userContext } from "../../../context/CartContext";
 import { IoCartSharp } from "react-icons/io5";
 
 const Wishlist = () => {
-  const [user, setUser] = useState([]);
-  const { removeFromWishList } = useContext(userContext);
+  const [wishlist, setWishList] = useState([]);
+  const { removeFromWishList, addToCart, setTrigger } = useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -25,8 +25,7 @@ const Wishlist = () => {
             }
           );
           const data = await res.json();
-          setUser(data);
-          console.log(data);
+          setWishList(data);
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
@@ -38,20 +37,21 @@ const Wishlist = () => {
   const handleRemoveItem = async (id) => {
     const success = await removeFromWishList(id);
     if (success) {
-      setUser((prevUser) => ({
+      setWishList((prevUser) => ({
         ...prevUser,
         data: prevUser.data.filter((item) => item._id !== id),
       }));
+      setTrigger(id)
     }
   };
 
-  const hasItemsInWishList = user?.data?.length > 0;
+  const hasItemsInWishList = wishlist?.data?.length > 0;
 
   return (
     <div className="wishlist-container">
       {hasItemsInWishList ? (
       <div>
-        {user?.data?.map((product) => (
+        {wishlist?.data?.map((product) => (
           <div className="product" key={product._id}>
             <img
               src={product.image}
@@ -66,8 +66,8 @@ const Wishlist = () => {
             <div className="product-price">
               offerPrice ${product.offerPrice}
             </div>
-            <div className="add-delete">
-              <div className="delete-icon">
+            <div className="add-delete" onClick={()=> addToCart(product._id)}>
+              <div className="delete-icon" >
                 <IoCartSharp />
               </div>
               <div

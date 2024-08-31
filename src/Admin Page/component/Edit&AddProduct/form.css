@@ -1,29 +1,131 @@
 
-.control{
-    width: 85%;
-    margin: 100px 100px;
-    display: flex;
-    justify-content: center;
-}
-.add-product-form{
-    
-    width: 50%;
-    
-}
-.form-label{
-    width: 200px;
+.add-edit-product-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
 }
 
-.add-edit-product-form{
-    display: flex;
-    justify-content: center;
-    margin-right: 50px;
+.add-edit-product-form form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
 }
-.selectCategory{
-    display: flex;
-    justify-content: center;
+
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
 }
-.add-btn{
-    display: flex;
-    justify-content: center;
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #7a42f4;
+  outline: none;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.d-flex .form-group {
+  flex: 1;
+}
+
+
+.qty-price {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.qty-price .form-group {
+  flex-basis: 100px; 
+  margin-bottom: 0; 
+}
+
+.qty-price input {
+  width: 100px; 
+}
+
+
+.selectCategory {
+  margin-top: 20px;
+  width: 400px;
+  display: flex;
+  margin-left: 300px;  
+}
+
+
+.add-btn {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.add-btn button {
+  background-color: #0e0e0f;
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.add-btn button:hover {
+  background-color: #09090a;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .d-flex {
+    flex-direction: column;
+  }
+
+  .qty-price {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+  }
 }

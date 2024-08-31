@@ -1,25 +1,56 @@
-import React from "react";
-import "./navbar.css";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import AlertBox from "../../../popup box/AlertBox";
+import ConfirmBox from "../../../popup box/ConfirmBox";
 import { AiFillHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
+import { FaShoppingCart } from "react-icons/fa";
 
+import "./navbar.css";
 
 
 
 function NavBarAdmin() {
-
+  const navigate = useNavigate()
+  const [alert, setAlert] = useState(null);
+  const [confirm, setConfirm] = useState(null);
+  
   const handleLogout = ()=> {
-    localStorage.removeItem('isAdmin')
-    alert("Logo Out");
-  }
+    setConfirm({
+      message: `Do you want to logout?`,
+      onConfirm: () => {
+        localStorage.removeItem('isAdmin')
+        setAlert({ type: "success", message: "Logged out successfully." });
+        setTimeout(() => setAlert(null), 1000);
+        navigate("/");
+        setConfirm(null); 
+      },
+      onCancel: () => {
+        setConfirm(null); 
+      }
+    });
+  };
+
 
   return (
     <nav className="navbar">
-    
+    {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
+      {confirm && (
+        <ConfirmBox
+          message={confirm.message}
+          onConfirm={confirm.onConfirm}
+          onCancel={confirm.onCancel}
+        />
+      )}
       <div className="container-fluid">
         <div className="navbar-admin ">
           <div className="mb-5 nav-hover">
@@ -46,9 +77,16 @@ function NavBarAdmin() {
               <AiFillProduct className="nav-products" />
             </Link>
           </div>
+          <div className=" nav-hover mb-5">
+            <Link
+              to="/adminhome/order"
+              className="fw-bold text-decoration-none mb-3 text-secondary"
+            >
+              <FaShoppingCart className="nav-products" />
+            </Link>
+          </div>
           <div className=" nav-hover" onClick={handleLogout}>
             <Link
-              to="/"
               className="fw-bold text-decoration-none mb-3 text-secondary"
             >
               <FiLogOut className="nav-products" />

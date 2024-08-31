@@ -1,0 +1,87 @@
+.adminhome {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 5px 10px 0 0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.product-images {
+  width: 150px;
+  height: 150px;
+}
+
+.edit-del {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+  }
+
+  .table td {
+    padding-left: 50%;
+    position: relative;
+    text-align: right;
+  }
+
+  .table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .product-image {
+    width: 80px;
+  }
+
+  .edit-del {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-image {
+    width: 70px;
+  }
+
+  .table td {
+    padding: 8px;
+  }
+
+  .edit-del {
+    flex-direction: row;
+  }
+}
+
+.btn {
+  font-size: 14px;
+}

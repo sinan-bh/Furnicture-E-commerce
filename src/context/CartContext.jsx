@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../Custom Hook/useFetch";
-import AlertBox from "../User Pages/component/popup box/AlertBox"; 
+import AlertBox from "../popup box/AlertBox"; 
 
 export const userContext = createContext(null);
 
@@ -10,9 +10,10 @@ function CartContext(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
-  const [wishList, setWishList] = useState([]);
-  const [cartProduct, setCartProduct] = useState([]);
+  const [cartProduct, setCartProduct] = useState(0);
+  const [trigger, setTrigger] = useState();
   const [alert, setAlert] = useState(null); 
+
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
@@ -128,7 +129,6 @@ function CartContext(props) {
         const response = await fetch(url, options);
         const result = await response.json();
         if (response.ok) {
-          setWishList(result);
           setAlert({ type: "success", message: "Product added to wishlist." });
           setTimeout(() => setAlert(null), 2000);
         } else {
@@ -164,6 +164,8 @@ function CartContext(props) {
     searchTerm,
     userDatas,
     order,
+    cartProduct,
+    trigger,
     addToCart,
     addFromCart,
     removeFromCart,
@@ -175,6 +177,7 @@ function CartContext(props) {
     addWishList,
     removeFromWishList,
     setCartProduct,
+    setTrigger,
   };
 
   return (

@@ -6,8 +6,9 @@ import { IoCartSharp } from "react-icons/io5";
 import { userContext } from "../../../context/CartContext";
 import { CiSearch, CiLogout, CiLogin } from "react-icons/ci";
 import Logo from "../../../assets/img/logo/logo.png";
-import ConfirmBox from "../popup box/ConfirmBox";
-import AlertBox from "../popup box/AlertBox";
+import ConfirmBox from "../../../popup box/ConfirmBox";
+import AlertBox from "../../../popup box/AlertBox";
+
 import "./Style.css";
 
 const Navbar = () => {
@@ -19,23 +20,10 @@ const Navbar = () => {
   const [wishlistLength, setWishListLength] = useState(0);
   const [alert, setAlert] = useState(null);
   const [confirm, setConfirm] = useState(null); 
-  const { searchTerm, setSearchTerm } = useContext(userContext);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (menuRef.current && !menuRef.current.contains(event.target)) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+  const { searchTerm, setSearchTerm, trigger } = useContext(userContext);
 
 
   useEffect(() => {
@@ -59,7 +47,7 @@ const Navbar = () => {
       }
     };
     fetchCartLength();
-  }, [isLogin,data]);
+  }, [isLogin,data,trigger]);
 
   useEffect(() => {
     const fetchWishListLength = async () => {
@@ -82,7 +70,7 @@ const Navbar = () => {
       }
     };
     fetchWishListLength();
-  }, [isLogin,data]);
+  }, [isLogin,data,trigger]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);

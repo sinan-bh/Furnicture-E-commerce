@@ -1,0 +1,90 @@
+
+.user-data-container {
+  padding: 20px;
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.user-data-container h2 {
+  font-size: 2rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.search-container-user {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-left: 710px;
+}
+
+.search-container-user input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+  text-align: left;
+  padding: 15px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.user-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.user-table tbody tr:hover {
+  background-color: #e9e9e9;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .user-table {
+    border: 0;
+  }
+
+  .user-table thead {
+    display: none;
+  }
+
+  .user-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .user-table tbody td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .user-table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    font-weight: bold;
+    text-align: left;
+    font-size: 14px;
+  }
+}

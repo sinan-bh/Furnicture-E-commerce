@@ -1,30 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import AlertBox from "../../../popup box/AlertBox";
 import "./form.css";
 
 function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
   const [formData, setFormData] = useState({
-    id: id,
-    image: "",
-    imageCategory: "",
+    title: "",
     description: "",
     details: "",
     price: "",
     offerPrice: "",
     type: "",
+    category: "",
+    quantity: "",
   });
+
+
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/products/${id}`)
+      fetch(`http://localhost:3000/admin/product/${id}`,{
+        method: 'GET',
+        credentials: 'include'
+      })
         .then((response) => response.json())
         .then((data) => {
           setFormData({
-            ...data,
-            type: "edit",
-          });
+            ...data.data,
+          })
         })
         .catch((error) => {
           console.error("Failed to fetch product data:", error);
@@ -40,49 +47,76 @@ function AddEditProduct() {
     });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formDataToSend = new FormData();
+    const filteredFormData = { ...formData };
+    delete filteredFormData._id;
+    delete filteredFormData.__v;
+
+    Object.keys(filteredFormData).forEach((key) => {
+      formDataToSend.append(key, filteredFormData[key]);
+    });
+
+    if (file) {
+      formDataToSend.append("image", file);
+    }
+
     try {
       const options = {
         method: id ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
+        credentials: 'include'
       };
 
       const url = id
-        ? `http://localhost:8000/products/${id}`
-        : "http://localhost:8000/products";
+        ? `http://localhost:3000/admin/products/${id}`
+        : "http://localhost:3000/admin/products";
 
       const response = await fetch(url, options);
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      navigate("/adminhome/product-details");
+      setAlert({ type: 'success', message: id ? 'Product Updated' : 'Product Added' });
+      setTimeout(() => navigate("/adminhome/product-details"), 1000);
+      
     } catch (error) {
       console.error("Failed to add/edit product:", error);
+      setAlert({ type: 'error', message: 'Update failed' });
+        setTimeout(() => setAlert(null), 1000);
     }
   };
 
   return (
     <div className="add-edit-product-form">
+      {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div>
-        <h3 className="text-center ms-5 ps-5">
+        <h3 className="text-center ">
           {id ? "Edit Product" : "Add New Product"}
         </h3>
-        <form onSubmit={handleSubmit}>
-          <div className="d-flex ">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="d-flex">
             <div className="">
               <div className="form-group">
-                <label>Image URL:</label>
+                <label>Image:</label>
                 <input
-                  type="text"
+                  type="file"
                   className="form-control"
                   name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
-                  required
+                  onChange={handleFileChange}
+                  required = {!id ? true : false}
                 />
               </div>
               <div className="form-group">
@@ -95,26 +129,16 @@ function AddEditProduct() {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label>Price:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+              
             </div>
             <div className="">
               <div className="form-group">
-                <label>Image Category:</label>
+                <label>Title:</label>
                 <input
                   type="text"
                   className="form-control"
-                  name="imageCategory"
-                  value={formData.imageCategory}
+                  name="title"
+                  value={formData.title}
                   onChange={handleInputChange}
                   required
                 />
@@ -129,22 +153,46 @@ function AddEditProduct() {
                   required
                 />
               </div>
+              <div className="qty-price">
               <div className="form-group">
-                <label>Offer Price:</label>
+                <label>Price:</label>
                 <input
                   type="number"
-                  className="form-control"
-                  name="offerPrice"
-                  value={formData.offerPrice}
+                  className=""
+                  name="price"
+                  value={formData.price}
                   onChange={handleInputChange}
                   required
                 />
+              </div>
+                <div className="form-group">
+                  <label>Offer Price:</label>
+                  <input
+                    type="number"
+                    className=""
+                    name="offerPrice"
+                    value={formData.offerPrice}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group qty">
+                  <label>Quantity:</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div className="selectCategory">
             <div className="form-group">
-              <label>Category:</label>
+              <label>Type:</label>
               <select
                 className="form-control"
                 name="type"
@@ -152,7 +200,7 @@ function AddEditProduct() {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Select category</option>
+                <option value="">Select type</option>
                 <option value="Living Room Furniture">
                   Living Room Furniture
                 </option>
@@ -162,9 +210,24 @@ function AddEditProduct() {
                 <option value="Bedroom Furniture">Bedroom Furniture</option>
               </select>
             </div>
+            <div className="form-group ms-3">
+              <label>Category:</label>
+              <select
+                className="form-control"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select category</option>
+                <option value="livingroom">livingroom</option>
+                <option value="diningroom">diningroom</option>
+                <option value="bedroom">bedroom</option>
+              </select>
+            </div>
           </div>
-          <div className="add-btn ms-5 ps-5 mt-3">
-            <button type="submit" className="btn btn-secondary ms-5">
+          <div className="add-btn">
+            <button type="submit" className="btn btn-secondary">
               {id ? "Save Changes" : "Add Product"}
             </button>
           </div>

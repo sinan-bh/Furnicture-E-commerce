@@ -1,7 +1,6 @@
-/* Order Status Button */
 .orderstatus {
   display: block;
-  margin: 150px auto 5px auto; /* Center the button horizontally */
+  margin: 150px auto 5px auto; 
   padding: 12px 24px;
   background-color: #343a40;
   color: white;
@@ -10,18 +9,18 @@
   border-radius: 5px;
   max-width: 300px;
   transition: background-color 0.3s ease;
-  width: 90%; /* Make the button responsive */
-  box-sizing: border-box; /* Ensure padding is included in the width */
+  width: 90%; 
+  box-sizing: border-box; 
 }
 
 .orderstatus:hover {
   background-color: #495057;
 }
 
-/* Cart Container */
+
 .cart-container {
   max-width: 100%;
-  margin: 150px auto;
+  margin: 10px auto;
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 12px;
@@ -44,7 +43,7 @@
   text-decoration: underline;
 }
 
-/* Item Container */
+
 .item-container {
   display: flex;
   align-items: center;
@@ -53,7 +52,7 @@
 }
 
 .item-container img {
-  width: 80px; /* Adjust width as needed */
+  width: 80px; 
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
@@ -130,7 +129,7 @@
   text-decoration: underline;
 }
 
-/* Cart Summary */
+
 .cart-summary {
   display: flex;
   flex-direction: column;
@@ -150,7 +149,7 @@
   color: #495057;
 }
 
-/* Checkout Button */
+
 .text-end {
   text-align: center;
   margin-top: 20px;
@@ -171,7 +170,7 @@
   background-color: #495057;
 }
 
-/* Empty Cart Styling */
+
 .empt-cart {
   display: flex;
   justify-content: center;
@@ -182,7 +181,7 @@
   border: none;
 }
 
-/* Mobile Styles */
+
 @media (max-width: 768px) {
   .cart-container {
     padding: 15px;
