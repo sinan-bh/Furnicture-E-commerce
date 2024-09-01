@@ -65,6 +65,7 @@ function Payment() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             }),
+            credentials: 'include',
           })
             .then((res) => res.text())
             .then((text) => setAlert({ message: text, type: "success" }))
