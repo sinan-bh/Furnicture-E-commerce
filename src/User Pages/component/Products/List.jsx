@@ -8,7 +8,19 @@ import { MdShoppingCart } from "react-icons/md";
 function List({ list }) {
   const { _id: productID, title, image, description, price, offerPrice } = list;
 
-  const { addToCart, addWishList } = useContext(userContext);
+  const { addToCart, addWishList, setTrigger } = useContext(userContext);
+
+  const addToCartItem = async (id) => {
+    await addToCart(id)
+    setTrigger(id)
+  }
+
+  const addToWishListItem = async (id) => {
+    await addWishList(id)
+    setTrigger(id)
+  }
+
+
 
   return (
     <div className=" card-item">
@@ -40,13 +52,13 @@ function List({ list }) {
         <div className="wish-cart">
           <div
             className="btn-save"
-            onClick={() => addWishList(productID)}
+            onClick={() => addToWishListItem(productID)}
           >
             <FaHeart size={20}/>
           </div>
           <div
             className="btn-list"
-            onClick={() => addToCart(productID)}
+            onClick={() => addToCartItem(productID)}
           >
             <MdShoppingCart size={20}/>
           </div>
