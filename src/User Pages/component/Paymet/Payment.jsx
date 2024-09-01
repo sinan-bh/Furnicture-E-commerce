@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function Payment() {
   const userName = JSON.parse(localStorage.getItem("currentUser"));
+  const { setTrigger } = useContext(useContext)
   const [formData, setFormData] = useState({
     name: userName.username || "",
     address: "",
@@ -66,6 +67,7 @@ function Payment() {
           })
             .then((res) => res.text())
             .then((text) => setAlert({ message: text, type: "success" }))
+            .then(()=> setTrigger(true))
             .then(()=> navigate('/orderstatus'))
             .then(()=> setTimeout(() => setAlert(null), 2000))
             .catch(() => setAlert({ message: "Payment verification failed", type: "error" }));
