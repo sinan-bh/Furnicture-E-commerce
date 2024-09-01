@@ -13,7 +13,7 @@ function AdminContext(props) {
     loading,
     error,
     setData: setProducts,
-  } = useFetch("http://localhost:3000/admin/products");
+  } = useFetch("https://backend-ecommerce-furniture.onrender.com/admin/products");
 
   const [product, setProduct] = useState({
     image: "",
@@ -34,7 +34,7 @@ function AdminContext(props) {
 
   const fetchProduct = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/products/${id}`);
+      const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch product");
       }
