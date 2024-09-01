@@ -3,6 +3,7 @@ import "./Style.css";
 import Logo from "../../../assets/img/logo/logo.png";
 import AlertBox from "../../../popup box/AlertBox"; 
 import { useNavigate } from "react-router-dom";
+import { userContext } from "../../../context/CartContext";
 
 function Payment() {
   const userName = JSON.parse(localStorage.getItem("currentUser"));
