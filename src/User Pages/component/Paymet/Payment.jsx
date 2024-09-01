@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function Payment() {
   const userName = JSON.parse(localStorage.getItem("currentUser"));
-  const { setTrigger } = useContext(useContext)
+  const { setTrigger } = useContext(userContext)
   const [formData, setFormData] = useState({
     name: userName.username || "",
     address: "",
