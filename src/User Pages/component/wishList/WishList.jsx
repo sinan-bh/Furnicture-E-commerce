@@ -5,6 +5,7 @@ import { IoCartSharp } from "react-icons/io5";
 
 const Wishlist = () => {
   const [wishlist, setWishList] = useState([]);
+  const [alert, setAlert] = useState(null);
   const { removeFromWishList, addToCart, setTrigger } = useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -42,6 +43,8 @@ const Wishlist = () => {
         data: prevUser.data.filter((item) => item._id !== id),
       }));
       setTrigger(id)
+      setAlert({ type: "info", message: "Remove From WishList" });
+      setTimeout(() => setAlert(null), 1000);
     }
   };
 
@@ -49,6 +52,13 @@ const Wishlist = () => {
 
   return (
     <div className="wishlist-container">
+      {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       {hasItemsInWishList ? (
       <div>
         {wishlist?.data?.map((product) => (
