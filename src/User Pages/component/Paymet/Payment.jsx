@@ -65,7 +65,7 @@ function Payment() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             }),
-            credentials: 'include',
+
           })
             .then((res) => res.text())
             .then((text) => setAlert({ message: text, type: "success" }))
@@ -81,7 +81,7 @@ function Payment() {
           address: formData.address
         },
         theme: {
-          color: '#F37254',
+          color: '#3399cc',
         },
       };
 

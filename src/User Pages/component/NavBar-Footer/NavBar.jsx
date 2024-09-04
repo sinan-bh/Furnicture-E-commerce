@@ -64,7 +64,7 @@ const Navbar = () => {
           const result = await response.json();
           setWishListLength(result.data.length);
         } else {
-          setAlert({ type: "error", message: "Failed to fetch wishlist data." });
+          setAlert({ type: "error", message: "Failed to fetch wishlist data" });
           setTimeout(() => setAlert(null), 1000);
         }
       }
