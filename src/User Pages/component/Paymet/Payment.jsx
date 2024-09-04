@@ -81,7 +81,7 @@ function Payment() {
           address: formData.address
         },
         theme: {
-          color: '#F37254',
+          color: '#3399cc',
         },
       };
 
