@@ -11,7 +11,7 @@ function CartContext(props) {
   const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
   const [cartProduct, setCartProduct] = useState(0);
-  const [trigger, setTrigger] = useState();
+  const [trigger, setTrigger] = useState(false);
   const [alert, setAlert] = useState(null); 
 
 

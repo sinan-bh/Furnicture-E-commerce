@@ -43,7 +43,7 @@ const Wishlist = () => {
         ...prevUser,
         data: prevUser.data.filter((item) => item._id !== id),
       }));
-      setTrigger(id)
+      setTrigger(true)
       setAlert({ type: "info", message: "Remove From WishList" });
       setTimeout(() => setAlert(null), 1000);
     }
@@ -77,8 +77,8 @@ const Wishlist = () => {
             <div className="product-price">
               offerPrice ${product.offerPrice}
             </div>
-            <div className="add-delete" onClick={()=> addToCart(product._id)}>
-              <div className="delete-icon" >
+            <div className="add-delete" >
+              <div className="delete-icon" onClick={()=> addToCart(product._id)}>
                 <IoCartSharp />
               </div>
               <div
