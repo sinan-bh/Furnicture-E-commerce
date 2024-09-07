@@ -10,11 +10,11 @@ function Collections({ type }) {
     data: products,
     loading,
     error,
-  } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
+  } = useFetch("http://localhost:3000/users/products");
 
   const {
     data: category,
-  } = useFetch(`https://backend-ecommerce-furniture.onrender.com/users/products?category=${type}`);
+  } = useFetch(`http://localhost:3000/users/products?category=${type}`);
 
  
 

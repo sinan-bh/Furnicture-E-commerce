@@ -20,7 +20,8 @@ function AddCart() {
 
       const fetchData = async () => {
         try {
-          const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`, {
+          const res = await fetch(`http://localhost:3000/users/cart/${userID}`, {
+          // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`, {
             method: "GET",
             headers: {
               "Content-Type": "Application/json"
@@ -57,7 +58,8 @@ function AddCart() {
   const handleCheckout = async () => {
     console.log(price);
     
-    const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/payment/${userID}`, {
+    const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
+    // const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/payment/${userID}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

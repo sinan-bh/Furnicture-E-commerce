@@ -12,7 +12,8 @@ function OrderProducts() {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `https://backend-ecommerce-furniture.onrender.com/users/order/${userID}`,{
+            `http://localhost:3000/users/order/${userID}`,{
+            // `https://backend-ecommerce-furniture.onrender.com/users/order/${userID}`,{
               method: 'GET',
               credentials: 'include',
             });

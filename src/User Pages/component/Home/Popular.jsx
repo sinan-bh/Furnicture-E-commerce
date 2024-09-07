@@ -9,7 +9,8 @@ function Popular() {
   useEffect(()=> {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
+        const res = await fetch(`http://localhost:3000/users/popularproducts`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json"

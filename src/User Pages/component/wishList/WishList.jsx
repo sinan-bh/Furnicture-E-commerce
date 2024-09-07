@@ -17,7 +17,8 @@ const Wishlist = () => {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,
+            `http://localhost:3000/users/wishlist/${userID}`,
+            // `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,
             {
               method: "GET",
               headers: {
@@ -36,6 +37,11 @@ const Wishlist = () => {
     }
   }, []);
 
+  const addToCartItem = async (id) => {
+    await addToCart(id)
+    setTrigger(id)
+  }
+
   const handleRemoveItem = async (id) => {
     const success = await removeFromWishList(id);
     if (success) {
@@ -48,6 +54,8 @@ const Wishlist = () => {
       setTimeout(() => setAlert(null), 1000);
     }
   };
+
+  
 
   const hasItemsInWishList = wishlist?.data?.length > 0;
 
@@ -78,7 +86,7 @@ const Wishlist = () => {
               offerPrice ${product.offerPrice}
             </div>
             <div className="add-delete" >
-              <div className="delete-icon" onClick={()=> addToCart(product._id)}>
+              <div className="delete-icon" onClick={()=> addToCartItem(product._id)}>
                 <IoCartSharp />
               </div>
               <div
