@@ -1,79 +1,93 @@
 import React, { useEffect, useState } from "react";
-import "./OrderDetails.css";
-import Pagination from "../../../../popup box/Pagination";
-import useFetch from "../../../../Custom Hook/useFetch";
 import { Link, useParams } from "react-router-dom";
+import Pagination from "../../../../popup box/Pagination";
 
-function OrderDetails() {
-  const [orders,setOrders] = useState([])
+const UserById = () => {
+    const [orders,setOrders] = useState([])
   const [updateOrderID, setUpdateOrderID] = useState(null)
   const [updateStatus, setUpdateStatus] = useState("")
   const [dependency, setDependency] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
+    const {id} = useParams()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/admin/orders`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
-          method: "GET",
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const res = await fetch(`http://localhost:3000/admin/user/${id}`, {
+            // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "Application/json",
+              },
+              credentials: "include",
+            });
+            const order = await res.json();
+            console.log(order);
+            
+            setOrders(order);
+    
+          } catch (error) {
+            console.error("Error fetching cart data:", error);
+          }
+        };
+        fetchData();
+      }, [dependency]);
+
+      const handleEditClick = (orderId, currentStatus) => {
+        setUpdateOrderID(orderId); 
+        setUpdateStatus(currentStatus); 
+      };
+    
+      const handleStatusChange = (e) => {
+        setUpdateStatus(e.target.value); 
+      };
+    
+      const handleSaveClick = async (orderId) => {
+    
+        const option = {
+          method: "PUT",
           headers: {
-            "Content-Type": "Application/json",
+            "Content-Type": "application/json",
           },
-          credentials: "include",
-        });
-        const order = await res.json();
+          body: JSON.stringify({order_id: orderId, status: updateStatus}),
+          credentials: 'include',
+        }
+    
+        const url = 'http://localhost:3000/admin/order'
+        // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
+    
+        const response = await fetch(url, option)
+    
+        setDependency(response)
+        setUpdateOrderID(null); 
+      };
 
-        setOrders(order);
-
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, [dependency]);
-
-  const handleEditClick = (orderId, currentStatus) => {
-    setUpdateOrderID(orderId); 
-    setUpdateStatus(currentStatus); 
-  };
-
-  const handleStatusChange = (e) => {
-    setUpdateStatus(e.target.value); 
-  };
-
-  const handleSaveClick = async (orderId) => {
-
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({order_id: orderId, status: updateStatus}),
-      credentials: 'include',
-    }
-
-    const url = 'http://localhost:3000/admin/order'
-    // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
-
-    const response = await fetch(url, option)
-
-    setDependency(response)
-    setUpdateOrderID(null); 
-  };
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = orders?.data?.slice(indexOfFirstOrder, indexOfLastOrder);
-
-  console.log(currentOrders);
-  
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+      const indexOfLastOrder = currentPage * ordersPerPage;
+      const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+      const currentOrders = orders?.order?.slice(indexOfFirstOrder, indexOfLastOrder);
+      const paginate = (pageNumber) => setCurrentPage(pageNumber);
+      const totalPurchased = orders?.order?.map(item=> item.products.length).reduce((acc,item)=> acc + item, 0)
+      const totalPrize = orders?.order?.reduce((acc,item)=> acc + item.total_ammount, 0)    
+      const hasOrder = orders?.order?.some(item=> item.order._id)
 
   return (
-    <div>
+    <div className="userById card">
+      <h2>User Details</h2>
+      <div className="userById-container ">
+        <div className="userById-left">
+          <div>Name : {orders?.data?.name}</div>
+          <div>E-mail : {orders?.data?.email}</div>
+          <div>Phone Number :{orders?.data?.phone}</div>
+        </div>
+        <div>
+            <div>Address :{orders?.data?.address}</div>
+            <div>Total Purchased : {totalPurchased}</div>
+            <div>Total Prize : {totalPrize?.toFixed()}</div>
+        </div>
+      </div>
+        {hasOrder ? (
+      <div>
       <h2 className="text-center pt-3">Order Producus Status</h2>
       <div className="order-details-container">
         <table className="order-details-table">
@@ -85,7 +99,6 @@ function OrderDetails() {
               <th>Payment</th>
               <th>Status</th>
               <th>Edit</th>
-              <th>User</th>
             </tr>
           </thead>
           <tbody>
@@ -138,7 +151,6 @@ function OrderDetails() {
                     <button onClick={() => handleEditClick(order._id, order.status)}>Edit</button>
                   )}
                 </td>
-                <td><div>{order.userID.name}</div><Link to={`/adminhome/user/${order.userID._id}`}>click here</Link ></td>
               </tr>
             ))}
           </tbody>
@@ -151,7 +163,11 @@ function OrderDetails() {
         />
       </div>
     </div>
+      ): (
+        <div> User Not Purchased </div>
+      )}
+    </div>
   );
-}
+};
 
-export default OrderDetails;
+export default UserById;

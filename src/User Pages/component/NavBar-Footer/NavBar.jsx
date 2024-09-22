@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoCartSharp } from "react-icons/io5";
 import { userContext } from "../../../context/CartContext";
-import { CiSearch, CiLogout, CiLogin } from "react-icons/ci";
+import { CiSearch, CiLogin } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import { TbLogout } from "react-icons/tb";
 import Logo from "../../../assets/img/logo/logo.png";
 import ConfirmBox from "../../../popup box/ConfirmBox";
 import AlertBox from "../../../popup box/AlertBox";
@@ -23,6 +25,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
+  const [dropdownOpen, setDropdownOpen] = useState(false); 
   const { searchTerm, setSearchTerm, trigger } = useContext(userContext);
 
 
@@ -99,18 +102,23 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   const handleLogout = () => {
+    // toggleDropdown()
     setConfirm({
-      message: ` Hey ${data.username}, Do you want to logout?`,
+      message: `Hey ${data.username}, Do you want to logout?`,
       onConfirm: () => {
         localStorage.removeItem("isLogin");
         setAlert({ type: "success", message: "Logged out successfully." });
         setTimeout(() => setAlert(null), 1000);
         navigate("/");
-        setConfirm(null); 
+        setConfirm(null);
       },
       onCancel: () => {
-        setConfirm(null); 
+        setConfirm(null);
       }
     });
   };
@@ -120,6 +128,7 @@ const Navbar = () => {
     const handleMEnuClick = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
               setIsOpen(false);
+              setDropdownOpen(false)
             }
           };
       
@@ -245,14 +254,27 @@ const Navbar = () => {
               )}
             </div>
             {isLogin ? (
-              <button
-                type="button"
-                className="log-btn fw-bold"
-                onClick={handleLogout}
-              >
-                <span className="user-login">{data.username}</span>
-                <CiLogout />
-              </button>
+              <div className="profile-dropdown">
+                <button
+                  type="button"
+                  className="log-btn fw-bold"
+                  onClick={toggleDropdown}
+                >
+                  <CgProfile size={20} />
+                </button>
+                {dropdownOpen && (
+                  <div className="dropdown-menus" ref={menuRef}>
+                    <Link to="/profile" className="dropdown-item" onClick={toggleDropdown}>Profile <CgProfile /></Link>
+                    <button
+                      type="button"
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                    >
+                      <span onClick={toggleDropdown}>Logout <TbLogout /></span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link to="/login" className="log-btn fw-bold">
                 Login

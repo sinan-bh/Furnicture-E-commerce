@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ConfirmBox from "../../../../popup box/ConfirmBox";
 import AlertBox from "../../../../popup box/AlertBox";
+import Pagination from "../../../../popup box/Pagination";
 import "./products.css";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,8 @@ function Products({ type }) {
   const [confirm, setConfirm] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [dependency, setDependency] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,11 +36,14 @@ function Products({ type }) {
     fetchData();
   }, [dependency]);
 
-  const filteredProducts = products
-    .filter((product) => type === "All" || product.category === type)
-    .filter((product) =>
+  const filteredProducts = products.filter((product) => type === "All" || product.category === type).filter((product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  
 
   const handleDelete = async (id) => {
     setConfirm({
@@ -85,6 +90,8 @@ function Products({ type }) {
     });
   };
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="adminhome">
       {alert && (
@@ -128,10 +135,10 @@ function Products({ type }) {
           />
         </div>
       </div>
-      <div className="categorys ">
+      <div className="categorys">
         <div className="category-name">Select category</div>
         <div className="category-type">
-          <div value="All" className=" product-name ms-3">
+          <div value="All" className="product-name ms-3">
             <Link to={"/adminhome/product-details"} className="text-none">
               All Products
             </Link>
@@ -176,9 +183,9 @@ function Products({ type }) {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product, index) => (
+            {currentProducts.map((product, index) => (
               <tr key={product._id}>
-                <td data-label="ProductId">{index + 1}</td>
+                <td data-label="ProductId">{index + 1 + indexOfFirstProduct}</td>
                 <td data-label="Image">
                   <img
                     src={product.image}
@@ -218,6 +225,12 @@ function Products({ type }) {
           </tbody>
         </table>
       </div>
+      <Pagination
+        productsPerPage={productsPerPage}
+        totalProducts={filteredProducts.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

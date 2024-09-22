@@ -1,12 +1,15 @@
 import "./userDatas.css";
 import useFetch from "../../../../Custom Hook/useFetch";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Pagination from "../../../../popup box/Pagination";
 
 function UserDatas() {
   const [users,setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +37,12 @@ function UserDatas() {
     list.date.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredUsers?.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="user-data-container">
       <div>
@@ -56,21 +65,29 @@ function UserDatas() {
               <th>E-mail</th>
               <th>Username</th>
               <th>Date</th>
+              <th>User Details</th>
             </tr>
           </thead>
           <tbody>
-            {filteredUsers?.map((list, index) => (
+            {currentProducts?.map((list, index) => (
               <tr key={index}>
                 <td data-label="Index">{index + 1}</td>
                 <td data-label="Name">{list.name}</td>
                 <td data-label="E-mail">{list.email}</td>
                 <td data-label="Username">{list.userName}</td>
                 <td data-label="Date">{list.date}</td>
+                <td data-label="Date"><Link to={`/adminhome/user/${list._id}`}>click here</Link></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Pagination
+        productsPerPage={productsPerPage}
+        totalProducts={filteredUsers?.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

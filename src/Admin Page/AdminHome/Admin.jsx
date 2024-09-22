@@ -10,6 +10,7 @@ import OrderDetails from "../component/Home/OrderDetails/OrderDetails";
 import '../component/Home/admin.css'
 import Logo from "../../assets/img/logo/logo.png";
 import ProtectedRoute from "./ProtectedAdmin";
+import UserById from "../component/Home/Users/UserById";
 
 function Admin() {
 
@@ -33,6 +34,7 @@ function Admin() {
           </Route>
           <Route path="/adminhome/add-edit-product" element={<ProtectedRoute element={<AddEditProduct />} />} />
           <Route path="/adminhome/add-edit-product/:id" element={<ProtectedRoute element={<AddEditProduct />} />} />
+          <Route path="/adminhome/user/:id" element={<ProtectedRoute element={<UserById />} />} />
         </Routes>
       </AdminContext>
       </div>
