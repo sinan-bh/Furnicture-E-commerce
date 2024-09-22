@@ -12,7 +12,8 @@ function OrderDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
+        const res = await fetch(`http://localhost:3000/admin/orders`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -50,7 +51,8 @@ function OrderDetails() {
       credentials: 'include',
     }
 
-    const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
+    const url = 'http://localhost:3000/admin/order'
+    // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
 
     const response = await fetch(url, option)
 
@@ -88,16 +90,16 @@ function OrderDetails() {
                   </thead>
                   <tbody>
                     {order?.products?.map((item) => (
-                      <tr key={item._id}>
+                      <tr key={item.prodid._id}>
                         <td>
                           <img
-                            src={item.image}
-                            alt={item.title}
+                            src={item.prodid.image}
+                            alt={item.prodid.title}
                             className="product-image"
                           />
                         </td>
-                        <td>{item.title}</td>
-                        <td>{item.category}</td>
+                        <td>{item.prodid.title}</td>
+                        <td>{item.prodid.category}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -12,11 +12,12 @@ function OrderProducts() {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/users/order/${userID}`,{
-            // `https://backend-ecommerce-furniture.onrender.com/users/order/${userID}`,{
-              method: 'GET',
-              credentials: 'include',
-            });
+            `http://localhost:3000/users/order/${userID}`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
           const data = await res.json();
           setOrders(data);
         } catch (error) {
@@ -27,54 +28,65 @@ function OrderProducts() {
     }
   }, []);
 
-  console.log(order.data);
-
   const hasItemsInOrder = order?.order?.length > 0;
 
   return (
-    <div className="order-details-container">
-        <h2 className="text-center bold m-2 p-2">Order Products Status</h2>
+    <div>
       {hasItemsInOrder ? (
-        <table className="user-details-table">
-          <thead>
-            <tr>
-              <th rowSpan="1">Date</th>
-              <th colSpan="3">Products</th>
-              <th colSpan="1">Total Ammount</th>
-              <th>Status</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {order?.order?.map((order) => (
-              <tr key={order._id}>
-                <td>{order.date}</td>
-                {order?.products?.map((item) => (
-                  <>
-                    <td key={item._id}>
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="user-image"
-                      />
+        <div className="order-product-container">
+          <h2 className="text-center pt-3 m-3">Order Producus Status</h2>
+          <div className="">
+            <table className="order-details-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Products</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {order?.order?.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order.date}</td>
+                    <td>
+                      <table className="inner-table">
+                        <thead>
+                          <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Prize</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {order?.products?.map((item) => (
+                            <tr key={item.prodid._id}>
+                              <td>
+                                <img
+                                  src={item.prodid.image}
+                                  alt={item.prodid.title}
+                                  className="product-image"
+                                />
+                              </td>
+                              <td>{item.prodid.title}</td>
+                              <td>{item.prodid.category}</td>
+                              <td>{item.quantity}</td>
+                              <td>{item.productPrize}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </td>
-                    <td>{item.title}</td>
-                    <td>{item.category}</td>
-                  </>
+                    <td>${order.total_ammount}</td>
+                    <td>{order.status}</td>
+                  </tr>
                 ))}
-                <td>${order.total_ammount}</td>
-                <td>{order.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
         <div className="text-center bg-white card empt-cart">
           <h2>Your cart is empty...!</h2>

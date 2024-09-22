@@ -11,7 +11,8 @@ function Analytics() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
+        const res = await fetch(`http://localhost:3000/admin/allusers`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -31,7 +32,8 @@ function Analytics() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -53,7 +55,8 @@ function Analytics() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
+        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",

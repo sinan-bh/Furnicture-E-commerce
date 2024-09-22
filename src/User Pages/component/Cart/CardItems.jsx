@@ -8,14 +8,13 @@ function CardItems({ item, onRemove }) {
   const { addFromCart, removeFromCart, removeItem, setCartProduct, setTrigger } =
   useContext(userContext);
 
-  setCartProduct(qty)
-
+  
   const handleAdd = (id) => {
     const updatedQty = qty + 1;
     setQty(updatedQty); 
     addFromCart(id)
   };
-
+  
   const handleRemove = (id) => {
     if (qty > 1) {
       const updatedQty = qty - 1;
@@ -23,7 +22,9 @@ function CardItems({ item, onRemove }) {
       removeFromCart(id)
     }
   };
-    
+  
+  setCartProduct(qty)
+  
   const handleRemoveItem = (id) => {
     removeItem(id).then((success) => {
       if (success) {
@@ -57,7 +58,7 @@ function CardItems({ item, onRemove }) {
             </button>
           </div>
           <div className="item-price">
-            <h6 className="text-success">Offer $ {offerPrice}</h6>
+            <h6 className="text-success">Offer $ {(qty * offerPrice).toFixed(2)}</h6>
             <p className="mb-0 text-secondary">
               <del>$ {price}</del>
             </p>

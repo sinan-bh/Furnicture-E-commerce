@@ -38,7 +38,7 @@ function AddCart() {
       };
       fetchData();
     }
-  }, [cartProduct]);
+  }, [cartProduct,userID]);
 
   useEffect(() => {
     if (cartItem?.length > 0) {

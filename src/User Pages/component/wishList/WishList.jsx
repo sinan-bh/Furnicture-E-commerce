@@ -9,10 +9,10 @@ const Wishlist = () => {
   const [alert, setAlert] = useState(null);
   const { removeFromWishList, addToCart, setTrigger } = useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
+  const userID = data.userID;
 
   useEffect(() => {
     if (data && data.userID) {
-      const userID = data.userID;
 
       const fetchData = async () => {
         try {
@@ -35,7 +35,7 @@ const Wishlist = () => {
       };
       fetchData();
     }
-  }, []);
+  }, [userID]);
 
   const addToCartItem = async (id) => {
     await addToCart(id)

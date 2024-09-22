@@ -15,7 +15,8 @@ function Products({ type }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -45,7 +46,8 @@ function Products({ type }) {
       onConfirm: async () => {
         try {
           const response = await fetch(
-            `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`,
+            `http://localhost:3000/admin/products/${id}`,
+            // `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`,
             {
               method: "DELETE",
               credentials: 'include'
