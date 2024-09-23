@@ -3,6 +3,7 @@ import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
+import Spinner from "../../../popup box/Spinner";
 
 function AddCart() {
   const { cart, setOrder, cartProduct } = useContext(userContext);
@@ -10,6 +11,7 @@ function AddCart() {
   const [cartItem, setCartItem] = useState([]);
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -34,6 +36,8 @@ function AddCart() {
           setCartItem(product);
         } catch (error) {
           console.error("Error fetching cart data:", error);
+        } finally {
+          setLoading(false)
         }
       };
       fetchData();
@@ -86,7 +90,10 @@ function AddCart() {
   const carts = cartItem?.filter((item) => item.prodid);
   const hasItemsInCart = carts.length > 0;
 
-  
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
+ 
 
   return (
     <div>

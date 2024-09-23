@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../Custom Hook/useFetch";
 import AlertBox from "../popup box/AlertBox"; 
@@ -8,11 +8,19 @@ export const userContext = createContext(null);
 function CartContext(props) {
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
   const [cartProduct, setCartProduct] = useState(0);
   const [trigger, setTrigger] = useState(false);
   const [alert, setAlert] = useState(null); 
+  const [userData, setUserData] = useState({});
+  const [isEditing, setIsEditing] = useState({
+    name: false,
+    userName: false,
+    phone: false,
+    email: false,
+    address: false,
+  });
+  const [isAnyFieldEditing, setIsAnyFieldEditing] = useState(false);
 
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
@@ -169,26 +177,92 @@ function CartContext(props) {
     }
   };
 
+  useEffect(() => {
+    const { userID } = data;
+    if (userID) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(
+            `http://localhost:3000/users/profile/${userID}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
+          const fetchedData = await res.json();
+          setUserData(fetchedData);
+        } catch (error) {
+          console.error("Error fetching profile data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [data?.userID]);
+
+  const updateUserData = async () => {
+    const { userID } = data;
+    try {
+      const res = await fetch(`http://localhost:3000/users/profile/${userID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+        credentials: "include",
+      });
+      if (res.ok) {
+        const updatedUser = await res.json();
+        setUserData(updatedUser);
+        setIsEditing({
+          name: false,
+          userName: false,
+          phone: false,
+          email: false,
+          address: false,
+        });
+        setIsAnyFieldEditing(false); 
+      } else {
+        console.error("Failed to update profile data");
+      }
+    } catch (error) {
+      console.error("Error updating profile data:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   const contextValue = {
     products,
     cart,
     searchTerm,
-    userDatas,
+    userData,
     order,
     cartProduct,
     trigger,
+    isEditing,
+    isAnyFieldEditing,
     addToCart,
     addFromCart,
     removeFromCart,
     removeItem,
     setSearchTerm,
-    setUserDatas,
+    setUserData,
     setCart,
     setOrder,
     addWishList,
     removeFromWishList,
     setCartProduct,
     setTrigger,
+    setIsEditing,
+    setIsAnyFieldEditing,
+    updateUserData,
+    handleChange,
   };
 
   return (

@@ -3,10 +3,12 @@ import "./wishlist.css";
 import { userContext } from "../../../context/CartContext";
 import { IoCartSharp } from "react-icons/io5";
 import AlertBox from "../../../popup box/AlertBox";
+import Spinner from "../../../popup box/Spinner";
 
 const Wishlist = () => {
   const [wishlist, setWishList] = useState([]);
   const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { removeFromWishList, addToCart, setTrigger } = useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data.userID;
@@ -31,6 +33,8 @@ const Wishlist = () => {
           setWishList(data);
         } catch (error) {
           console.error("Error fetching cart data:", error);
+        } finally {
+          setLoading(false)
         }
       };
       fetchData();
@@ -55,9 +59,11 @@ const Wishlist = () => {
     }
   };
 
-  
-
   const hasItemsInWishList = wishlist?.data?.length > 0;
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div className="wishlist-container">

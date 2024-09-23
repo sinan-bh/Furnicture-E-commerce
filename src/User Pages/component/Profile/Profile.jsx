@@ -1,44 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import "./Profile.css";
+import { userContext } from "../../../context/CartContext";
 
 function Profile() {
-  const [userData, setUserData] = useState({});
-  const [isEditing, setIsEditing] = useState({
-    name: false,
-    userName: false,
-    phone: false,
-    email: false,
-    address: false,
-  });
-  const [isAnyFieldEditing, setIsAnyFieldEditing] = useState(false); // Track if any field is being edited
+  const {
+    userData,
+    setUserData,
+    isEditing,
+    setIsEditing,
+    isAnyFieldEditing,
+    setIsAnyFieldEditing,
+    updateUserData,
+  } = useContext(userContext);
 
-  const data = JSON.parse(localStorage.getItem("currentUser"));
-  const userID = data?.userID;
-
-  useEffect(() => {
-    if (userID) {
-      const fetchData = async () => {
-        try {
-          const res = await fetch(
-            `http://localhost:3000/users/profile/${userID}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-            }
-          );
-          const fetchedData = await res.json();
-          setUserData(fetchedData);
-        } catch (error) {
-          console.error("Error fetching profile data:", error);
-        }
-      };
-      fetchData();
-    }
-  }, [userID]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,38 +30,9 @@ function Profile() {
     setIsAnyFieldEditing(isEditingNow);
   };
 
-  const updateUserData = async () => {
-    try {
-      const res = await fetch(`http://localhost:3000/users/profile/${userID}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-        credentials: "include",
-      });
-      if (res.ok) {
-        const updatedUser = await res.json();
-        setUserData(updatedUser);
-        setIsEditing({
-          name: false,
-          userName: false,
-          phone: false,
-          email: false,
-          address: false,
-        });
-        setIsAnyFieldEditing(false); 
-      } else {
-        console.error("Failed to update profile data");
-      }
-    } catch (error) {
-      console.error("Error updating profile data:", error);
-    }
-  };
-
   const toggleEdit = (field) => {
     setIsEditing((prev) => ({ ...prev, [field]: true }));
-    setIsAnyFieldEditing(true); 
+    setIsAnyFieldEditing(true);
   };
 
   return (
@@ -112,7 +58,7 @@ function Profile() {
                   style={{ color: "white", padding: "0 10px" }}
                   onClick={() => toggleEdit("name")}
                 >
-                  {userData?.name} <FaEdit /> 
+                  {userData?.name} <FaEdit />
                 </span>
               ) : (
                 <span className="add-link" onClick={() => toggleEdit("name")}>
