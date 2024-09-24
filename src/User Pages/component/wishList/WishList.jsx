@@ -91,7 +91,7 @@ const Wishlist = () => {
                 src={item.image}
                 alt={item.name}
                 className={wishStyle["wishlist-item-image"]}
-                onClick={()=>handleDetails(item._id)}
+                onClick={()=> handleDetails(item._id)}
               />
               <div className={wishStyle["wishlist-item-details"]}>
                 <h2 className={wishStyle["wishlist-item-name"]}>{item.title}</h2>
