@@ -55,7 +55,7 @@ function AddCart() {
       setCount(0);
       setPrice(0);
     }
-  }, [cartItem,cart]);
+  }, [cartItem]);
 
  
 

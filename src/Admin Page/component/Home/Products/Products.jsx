@@ -13,7 +13,7 @@ function Products({ type }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
-  const {products,setTrigger,loading,setProducts} = useContext(formContext)
+  const {products,trigger,setTrigger,loading,setProducts} = useContext(formContext)
 
   const filteredProducts = products.filter((product) => type === "All" || product.category === type).filter((product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -46,7 +46,7 @@ function Products({ type }) {
             prevProducts.filter((product) => product._id !== id)
           );
 
-          setTrigger(true);
+          setTrigger(!trigger);
 
           setAlert({
             type: "success",

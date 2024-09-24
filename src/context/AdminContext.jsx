@@ -7,7 +7,7 @@ export const formContext = createContext();
 function AdminContext(props) {
   const [users,setUsers] = useState([])
   const [products, setProducts] = useState([]);
-  const [trigger, setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState();
   const [updateStatus, setUpdateStatus] = useState("")
   const [orderDetails, setOrderDetails] = useState([]);
   const [updateOrderID, setUpdateOrderID] = useState(null)

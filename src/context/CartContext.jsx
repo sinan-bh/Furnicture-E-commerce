@@ -10,7 +10,7 @@ function CartContext(props) {
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [order, setOrder] = useState({});
-  const [cartProduct, setCartProduct] = useState(0);
+  const [cartProduct, setCartProduct] = useState();
   const [trigger, setTrigger] = useState(false);
   const [alert, setAlert] = useState(null); 
   const [confirm, setConfirm] = useState(null); 

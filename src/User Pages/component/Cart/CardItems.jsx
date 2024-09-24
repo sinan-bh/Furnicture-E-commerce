@@ -5,7 +5,7 @@ import { userContext } from "../../../context/CartContext";
 function CardItems({ item, onRemove }) {
   const [qty, setQty] = useState(item.quantity);
   const { _id,title, image,  price, offerPrice } = item.prodid;
-  const { addFromCart, removeFromCart, removeItem, setCartProduct, setTrigger } =
+  const { addFromCart, removeFromCart, removeItem, setCartProduct,cartProduct, setTrigger } =
   useContext(userContext);
 
   

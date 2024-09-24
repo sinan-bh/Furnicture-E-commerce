@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AlertBox from "../../../popup box/AlertBox";
 import "./form.css";
+import { formContext } from "../../../context/AdminContext";
 
 function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [alert, setAlert] = useState(null);
+  const {trigger,setTrigger} = useContext(formContext)
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -88,6 +90,7 @@ function AddEditProduct() {
       }
       setAlert({ type: 'success', message: id ? 'Product Updated' : 'Product Added' });
       setTimeout(() => navigate("/adminhome/product-details"), 1000);
+      setTrigger(!trigger)
       
     } catch (error) {
       console.error("Failed to add/edit product:", error);

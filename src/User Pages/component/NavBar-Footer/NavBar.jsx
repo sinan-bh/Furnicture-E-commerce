@@ -7,6 +7,7 @@ import { userContext } from "../../../context/CartContext";
 import { CiSearch, CiLogin } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { TbLogout } from "react-icons/tb";
+import { BsCartCheck } from "react-icons/bs";
 import Logo from "../../../assets/img/logo/logo.png";
 import ConfirmBox from "../../../popup box/ConfirmBox";
 import AlertBox from "../../../popup box/AlertBox";
@@ -49,7 +50,7 @@ const Navbar = () => {
       }
     };
     fetchCartLength();
-  }, [trigger]);
+  }, [data.userID,trigger]);
 
   useEffect(() => {
     const fetchWishListLength = async () => {
@@ -73,7 +74,7 @@ const Navbar = () => {
       }
     };
     fetchWishListLength();
-  }, [trigger]);
+  }, [data.userID,trigger]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -246,6 +247,7 @@ const Navbar = () => {
                 {dropdownOpen && (
                   <div className="dropdown-menus" ref={menuRef}>
                     <Link to="/profile" className="dropdown-item" onClick={toggleDropdown}>Profile <CgProfile /></Link>
+                    <Link to="/orderstatus" className="dropdown-item" onClick={toggleDropdown}>Order <BsCartCheck /></Link>
                     <button
                       type="button"
                       className="dropdown-item"
