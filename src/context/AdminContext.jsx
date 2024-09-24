@@ -63,7 +63,7 @@ function AdminContext(props) {
     const fetchData = async () => {
       try {
         // const res = await fetch(`http://localhost:3000/admin/orders`, {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
