@@ -30,8 +30,8 @@ function Products({ type }) {
       onConfirm: async () => {
         try {
           const response = await fetch(
-            `http://localhost:3000/admin/products/${id}`,
-            // `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`,
+            // `http://localhost:3000/admin/products/${id}`,
+            `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`,
             {
               method: "DELETE",
               credentials: 'include'

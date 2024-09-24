@@ -1,6 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import useFetch from "../Custom Hook/useFetch";
 
 export const formContext = createContext();
 
@@ -19,8 +17,8 @@ function AdminContext(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/allusers`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
+        // const res = await fetch(`http://localhost:3000/admin/allusers`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -42,8 +40,8 @@ function AdminContext(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/products`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
+        // const res = await fetch(`http://localhost:3000/admin/products`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -64,8 +62,8 @@ function AdminContext(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
-        const res = await fetch(`http://localhost:3000/admin/orders`, {
+        // const res = await fetch(`http://localhost:3000/admin/orders`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",
@@ -94,8 +92,8 @@ function AdminContext(props) {
       credentials: 'include',
     }
 
-    const url = 'http://localhost:3000/admin/order'
-    // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
+    // const url = 'http://localhost:3000/admin/order'
+    const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
 
     const response = await fetch(url, option)
 
@@ -106,8 +104,8 @@ function AdminContext(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
-        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+        // const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",

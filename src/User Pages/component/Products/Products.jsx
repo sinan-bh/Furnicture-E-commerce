@@ -13,11 +13,13 @@ function Collections({ type }) {
     data: products,
     loading,
     error,
-  } = useFetch("http://localhost:3000/users/products");
+  // } = useFetch("http://localhost:3000/users/products");
+  } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
 
   const {
     data: category,
-  } = useFetch(`http://localhost:3000/users/products?category=${type}`);
+  // } = useFetch(`http://localhost:3000/users/products?category=${type}`);
+  } = useFetch( `https://backend-ecommerce-furniture.onrender.com/users/products?category=${type}`);
 
   if (loading) {
     return <div className="d-flex justify-content-center align-items-center  h-100"><Spinner /></div>;

@@ -32,8 +32,8 @@ const Navbar = () => {
     const fetchCartLength = async () => {
       if (isLogin && data) {
         const { userID } = data;
-        const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
-        // const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`,{
+        // const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
+        const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`,{
           method: "GET",
           headers:{
             "Content-Type": "Application/json"
@@ -56,8 +56,8 @@ const Navbar = () => {
     const fetchWishListLength = async () => {
       if (isLogin && data) {
         const { userID } = data;
-        const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
-        // const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
+        // const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
+        const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
           method: "GET",
           headers:{
             "Content-Type": "Application/json"

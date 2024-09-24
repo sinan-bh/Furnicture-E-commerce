@@ -23,8 +23,8 @@ const UserById = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/admin/user/${userId}`, {
-          // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
+        // const res = await fetch(`http://localhost:3000/admin/user/${userId}`, {
+          const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/user/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json",

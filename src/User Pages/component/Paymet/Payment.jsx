@@ -46,9 +46,9 @@ function Payment() {
               localStorage.getItem("currentUser")
             ).userID;
             const res = await fetch(
-              `http://localhost:3000/users/verify_payment/${userID}`,
+              // `http://localhost:3000/users/verify_payment/${userID}`,
+               `https://backend-ecommerce-furniture.onrender.com/users/verify_payment/${userID}`,
               {
-                // fetch(`https://backend-ecommerce-furniture.onrender.com/users/verify_payment/${userID}`, {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",

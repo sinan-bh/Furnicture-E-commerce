@@ -1,5 +1,5 @@
 import React from "react";
-import "./popup.css"; // Optional for custom styling
+import "./popup.css"; 
 
 function Pagination({ productsPerPage, totalProducts, paginate, currentPage }) {
   const pageNumbers = [];
