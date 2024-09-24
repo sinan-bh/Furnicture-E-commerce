@@ -86,11 +86,12 @@ const Wishlist = () => {
       <div className={wishStyle["wishlist-grid"]}>
         {wishlist?.data?.length > 0 ? (
           wishlist.data.map((item) => (
-            <div key={item._id} className={wishStyle["wishlist-item"]} onClick={()=>handleDetails(item._id)}>
+            <div key={item._id} className={wishStyle["wishlist-item"]} >
               <img
                 src={item.image}
                 alt={item.name}
                 className={wishStyle["wishlist-item-image"]}
+                onClick={()=>handleDetails(item._id)}
               />
               <div className={wishStyle["wishlist-item-details"]}>
                 <h2 className={wishStyle["wishlist-item-name"]}>{item.title}</h2>
