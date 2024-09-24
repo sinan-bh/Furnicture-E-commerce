@@ -3,6 +3,7 @@ import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
+import Spinner from "../../../popup box/Spinner";
 
 function AddCart() {
   const { cart, setOrder, cartProduct } = useContext(userContext);
@@ -10,6 +11,7 @@ function AddCart() {
   const [cartItem, setCartItem] = useState([]);
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -20,6 +22,7 @@ function AddCart() {
 
       const fetchData = async () => {
         try {
+          // const res = await fetch(`http://localhost:3000/users/cart/${userID}`, {
           const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`, {
             method: "GET",
             headers: {
@@ -33,11 +36,13 @@ function AddCart() {
           setCartItem(product);
         } catch (error) {
           console.error("Error fetching cart data:", error);
+        } finally {
+          setLoading(false)
         }
       };
       fetchData();
     }
-  }, [cartProduct]);
+  }, [cartProduct,userID]);
 
   useEffect(() => {
     if (cartItem?.length > 0) {
@@ -50,13 +55,14 @@ function AddCart() {
       setCount(0);
       setPrice(0);
     }
-  }, [cartItem,cart]);
+  }, [cartItem]);
 
  
 
   const handleCheckout = async () => {
     console.log(price);
     
+    // const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
     const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/payment/${userID}`, {
       method: "POST",
       headers: {
@@ -84,7 +90,10 @@ function AddCart() {
   const carts = cartItem?.filter((item) => item.prodid);
   const hasItemsInCart = carts.length > 0;
 
-  
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
+ 
 
   return (
     <div>

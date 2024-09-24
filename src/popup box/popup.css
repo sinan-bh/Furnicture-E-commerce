@@ -130,3 +130,56 @@
   background: #f44336;
   color: white;
 }
+
+.logoutButton{
+  background: rgb(39, 1, 72);
+  color: white;
+}
+
+.closeIcon{
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-item .page-link {
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #1a1b1c;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.page-item .page-link:hover {
+  background-color: #070707;
+  color: #fff;
+}
+
+.page-item.active .page-link {
+  background-color: #595f66;
+  color: white;
+  border-color: #141415;
+}
+
+.page-item.disabled .page-link {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.spinner{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

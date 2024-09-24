@@ -1,63 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 import './home-combonent.css'
+import Spinner from "../../../popup box/Spinner";
+import { formContext } from "../../../context/AdminContext";
 
 function ProductsCount() {
-  const [products, setProducts] = useState([]);
-  const [orders, setOrder] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const product = await res.json();
-        console.log(product);
-
-        setProducts(product);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const orders = await res.json();
-
-        setOrder(orders);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const {products,orderDetails,loading} = useContext(formContext)
 
   const livingRoomItems = products
-    ?.filter((type) => type.type === "Living Room Furniture")
-    .reduce((total, item) => total + Number(item.quantity), 0);
+    ?.filter((type) => type?.type === "Living Room Furniture")
+    ?.reduce((total, item) => total + Number(item?.quantity), 0);
   const diningRoomItems = products
-    ?.filter((type) => type.type === "Dining Room Furniture")
-    .reduce((total, item) => total + Number(item.quantity), 0);
+    ?.filter((type) => type?.type === "Dining Room Furniture")
+    ?.reduce((total, item) => total + Number(item?.quantity), 0);
   const bedRoomItems = products
-    ?.filter((type) => type.type === "Bedroom Furniture")
-    .reduce((total, item) => total + Number(item.quantity), 0);
+    ?.filter((type) => type?.type === "Bedroom Furniture")
+    ?.reduce((total, item) => total + Number(item?.quantity), 0);
 
   const livingRoom = products?.filter(
     (type) => type.type === "Living Room Furniture"
@@ -69,6 +28,11 @@ function ProductsCount() {
     (type) => type.type === "Bedroom Furniture"
   ).length;
 
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
+
+  console.log(orderDetails);
   
 
   return (
@@ -91,22 +55,22 @@ function ProductsCount() {
             <td>Living Room</td>
             <td>{livingRoom}</td>
             <td>{livingRoomItems}</td>
-            <td>{orders?.livingPurchased}</td>
-            <td>{livingRoomItems - orders?.livingPurchased}</td>
+            <td>{orderDetails?.livingPurchased}</td>
+            <td>{livingRoomItems - orderDetails?.livingPurchased}</td>
           </tr>
           <tr>
             <td>Dining Room</td>
             <td>{diningRoom}</td>
             <td>{diningRoomItems}</td>
-            <td>{orders?.diningPurchased}</td>
-            <td>{diningRoomItems - orders?.diningPurchased}</td>
+            <td>{orderDetails?.diningPurchased}</td>
+            <td>{diningRoomItems - orderDetails?.diningPurchased}</td>
           </tr>
           <tr>
             <td>Bed Room</td>
             <td>{bedRoom}</td>
             <td>{bedRoomItems}</td>
-            <td>{orders?.bedPurchased}</td>
-            <td>{bedRoomItems - orders?.bedPurchased}</td>
+            <td>{orderDetails?.bedPurchased}</td>
+            <td>{bedRoomItems - orderDetails?.bedPurchased}</td>
           </tr>
         </tbody>
       </table>

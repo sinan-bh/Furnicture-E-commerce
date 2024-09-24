@@ -15,6 +15,7 @@ import CartContext from "./context/CartContext";
 import Registration from "./User Pages/Registration-Login/Registration";
 import Wishlist from "./User Pages/component/wishList/WishList";
 import OrderProducts from "./User Pages/component/orderProducts/OrderProducts";
+import Profile from "./User Pages/component/Profile/Profile";
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/orderstatus" element={<OrderProducts />} />
               <Route path="/searchItem" element={<SearchItem />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
             </Routes>

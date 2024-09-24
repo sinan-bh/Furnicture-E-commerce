@@ -434,6 +434,47 @@ input:-moz-placeholder {
   }
 }
 
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-menus {
+  position: absolute;
+  right: 0px;
+  margin-top: 30px;
+  background-color: white; 
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000; 
+  opacity: 0; 
+  transform: translateX(-5px); 
+  animation: slideIn 1.3s forwards; 
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  color: black; 
+  text-decoration: none; 
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1; 
+}
+
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(0); 
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-10px); 
+  }
+}
+
+
 /* Footer */
 
 footer {

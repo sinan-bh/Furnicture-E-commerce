@@ -74,14 +74,28 @@
 
 .pay {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
 }
 
 .finish-pay-btn {
-  width: 100%;
-  padding: 12px;
+  width: 150px;
+  padding: 10px;
   background-color: #ff6f61;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.finish-update-btn {
+  margin-right: 5px;
+  width: 150px;
+  padding: 10px;
+  background-color: #35043b;
   border: none;
   border-radius: 8px;
   color: white;
@@ -94,6 +108,9 @@
 
 .finish-pay-btn:hover {
   background-color: #ff3d2e;
+  transform: translateY(-3px);
+}
+.finish-update-btn:hover {
   transform: translateY(-3px);
 }
 

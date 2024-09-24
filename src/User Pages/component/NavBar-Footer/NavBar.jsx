@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoCartSharp } from "react-icons/io5";
 import { userContext } from "../../../context/CartContext";
-import { CiSearch, CiLogout, CiLogin } from "react-icons/ci";
+import { CiSearch, CiLogin } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import { TbLogout } from "react-icons/tb";
+import { BsCartCheck } from "react-icons/bs";
 import Logo from "../../../assets/img/logo/logo.png";
 import ConfirmBox from "../../../popup box/ConfirmBox";
 import AlertBox from "../../../popup box/AlertBox";
@@ -18,18 +21,18 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const [cartLength, setCartLength] = useState(0);
   const [wishlistLength, setWishListLength] = useState(0);
-  const [alert, setAlert] = useState(null);
-  const [confirm, setConfirm] = useState(null); 
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
-  const { searchTerm, setSearchTerm, trigger } = useContext(userContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false); 
+  const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
 
 
   useEffect(() => {
     const fetchCartLength = async () => {
       if (isLogin && data) {
         const { userID } = data;
+        // const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
         const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`,{
           method: "GET",
           headers:{
@@ -39,7 +42,7 @@ const Navbar = () => {
         });
         if (response.ok) {
           const result = await response.json();
-          setCartLength(result.length);
+          setCartLength(result?.length);
         } else {
           setAlert({ type: "error", message: "Failed to fetch cart data." });
           setTimeout(() => setAlert(null), 1000);
@@ -47,12 +50,13 @@ const Navbar = () => {
       }
     };
     fetchCartLength();
-  }, [trigger]);
+  }, [data.userID,trigger]);
 
   useEffect(() => {
     const fetchWishListLength = async () => {
       if (isLogin && data) {
         const { userID } = data;
+        // const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
         const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
           method: "GET",
           headers:{
@@ -62,7 +66,7 @@ const Navbar = () => {
         });
         if (response.ok) {
           const result = await response.json();
-          setWishListLength(result.data.length);
+          setWishListLength(result?.data?.length);
         } else {
           setAlert({ type: "error", message: "Failed to fetch wishlist data" });
           setTimeout(() => setAlert(null), 1000);
@@ -70,7 +74,7 @@ const Navbar = () => {
       }
     };
     fetchWishListLength();
-  }, [trigger]);
+  }, [data.userID,trigger]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -97,20 +101,8 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-  const handleLogout = () => {
-    setConfirm({
-      message: ` Hey ${data.username}, Do you want to logout?`,
-      onConfirm: () => {
-        localStorage.removeItem("isLogin");
-        setAlert({ type: "success", message: "Logged out successfully." });
-        setTimeout(() => setAlert(null), 1000);
-        navigate("/");
-        setConfirm(null); 
-      },
-      onCancel: () => {
-        setConfirm(null); 
-      }
-    });
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
   };
 
   useEffect(()=>{
@@ -118,6 +110,7 @@ const Navbar = () => {
     const handleMEnuClick = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
               setIsOpen(false);
+              setDropdownOpen(false)
             }
           };
       
@@ -130,7 +123,7 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
-
+  
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -243,14 +236,28 @@ const Navbar = () => {
               )}
             </div>
             {isLogin ? (
-              <button
-                type="button"
-                className="log-btn fw-bold"
-                onClick={handleLogout}
-              >
-                <span className="user-login">{data.username}</span>
-                <CiLogout />
-              </button>
+              <div className="profile-dropdown">
+                <button
+                  type="button"
+                  className="log-btn fw-bold"
+                  onClick={toggleDropdown}
+                >
+                  <CgProfile size={20} />
+                </button>
+                {dropdownOpen && (
+                  <div className="dropdown-menus" ref={menuRef}>
+                    <Link to="/profile" className="dropdown-item" onClick={toggleDropdown}>Profile <CgProfile /></Link>
+                    <Link to="/orderstatus" className="dropdown-item" onClick={toggleDropdown}>Order <BsCartCheck /></Link>
+                    <button
+                      type="button"
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                    >
+                      <span onClick={toggleDropdown}>Logout <TbLogout /></span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link to="/login" className="log-btn fw-bold">
                 Login
@@ -281,7 +288,7 @@ const Navbar = () => {
           <Link to={'/bedroom'} className="menu-item" onClick={toggleMenu}>
             Bed Room
           </Link>
-          <Link className="menu-item" onClick={handleLogout}>
+          <Link className="menu-item" onClick={()=>handleLogout()}>
             Logout
           </Link>
         </div>

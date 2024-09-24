@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import { userContext } from "../../../context/CartContext";
+import Spinner from "../../../popup box/Spinner";
 
 
 function Popular() {
   const [popularProducts, setPopularProducts] = useState()
+  const { loading, setLoading } = useContext(userContext)
   
   useEffect(()=> {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
+        const res = await fetch(`http://localhost:3000/users/popularproducts`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
           method: "GET",
           headers: {
             "Content-Type": "Application/json"
@@ -19,11 +23,18 @@ function Popular() {
         setPopularProducts(product);
       } catch (error) {
         console.error("Error fetching cart data:", error);
+      } finally {
+        setLoading(false)
       }
     };
-    fetchData();
-  
+    fetchData();  
   },[])
+
+  
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
+
   return (
     <div className="category">
       <div className="container card  mt-5">

@@ -1,24 +1,36 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../Custom Hook/useFetch";
 import AlertBox from "../popup box/AlertBox"; 
+import Spinner from "../popup box/Spinner";
 
 export const userContext = createContext(null);
 
 function CartContext(props) {
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [userDatas, setUserDatas] = useState({});
   const [order, setOrder] = useState({});
-  const [cartProduct, setCartProduct] = useState(0);
+  const [cartProduct, setCartProduct] = useState();
   const [trigger, setTrigger] = useState(false);
   const [alert, setAlert] = useState(null); 
+  const [confirm, setConfirm] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [isEditing, setIsEditing] = useState({
+    name: false,
+    userName: false,
+    phone: false,
+    email: false,
+    address: false,
+  });
+  const [isAnyFieldEditing, setIsAnyFieldEditing] = useState(false);
 
 
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const navigate = useNavigate();
 
+  // const { data: products } = useFetch("http://localhost:3000/users/products");
   const { data: products } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
 
   const addToCart = async (productID) => {
@@ -38,6 +50,7 @@ function CartContext(props) {
           };
 
           const { userID } = data;
+          // const url = `http://localhost:3000/users/cart/${userID}`;
           const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
 
           const response = await fetch(url, options);
@@ -66,6 +79,7 @@ function CartContext(props) {
         credentials: 'include'
       };
       const { userID } = data;
+      // const url = `http://localhost:3000/users/cart/${userID}`;
       const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
       const response = await fetch(url, options);
       const result = await response.json();
@@ -83,6 +97,7 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
+    // const url = `http://localhost:3000/users/cart/${userID}`;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
     const response = await fetch(url, options);
     const result = await response.json();
@@ -98,6 +113,7 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
+    // const url = `http://localhost:3000/users/cart/${userID}/${productID}`;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}/${productID}`;
     const response = await fetch(url, options);
     if (response.ok) {
@@ -127,6 +143,7 @@ function CartContext(props) {
         };
 
         const { userID } = data;
+        // const url = `http://localhost:3000/users/wishlist/${userID}`;
         const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`;
 
         const response = await fetch(url, options);
@@ -151,6 +168,7 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
+    // const url = `http://localhost:3000/users/wishlist/${userID}/${productID}`;
     const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}/${productID}`;
     const response = await fetch(url, options);
     if (response.ok) {
@@ -162,26 +180,120 @@ function CartContext(props) {
     }
   };
 
+  useEffect(() => {
+    const { userID } = data;
+    if (userID) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(
+            // `http://localhost:3000/users/profile/${userID}`,
+             `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
+          const fetchedData = await res.json();
+          setUserData(fetchedData);
+        } catch (error) {
+          console.error("Error fetching profile data:", error);
+        } finally {
+          setLoading(false)
+        }
+      };
+      fetchData();
+    }
+  }, [data?.userID]);
+
+  const updateUserData = async () => {
+    const { userID } = data;
+    try {
+      // const res = await fetch(`http://localhost:3000/users/profile/${userID}`, {
+      const res = await fetch( `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+        credentials: "include",
+        
+      });
+      if (res.ok) {
+        const updatedUser = await res.json();
+        console.log(updatedUser);
+        
+        setUserData(updatedUser);
+        setIsEditing({
+          name: false,
+          userName: false,
+          phone: false,
+          email: false,
+          address: false,
+        });
+        setIsAnyFieldEditing(false); 
+      } else {
+        console.error("Failed to update profile data");
+      }
+    } catch (error) {
+      console.error("Error updating profile data:", error);
+    } 
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const handleLogout = () => {
+    setConfirm({
+      message: `Hey ${data.username}, Do you want to logout?`,
+      onConfirm: () => {
+        localStorage.removeItem("isLogin");
+        setAlert({ type: "success", message: "Logged out successfully." });
+        setTimeout(() => setAlert(null), 1000);
+        navigate("/");
+        setConfirm(null);
+      },
+      onCancel: () => {
+        setConfirm(null);
+      }
+    });
+  };
+
   const contextValue = {
     products,
     cart,
     searchTerm,
-    userDatas,
+    userData,
     order,
     cartProduct,
     trigger,
+    isEditing,
+    isAnyFieldEditing,
+    loading,
+    confirm,
     addToCart,
     addFromCart,
     removeFromCart,
     removeItem,
     setSearchTerm,
-    setUserDatas,
+    setUserData,
     setCart,
     setOrder,
     addWishList,
     removeFromWishList,
     setCartProduct,
     setTrigger,
+    setIsEditing,
+    setIsAnyFieldEditing,
+    updateUserData,
+    handleChange,
+    setLoading,
+    handleLogout,
+    setAlert,
   };
 
   return (
