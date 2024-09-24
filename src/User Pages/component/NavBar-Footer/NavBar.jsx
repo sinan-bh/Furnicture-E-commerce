@@ -20,13 +20,11 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const [cartLength, setCartLength] = useState(0);
   const [wishlistLength, setWishListLength] = useState(0);
-  const [alert, setAlert] = useState(null);
-  const [confirm, setConfirm] = useState(null); 
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const [dropdownOpen, setDropdownOpen] = useState(false); 
-  const { searchTerm, setSearchTerm, trigger } = useContext(userContext);
+  const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
 
 
   useEffect(() => {
@@ -43,7 +41,7 @@ const Navbar = () => {
         });
         if (response.ok) {
           const result = await response.json();
-          setCartLength(result.length);
+          setCartLength(result?.length);
         } else {
           setAlert({ type: "error", message: "Failed to fetch cart data." });
           setTimeout(() => setAlert(null), 1000);
@@ -67,7 +65,7 @@ const Navbar = () => {
         });
         if (response.ok) {
           const result = await response.json();
-          setWishListLength(result.data.length);
+          setWishListLength(result?.data?.length);
         } else {
           setAlert({ type: "error", message: "Failed to fetch wishlist data" });
           setTimeout(() => setAlert(null), 1000);
@@ -106,23 +104,6 @@ const Navbar = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleLogout = () => {
-    // toggleDropdown()
-    setConfirm({
-      message: `Hey ${data.username}, Do you want to logout?`,
-      onConfirm: () => {
-        localStorage.removeItem("isLogin");
-        setAlert({ type: "success", message: "Logged out successfully." });
-        setTimeout(() => setAlert(null), 1000);
-        navigate("/");
-        setConfirm(null);
-      },
-      onCancel: () => {
-        setConfirm(null);
-      }
-    });
-  };
-
   useEffect(()=>{
   
     const handleMEnuClick = (event) => {
@@ -141,7 +122,7 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
-
+  
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -305,7 +286,7 @@ const Navbar = () => {
           <Link to={'/bedroom'} className="menu-item" onClick={toggleMenu}>
             Bed Room
           </Link>
-          <Link className="menu-item" onClick={handleLogout}>
+          <Link className="menu-item" onClick={()=>handleLogout()}>
             Logout
           </Link>
         </div>

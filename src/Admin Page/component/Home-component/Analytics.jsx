@@ -1,84 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../Custom Hook/useFetch";
 
 import './home-combonent.css'
+import Spinner from "../../../popup box/Spinner";
+import { formContext } from "../../../context/AdminContext";
 
 function Analytics() {
-  const [users,setUsers] = useState([])
-  const [products, setProducts] = useState([]);
-  const [order, setOrder] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
-        const res = await fetch(`http://localhost:3000/admin/allusers`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const users = await res.json();
-
-        setUsers(users);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
-        const res = await fetch(`http://localhost:3000/admin/products`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const product = await res.json();
-        console.log(product);
-
-        setProducts(product);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
-        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const order = await res.json();
-
-        setOrder(order);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const { users, loading, orderDetails, products} = useContext(formContext)
 
   const userCount = users?.data?.length;
   const productCount = products?.length;
-  const orderCount = order?.total_purchase;
-  const totalRevanue = order?.revanue;
-  console.log(order);
-  
+  const orderCount = orderDetails?.total_purchase;
+  const totalRevanue = orderDetails?.revanue;
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div>
@@ -118,7 +55,7 @@ function Analytics() {
             <span className="bold">Total Revanue</span>
           </div>
           <div className="card-body">
-            <h2>${totalRevanue}</h2>
+            <h2>${totalRevanue?.toFixed(2)}</h2>
             <p className="positive">Popular products Since last week</p>
           </div>
         </div>

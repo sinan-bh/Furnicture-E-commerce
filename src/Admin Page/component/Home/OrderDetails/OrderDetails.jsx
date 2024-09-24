@@ -1,38 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./OrderDetails.css";
 import Pagination from "../../../../popup box/Pagination";
 import useFetch from "../../../../Custom Hook/useFetch";
 import { Link, useParams } from "react-router-dom";
+import Spinner from "../../../../popup box/Spinner";
+import AdminContext, { formContext } from "../../../../context/AdminContext";
 
 function OrderDetails() {
-  const [orders,setOrders] = useState([])
-  const [updateOrderID, setUpdateOrderID] = useState(null)
-  const [updateStatus, setUpdateStatus] = useState("")
-  const [dependency, setDependency] = useState()
   const [currentPage, setCurrentPage] = useState(1);
+  const {updateStatus, setUpdateStatus, loading, order, setUpdateOrderID, updateOrderID, handleSaveClick} = useContext(formContext)
   const ordersPerPage = 5;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/admin/orders`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const order = await res.json();
-
-        setOrders(order);
-
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, [dependency]);
 
   const handleEditClick = (orderId, currentStatus) => {
     setUpdateOrderID(orderId); 
@@ -43,34 +20,15 @@ function OrderDetails() {
     setUpdateStatus(e.target.value); 
   };
 
-  const handleSaveClick = async (orderId) => {
-
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({order_id: orderId, status: updateStatus}),
-      credentials: 'include',
-    }
-
-    const url = 'http://localhost:3000/admin/order'
-    // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
-
-    const response = await fetch(url, option)
-
-    setDependency(response)
-    setUpdateOrderID(null); 
-  };
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = orders?.data?.slice(indexOfFirstOrder, indexOfLastOrder);
+  const currentOrders = order?.data?.slice(indexOfFirstOrder, indexOfLastOrder);  
 
-  console.log(currentOrders);
-  
-
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div>
@@ -145,7 +103,7 @@ function OrderDetails() {
         </table>
         <Pagination
           ordersPerPage={ordersPerPage}
-          totalOrders={orders?.data?.length || 0}
+          totalOrders={order?.data?.length || 0}
           paginate={paginate}
           currentPage={currentPage}
         />

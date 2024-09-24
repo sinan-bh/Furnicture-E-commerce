@@ -5,75 +5,147 @@ import useFetch from "../Custom Hook/useFetch";
 export const formContext = createContext();
 
 function AdminContext(props) {
-  const { id } = useParams();
-
-
-  const {
-    data: products,
-    loading,
-    error,
-    setData: setProducts,
-  } = useFetch("https://backend-ecommerce-furniture.onrender.com/admin/products");
-
-  const [product, setProduct] = useState({
-    image: "",
-    imageCategory: "",
-    description: "",
-    details: "",
-    price: "",
-    offerPrice: "",
-  });
-
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [users,setUsers] = useState([])
+  const [products, setProducts] = useState([]);
+  const [trigger, setTrigger] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState("")
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [updateOrderID, setUpdateOrderID] = useState(null)
+  const [order, setOrder] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [dependency, setDependency] = useState()
+  const isAdmin = JSON.parse(localStorage.getItem("isAmin"))
 
   useEffect(() => {
-    if (id) {
-      fetchProduct(id);
-    }
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/allusers`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const users = await res.json();
 
-  const fetchProduct = async (id) => {
-    try {
-      const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch product");
+        setUsers(users);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      } finally {
+        setLoading(false)
       }
-      const data = await response.json();
-      setProduct(data);
-      setSelectedCategory(data.category);
-    } catch (error) {
-      console.error("Error fetching product:", error);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/admin/products`, {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const product = await res.json();
+        setProducts(product);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchData();
+  }, [trigger]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
+        const res = await fetch(`http://localhost:3000/admin/orders`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const Orders = await res.json();
+        setOrder(Orders)
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchData();
+  }, [isAdmin,updateStatus,dependency]); 
+
+  const handleSaveClick = async (orderId) => {
+
+    const option = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({order_id: orderId, status: updateStatus}),
+      credentials: 'include',
     }
+
+    const url = 'http://localhost:3000/admin/order'
+    // const url = 'https://backend-ecommerce-furniture.onrender.com/admin/order'
+
+    const response = await fetch(url, option)
+
+    setDependency(response)
+    setUpdateOrderID(null); 
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProduct({
-      ...product,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/orders/details`, {
+        const res = await fetch(`http://localhost:3000/admin/orders/details`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          credentials: "include",
+        });
+        const order = await res.json();
 
-  const handleAddProduct = (addedProduct) => {
-    setProducts([...products, addedProduct]);
-  };
-  
-
-
+        setOrderDetails(order);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchData();
+  }, []);
 
   const formValue = {
-    products,
-    error,
+    users,
+    order,
+    updateStatus,
     loading,
+    isAdmin,
+    dependency,
+    updateOrderID,
+    products,
+    trigger,
+    orderDetails,
+    setUsers,
+    setUpdateStatus,
+    setOrder,
+    setLoading,
+    setDependency,
+    handleSaveClick,
+    setUpdateOrderID,
     setProducts,
-    id,
-    product,
-    selectedCategory,
-    setProduct,
-    setSelectedCategory,
-    fetchProduct,
-    handleInputChange,
-    handleAddProduct,
+    setTrigger,
   };
 
   return (

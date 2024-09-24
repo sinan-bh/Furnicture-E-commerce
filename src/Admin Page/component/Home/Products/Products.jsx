@@ -1,40 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ConfirmBox from "../../../../popup box/ConfirmBox";
 import AlertBox from "../../../../popup box/AlertBox";
 import Pagination from "../../../../popup box/Pagination";
 import "./products.css";
 import { Link } from "react-router-dom";
+import Spinner from "../../../../popup box/Spinner";
+import { formContext } from "../../../../context/AdminContext";
 
 function Products({ type }) {
-  const [products, setProducts] = useState([]);
   const [alert, setAlert] = useState(null);
   const [confirm, setConfirm] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dependency, setDependency] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/admin/products`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/products`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const product = await res.json();
-        console.log(product);
-
-        setProducts(product);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, [dependency]);
+  const {products,setTrigger,loading,setProducts} = useContext(formContext)
 
   const filteredProducts = products.filter((product) => type === "All" || product.category === type).filter((product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -67,7 +46,7 @@ function Products({ type }) {
             prevProducts.filter((product) => product._id !== id)
           );
 
-          setDependency(true);
+          setTrigger(true);
 
           setAlert({
             type: "success",
@@ -91,6 +70,10 @@ function Products({ type }) {
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div className="adminhome">

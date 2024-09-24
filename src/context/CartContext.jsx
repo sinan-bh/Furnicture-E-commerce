@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../Custom Hook/useFetch";
 import AlertBox from "../popup box/AlertBox"; 
+import Spinner from "../popup box/Spinner";
 
 export const userContext = createContext(null);
 
@@ -12,6 +13,8 @@ function CartContext(props) {
   const [cartProduct, setCartProduct] = useState(0);
   const [trigger, setTrigger] = useState(false);
   const [alert, setAlert] = useState(null); 
+  const [confirm, setConfirm] = useState(null); 
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [isEditing, setIsEditing] = useState({
     name: false,
@@ -196,6 +199,8 @@ function CartContext(props) {
           setUserData(fetchedData);
         } catch (error) {
           console.error("Error fetching profile data:", error);
+        } finally {
+          setLoading(false)
         }
       };
       fetchData();
@@ -212,9 +217,12 @@ function CartContext(props) {
         },
         body: JSON.stringify(userData),
         credentials: "include",
+        
       });
       if (res.ok) {
         const updatedUser = await res.json();
+        console.log(updatedUser);
+        
         setUserData(updatedUser);
         setIsEditing({
           name: false,
@@ -229,12 +237,28 @@ function CartContext(props) {
       }
     } catch (error) {
       console.error("Error updating profile data:", error);
-    }
+    } 
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+  };
+
+  const handleLogout = () => {
+    setConfirm({
+      message: `Hey ${data.username}, Do you want to logout?`,
+      onConfirm: () => {
+        localStorage.removeItem("isLogin");
+        setAlert({ type: "success", message: "Logged out successfully." });
+        setTimeout(() => setAlert(null), 1000);
+        navigate("/");
+        setConfirm(null);
+      },
+      onCancel: () => {
+        setConfirm(null);
+      }
+    });
   };
 
   const contextValue = {
@@ -247,6 +271,8 @@ function CartContext(props) {
     trigger,
     isEditing,
     isAnyFieldEditing,
+    loading,
+    confirm,
     addToCart,
     addFromCart,
     removeFromCart,
@@ -263,6 +289,9 @@ function CartContext(props) {
     setIsAnyFieldEditing,
     updateUserData,
     handleChange,
+    setLoading,
+    handleLogout,
+    setAlert,
   };
 
   return (

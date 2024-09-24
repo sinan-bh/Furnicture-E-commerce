@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import "./Profile.css";
 import { userContext } from "../../../context/CartContext";
+import Spinner from "../../../popup box/Spinner";
 
 function Profile() {
   const {
     userData,
+    loading,
     setUserData,
     isEditing,
     setIsEditing,
@@ -22,7 +24,7 @@ function Profile() {
 
   const handleBlur = (field) => {
     setIsEditing((prev) => ({ ...prev, [field]: false }));
-    checkIfAnyFieldIsEditing(); // Check if any field is still being edited
+    checkIfAnyFieldIsEditing(); 
   };
 
   const checkIfAnyFieldIsEditing = () => {
@@ -34,6 +36,10 @@ function Profile() {
     setIsEditing((prev) => ({ ...prev, [field]: true }));
     setIsAnyFieldEditing(true);
   };
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div className="profile-container">

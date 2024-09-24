@@ -4,12 +4,12 @@ import { userContext } from "../../../context/CartContext";
 import { IoCartSharp } from "react-icons/io5";
 import AlertBox from "../../../popup box/AlertBox";
 import Spinner from "../../../popup box/Spinner";
+import { Link } from "react-router-dom";
 
 const Wishlist = () => {
   const [wishlist, setWishList] = useState([]);
   const [alert, setAlert] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { removeFromWishList, addToCart, setTrigger } = useContext(userContext);
+  const { removeFromWishList, addToCart, setTrigger, loading, setLoading } = useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data.userID;
 
@@ -67,50 +67,45 @@ const Wishlist = () => {
 
   return (
     <div className="wishlist-container">
-      {alert && (
-        <AlertBox
-          message={alert.message}
-          type={alert.type}
-          onClose={() => setAlert(null)}
-        />
-      )}
-      {hasItemsInWishList ? (
-      <div>
-        {wishlist?.data?.map((product) => (
-          <div className="product" key={product._id}>
+    {alert && (
+      <AlertBox
+        message={alert.message}
+        type={alert.type}
+        onClose={() => setAlert(null)}
+      />
+    )}
+    <h1 className="wishlist-title">My Wishlist</h1>
+    <div className="wishlist-grid">
+      {wishlist?.data?.length > 0 ? (
+        wishlist.data.map((item) => (
+          <div key={item._id} className="wishlist-item">
             <img
-              src={product.image}
-              alt={product.title}
-              className="product-image"
+              src={item.image}
+              alt={item.name}
+              className="wishlist-item-image"
             />
-            <div className="product-details">
-              <h4>{product.title}</h4>
-              <p>{product.description}</p>
-            </div>
-            <div className="product-price">price ${product.price}</div>
-            <div className="product-price">
-              offerPrice ${product.offerPrice}
-            </div>
-            <div className="add-delete" >
-              <div className="delete-icon" onClick={()=> addToCartItem(product._id)}>
-                <IoCartSharp />
-              </div>
-              <div
-                className="delete-icon"
-                onClick={() => handleRemoveItem(product._id)}
-              >
-                🗑️
+            <div className="wishlist-item-details">
+              <h2 className="wishlist-item-name">{item.name}</h2>
+              <p className="wishlist-item-price">₹ {item.price}</p>
+              <div className="wishlist-item-actions">
+                <button
+                  onClick={() => handleRemoveItem(item._id)}
+                  className="wishlist-item-remove-button"
+                >
+                  🗑️
+                </button>
+                <Link to={"/cart"} onClick={() => addToCartItem(item._id)}>
+                  <IoCartSharp className="wishlist-item-add-to-cart" />
+                </Link>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        ))
       ) : (
-        <div className="text-center bg-white card empt-cart">
-        <h2>Your WishList is empty...!</h2>
-      </div>
+        <p className="wishlist-empty-message">Your wishlist is empty.</p>
       )}
     </div>
+  </div>
   );
 };
 

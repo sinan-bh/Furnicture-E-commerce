@@ -49,7 +49,7 @@ function Payment() {
               `http://localhost:3000/users/verify_payment/${userID}`,
               {
                 // fetch(`https://backend-ecommerce-furniture.onrender.com/users/verify_payment/${userID}`, {
-                method: "POST",
+                method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -58,6 +58,7 @@ function Payment() {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
                 }),
+                credentials: "include"
               }
             );
 

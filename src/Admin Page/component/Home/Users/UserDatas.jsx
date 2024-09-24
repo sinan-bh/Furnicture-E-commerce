@@ -1,37 +1,16 @@
 import "./userDatas.css";
 import useFetch from "../../../../Custom Hook/useFetch";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "../../../../popup box/Pagination";
+import Spinner from "../../../../popup box/Spinner";
+import { formContext } from "../../../../context/AdminContext";
 
 function UserDatas() {
-  const [users,setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/admin/allusers`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/allusers`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const users = await res.json();
-
-        setUsers(users);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
+  const { users, loading} = useContext(formContext)
 
   const filteredUsers = users?.data?.filter((list) =>
     list.date.toLowerCase().includes(searchTerm.toLowerCase())
@@ -42,6 +21,10 @@ function UserDatas() {
   const currentProducts = filteredUsers?.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div className="user-data-container">
@@ -76,7 +59,8 @@ function UserDatas() {
                 <td data-label="E-mail">{list.email}</td>
                 <td data-label="Username">{list.userName}</td>
                 <td data-label="Date">{list.date}</td>
-                <td data-label="Date"><Link to={`/adminhome/user/${list._id}`}>click here</Link></td>
+                {console.log(list._id)}
+                <td data-label="Date"><Link to={`/adminhome/user/${list?._id}`}>click here</Link></td>
               </tr>
             ))}
           </tbody>

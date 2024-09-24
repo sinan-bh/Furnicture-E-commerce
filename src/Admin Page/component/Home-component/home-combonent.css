@@ -84,7 +84,7 @@
   }
 
   .productCountTable{
-    margin-left: 25px;
+    /* margin-left: 25px; */
     width: 100%;
     height: auto;
     display: flex;
@@ -130,4 +130,12 @@
       transform: translateY(0);
     }
   }
+
+  .pieChart{
+    margin-left: 100px;
+    font-weight: bold;
+  }
   
+  .pieChart-chart{
+    margin-top: 30px;
+  }

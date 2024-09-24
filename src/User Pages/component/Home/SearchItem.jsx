@@ -3,6 +3,7 @@ import List from "../Products/List";
 import "./home.css";
 import { userContext } from "../../../context/CartContext";
 import useFetch from "../../../Custom Hook/useFetch";
+import Spinner from "../../../popup box/Spinner";
 
 function SearchItem() {
   const { searchTerm } = useContext(userContext);
@@ -15,7 +16,7 @@ function SearchItem() {
   // } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><Spinner /></div>;
   }
 
   if (error) {
@@ -40,6 +41,9 @@ function SearchItem() {
     </div>
     )
   }
+
+  
+ 
 
   return (
     <div className="container pt-5">

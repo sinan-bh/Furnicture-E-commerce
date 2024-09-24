@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./OrderProducts.css";
+import Spinner from "../../../popup box/Spinner";
 
 function OrderProducts() {
   const [order, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -22,6 +24,8 @@ function OrderProducts() {
           setOrders(data);
         } catch (error) {
           console.error("Error fetching cart data:", error);
+        } finally {
+          setLoading(false)
         }
       };
       fetchData();
@@ -29,6 +33,10 @@ function OrderProducts() {
   }, []);
 
   const hasItemsInOrder = order?.order?.length > 0;
+
+  if (loading) {
+    return <div><Spinner /></div>;
+  }
 
   return (
     <div>

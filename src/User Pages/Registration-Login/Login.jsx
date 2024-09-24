@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import AlertBox from '../../popup box/AlertBox'; 
+import { formContext } from '../../context/AdminContext';
 
 function Login() {
   const [errors, setErrors] = useState({});
@@ -51,7 +52,10 @@ function Login() {
 
       const { status, userName, token, user, data } = result;
       console.log(result);
-      
+
+      // if (!token) {
+      //   handleLogout()
+      // }      
 
       if (!response.ok) {
         setAlert({ type: 'error', message: 'Login failed' });

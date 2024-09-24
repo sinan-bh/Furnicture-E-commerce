@@ -210,9 +210,15 @@ abbr[title]{
   color: #4caf50;
 }
 
+.Product-Chart {
+  width: 100vw;
+  display: flex;
+}
+
+
 .table-prd .category-border{
   width: 400px;
-  margin-left: 100%;
+  margin-left: 200px;
 }
 .table-prd .table{
   height: 332px;

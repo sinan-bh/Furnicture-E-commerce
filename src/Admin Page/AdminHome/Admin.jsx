@@ -34,7 +34,7 @@ function Admin() {
           </Route>
           <Route path="/adminhome/add-edit-product" element={<ProtectedRoute element={<AddEditProduct />} />} />
           <Route path="/adminhome/add-edit-product/:id" element={<ProtectedRoute element={<AddEditProduct />} />} />
-          <Route path="/adminhome/user/:id" element={<ProtectedRoute element={<UserById />} />} />
+          <Route path="/adminhome/user/:userId" element={<ProtectedRoute element={<UserById />} />} />
         </Routes>
       </AdminContext>
       </div>
