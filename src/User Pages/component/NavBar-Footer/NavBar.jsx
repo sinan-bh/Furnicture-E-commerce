@@ -26,7 +26,7 @@ const Navbar = () => {
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const [dropdownOpen, setDropdownOpen] = useState(false); 
   const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
-  const {userID} = data
+  const userID = data?.userID
   console.log(userID);
   
 
