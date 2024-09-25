@@ -76,7 +76,7 @@ const Navbar = () => {
       }
     };
     fetchWishListLength();
-  }, [data.userID,trigger]);
+  }, [userID,trigger]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
