@@ -13,7 +13,6 @@ function CardItems({ item, onRemove }) {
     const updatedQty = qty + 1;
     setQty(updatedQty); 
     addFromCart(id)
-    setTrigger(!trigger)
   };
   
   const handleRemove = (id) => {
@@ -21,7 +20,6 @@ function CardItems({ item, onRemove }) {
       const updatedQty = qty - 1;
       setQty(updatedQty); 
       removeFromCart(id)
-      setTrigger(!trigger)
     }
   };
   
