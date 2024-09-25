@@ -181,7 +181,7 @@ function CartContext(props) {
   };
 
   useEffect(() => {
-    const { userID } = data;
+    const userID = data?.userID;
     if (userID) {
       const fetchData = async () => {
         try {
