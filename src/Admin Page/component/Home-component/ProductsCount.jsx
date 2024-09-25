@@ -45,9 +45,9 @@ function ProductsCount() {
           <tr>
             <th scope="col" className="">Category</th>
             <th scope="col">Products</th>
-            <th scope="col">Products Items</th>
+            <th scope="col">Products Stock</th>
             <th scope="col">Purchased Products</th>
-            <th scope="col">Total Products</th>
+            <th scope="col">Total Stock</th>
           </tr>
         </thead>
         <tbody>
