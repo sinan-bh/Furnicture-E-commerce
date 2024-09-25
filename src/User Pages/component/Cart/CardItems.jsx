@@ -5,7 +5,7 @@ import { userContext } from "../../../context/CartContext";
 function CardItems({ item, onRemove }) {
   const [qty, setQty] = useState(item.quantity);
   const { _id,title, image,  price, offerPrice } = item.prodid;
-  const { addFromCart, removeFromCart, removeItem, setCartProduct,cartProduct, setTrigger } =
+  const { addFromCart, removeFromCart, removeItem, setCartProduct,trigger,cartProduct, setTrigger } =
   useContext(userContext);
 
   
@@ -13,6 +13,7 @@ function CardItems({ item, onRemove }) {
     const updatedQty = qty + 1;
     setQty(updatedQty); 
     addFromCart(id)
+    setTrigger(!trigger)
   };
   
   const handleRemove = (id) => {
@@ -20,6 +21,7 @@ function CardItems({ item, onRemove }) {
       const updatedQty = qty - 1;
       setQty(updatedQty); 
       removeFromCart(id)
+      setTrigger(!trigger)
     }
   };
   
@@ -29,7 +31,7 @@ function CardItems({ item, onRemove }) {
     removeItem(id).then((success) => {
       if (success) {
         onRemove(id);
-        setTrigger(id) 
+        setTrigger(!trigger) 
       }
     });
   };

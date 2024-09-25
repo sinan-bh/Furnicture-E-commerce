@@ -26,7 +26,9 @@ const Navbar = () => {
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const [dropdownOpen, setDropdownOpen] = useState(false); 
   const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
-
+  const {userID} = data
+  console.log(userID);
+  
 
   useEffect(() => {
     const fetchCartLength = async () => {
@@ -50,7 +52,7 @@ const Navbar = () => {
       }
     };
     fetchCartLength();
-  }, [data.userID,trigger]);
+  }, [userID,trigger]);
 
   useEffect(() => {
     const fetchWishListLength = async () => {

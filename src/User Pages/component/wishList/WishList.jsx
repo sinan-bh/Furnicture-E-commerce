@@ -11,7 +11,7 @@ const Wishlist = () => {
   const [wishlist, setWishList] = useState([]);
   const [alert, setAlert] = useState(null);
   const navigete = useNavigate()
-  const { removeFromWishList, addToCart, setTrigger, loading, setLoading } =
+  const { removeFromWishList, addToCart, setTrigger,trigger, loading, setLoading } =
     useContext(userContext);
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data.userID;
@@ -41,11 +41,11 @@ const Wishlist = () => {
       };
       fetchData();
     }
-  }, [userID]);
+  }, [userID,trigger]);
 
   const addToCartItem = async (id) => {
     await addToCart(id);
-    setTrigger(id);
+    setTrigger(!trigger);
   };
 
   const handleRemoveItem = async (id) => {
