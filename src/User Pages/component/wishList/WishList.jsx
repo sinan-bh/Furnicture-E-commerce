@@ -55,9 +55,9 @@ const Wishlist = () => {
         ...prevUser,
         data: prevUser.data.filter((item) => item._id !== id),
       }));
-      setTrigger(true);
       setAlert({ type: "info", message: "Remove From WishList" });
       setTimeout(() => setAlert(null), 1000);
+      setTrigger(true);
     }
   };
 
