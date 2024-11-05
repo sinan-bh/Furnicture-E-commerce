@@ -1,23 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData, updateUserData, startEditingField, stopEditingField } from "../../../lib/store/features/userSlice"; // Adjust the path as necessary
+import {
+  fetchUserData,
+  updateUserData,
+  startEditingField,
+  stopEditingField,
+} from "../../../lib/store/features/userSlice";
 import Spinner from "../../../popup box/Spinner";
 import "./Profile.css";
 
 function Profile() {
   const dispatch = useDispatch();
-  const { userData, loading, isEditing, isAnyFieldEditing } = useSelector(state => state.user);
+  const { userData, loading, isEditing, isAnyFieldEditing } = useSelector(
+    (state) => state.user
+  );
+  const [localUserData, setLocalUserData] = useState(userData);
+  const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("currentUser"))
     const userID = data?.userID;
     dispatch(fetchUserData(userID));
   }, [dispatch]);
 
+  useEffect(() => {
+    setLocalUserData(userData);
+  }, [userData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(updateUserData({ userID: userData.id, userData: { ...userData, [name]: value } })); // Assuming you have user ID in userData
+    setLocalUserData((prev) => ({ ...prev, [name]: value }));
+    dispatch(startEditingField(name));
   };
 
   const handleBlur = (field) => {
@@ -28,13 +41,17 @@ function Profile() {
     dispatch(startEditingField(field));
   };
 
-  const updateProfile = () => {
-    const userID = userData?.id;
-    dispatch(updateUserData({ userID, userData })); 
+  const handleUpdate = () => {
+    const userID = data?.userID;
+    dispatch(updateUserData({ userID, userData: localUserData }));
   };
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -43,29 +60,31 @@ function Profile() {
         <div className="profile-details-section">
           <h3 className="details-heading text-white">Profile Details</h3>
           <ul className="details-list">
-            {Object.keys(userData).map((key) => (
-              <li key={key}>
-                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
-                {isEditing[key] ? (
+            {["name", "userName", "phone", "email", "address"].map((field) => (
+              <li key={field}>
+                <strong>
+                  {field.charAt(0).toUpperCase() + field.slice(1)}:
+                </strong>{" "}
+                {isEditing[field] ? (
                   <input
-                    type="text"
-                    name={key}
-                    value={userData[key] || ""}
+                    type={field === "email" ? "email" : "text"}
+                    name={field}
+                    value={localUserData[field] || ""}
                     onChange={handleChange}
-                    onBlur={() => handleBlur(key)}
+                    onBlur={() => handleBlur(field)}
                     autoFocus
                   />
-                ) : userData[key] ? (
+                ) : localUserData[field] ? (
                   <span
                     className="editable"
                     style={{ color: "white", padding: "0 10px" }}
-                    onClick={() => toggleEdit(key)}
+                    onClick={() => toggleEdit(field)}
                   >
-                    {userData[key]} <FaEdit />
+                    {localUserData[field]} <FaEdit />
                   </span>
                 ) : (
-                  <span className="add-link" onClick={() => toggleEdit(key)}>
-                    + Add {key.charAt(0).toUpperCase() + key.slice(1)}
+                  <span className="add-link" onClick={() => toggleEdit(field)}>
+                    + Add {field.charAt(0).toUpperCase() + field.slice(1)}
                   </span>
                 )}
               </li>
@@ -73,7 +92,7 @@ function Profile() {
           </ul>
 
           {isAnyFieldEditing && (
-            <button className="update-button" onClick={updateProfile}>
+            <button className="update-button" onClick={handleUpdate}>
               Update Profile
             </button>
           )}

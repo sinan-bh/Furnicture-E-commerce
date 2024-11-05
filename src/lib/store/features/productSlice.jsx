@@ -22,11 +22,19 @@ export const fetchProductsById = createAsyncThunk("products/fetchProductsById", 
   return response.data;
 });
 
+export const fetchpPopularProducts = createAsyncThunk("products/fetchPopularProducts", async () => {
+  const response = await axios.get(`http://localhost:3000/users/popularproducts`,{
+    withCredentials: true
+  });
+  return response.data
+})
+
 
 
 const initialState = {
   products: [],
   product: {},
+  popular: [],
   loading: false,
   error: null,
 };
@@ -70,6 +78,18 @@ const productSlice = createSlice({
         state.product = action.payload;
       })
       .addCase(fetchProductsById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+      .addCase(fetchpPopularProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchpPopularProducts.fulfilled, (state, action) => {
+        state.loading = false
+        state.popular = action.payload;
+      })
+      .addCase(fetchpPopularProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error;
       });

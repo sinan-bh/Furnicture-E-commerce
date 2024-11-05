@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, fetchProductsByCategory } from "../../../lib/store/features/productSlice";
+import {
+  fetchProducts,
+  fetchProductsByCategory,
+} from "../../../lib/store/features/productSlice";
 import "./products.css";
 import List from "./List";
 import Pagination from "../../../popup box/Pagination";
@@ -22,7 +25,11 @@ function Collections({ type }) {
   }, [dispatch, type]);
 
   if (loading) {
-    return <div className="d-flex justify-content-center align-items-center h-100"><Spinner /></div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
@@ -35,7 +42,10 @@ function Collections({ type }) {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products?.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products?.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

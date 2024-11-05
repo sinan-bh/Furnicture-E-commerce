@@ -13,68 +13,28 @@ import ConfirmBox from "../../../popup box/ConfirmBox";
 import AlertBox from "../../../popup box/AlertBox";
 
 import "./Style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartProducts } from "../../../lib/store/features/cartSlice";
+import { fetchWishlist } from "../../../lib/store/features/whishListSlice";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null)
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
-  const [cartLength, setCartLength] = useState(0);
-  const [wishlistLength, setWishListLength] = useState(0);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const [dropdownOpen, setDropdownOpen] = useState(false); 
-  const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
-  const {userData} = useSelector(state=> state.user)
+  const { searchTerm, setSearchTerm, handleLogout,confirm,alert ,setAlert } = useContext(userContext);
+  const dispatch = useDispatch()
+  const {cart} = useSelector(state=> state.cart)
+  const {items} = useSelector(state=> state.wishList)
 
-  // useEffect(() => {
-  //   const fetchCartLength = async () => {
-  //     if (isLogin && data) {
-  //       const { userID } = data;
-  //       const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
-  //         method: "GET",
-  //         headers:{
-  //           "Content-Type": "Application/json"
-  //         },
-  //         credentials: 'include',
-  //       });
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setCartLength(result?.length);
-  //       } else {
-  //         setAlert({ type: "error", message: "Failed to fetch cart data." });
-  //         setTimeout(() => setAlert(null), 1000);
-  //       }
-  //     }
-  //   };
-  //   fetchCartLength();
-  // }, [data.userID]);
-
-  // useEffect(() => {
-  //   const fetchWishListLength = async () => {
-  //     if (isLogin && data) {
-  //       const { userID } = data;
-  //       const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
-  //       // const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
-  //         method: "GET",
-  //         headers:{
-  //           "Content-Type": "Application/json"
-  //         },
-  //         credentials: 'include',
-  //       });
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setWishListLength(result?.data?.length);
-  //       } else {
-  //         setAlert({ type: "error", message: "Failed to fetch wishlist data" });
-  //         setTimeout(() => setAlert(null), 1000);
-  //       }
-  //     }
-  //   };
-  //   fetchWishListLength();
-  // }, [data.userID]);
+  useEffect(() => {
+    dispatch(fetchCartProducts(data?.userID))
+    dispatch(fetchWishlist(data?.userID))
+  }, [data?.userID, dispatch]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -99,6 +59,7 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastScrollY]);
 
   const toggleDropdown = () => {
@@ -212,8 +173,8 @@ const Navbar = () => {
                 <Link to="/addcart" className="">
                   <button type="button" className="cart-link ">
                     <IoCartSharp className="icon" />
-                    {cartLength > 0 && (
-                      <div className="totaldiv fw-bold">{cartLength}</div>
+                    {cart?.length > 0 && (
+                      <div className="totaldiv fw-bold">{cart?.length}</div>
                     )}
                   </button>
                 </Link>
@@ -226,8 +187,8 @@ const Navbar = () => {
                 <Link to="/wishlist" className="">
                   <button type="button" className="cart-link ">
                     <FaRegHeart className="icon" />
-                    {wishlistLength > 0 && (
-                      <div className="totaldiv fw-bold">{wishlistLength}</div>
+                    {items?.length > 0 && (
+                      <div className="totaldiv fw-bold">{items?.length}</div>
                     )}
                   </button>
                 </Link>

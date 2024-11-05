@@ -1,38 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
-import { userContext } from "../../../context/CartContext";
 import Spinner from "../../../popup box/Spinner";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchpPopularProducts } from "../../../lib/store/features/productSlice";
 
 function Popular() {
-  const [popularProducts, setPopularProducts] = useState()
-  const { loading, setLoading } = useContext(userContext)
-  
-  useEffect(()=> {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/users/popularproducts`, {
-        // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json"
-          },
-        });
-        const product = await res.json();
-        setPopularProducts(product);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      } finally {
-        setLoading(false)
-      }
-    };
-    fetchData();  
-  },[])
+  const dispatch = useDispatch();
+  const { popular, loading } = useSelector((state) => state.products);
 
-  
+  useEffect(() => {
+    dispatch(fetchpPopularProducts());
+  }, []);
+
   if (loading) {
-    return <div><Spinner /></div>;
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -41,7 +27,7 @@ function Popular() {
         <h2 className="text-center mt-4">Popular Products</h2>
         <div className="  p-5 ">
           <div className=" ms-3 grid-style">
-            {popularProducts?.map((list) => (
+            {popular?.map((list) => (
               <div key={list._id} className=" mb-4">
                 <Link to={`/allproducts/${list._id}`}>
                   <img

@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./Style.css";
 import { useDispatch } from "react-redux";
-import { updateQuantity } from "../../../lib/store/features/cartSlice";
+import {
+  updateQuantity,
+} from "../../../lib/store/features/cartSlice";
 
 function CardItems({ userID, item, onRemove, onQuantityChange }) {
   const dispatch = useDispatch();
   const [qty, setQty] = useState(item.quantity);
-  const { _id, title, image, price, offerPrice } = item.prodid;
+  const { _id, title, image, price, offerPrice } = item?.prodid;
 
   useEffect(() => {
     setQty(item.quantity);
-  }, [item.quantity]);
+  }, [item?.quantity]);
 
   const handleAdd = (id) => {
     const updatedQty = qty + 1;
     setQty(updatedQty);
     dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
-    onQuantityChange({ [_id]: updatedQty }); // Call onQuantityChange
+    onQuantityChange({ [_id]: updatedQty });
   };
-  
+
   const handleRemove = (id) => {
     if (qty > 1) {
       const updatedQty = qty - 1;
       setQty(updatedQty);
       dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
-      onQuantityChange({ [_id]: updatedQty }); // Call onQuantityChange
+      onQuantityChange({ [_id]: updatedQty });
     }
-  };
-
-  const handleRemoveItem = (id) => {
-    onRemove(id);
   };
 
   return (
@@ -56,18 +54,19 @@ function CardItems({ userID, item, onRemove, onQuantityChange }) {
           </button>
         </div>
         <div className="item-price">
-          <h6 className="text-success">Offer $ {(qty * offerPrice).toFixed(2)}</h6>
+          <h6 className="text-success">
+            Offer $ {(qty * offerPrice).toFixed(2)}
+          </h6>
           <p className="mb-0 text-secondary">
             <del>$ {price}</del>
           </p>
           <br />
-          <a
-            href="#"
-            className="text-danger"
-            onClick={() => handleRemoveItem(_id)}
+          <span
+            className="text-danger remove-cart-product"
+            onClick={() => onRemove(_id)}
           >
             Remove
-          </a>
+          </span>
         </div>
       </div>
     </div>

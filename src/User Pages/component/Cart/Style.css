@@ -181,6 +181,11 @@
   border: none;
 }
 
+.remove-cart-product{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
   .cart-container {

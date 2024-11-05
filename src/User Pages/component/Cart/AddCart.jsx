@@ -4,11 +4,16 @@ import CardItems from "./CardItems";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartProducts, updateQuantity } from "../../../lib/store/features/cartSlice";
+import {
+  fetchCartProducts,
+  removeFromCart,
+  updateQuantity,
+} from "../../../lib/store/features/cartSlice";
+import Spinner from "../../../popup box/Spinner";
 
 function AddCart() {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.cart);
+  const { cart, loading } = useSelector((state) => state.cart);
   const { setOrder } = useContext(userContext);
   const navigate = useNavigate();
   const [price, setPrice] = useState(0);
@@ -25,7 +30,6 @@ function AddCart() {
 
   useEffect(() => {
     if (cart?.length > 0) {
-      dispatch(fetchCartProducts(userID))
       const totalItemCount = cart.reduce((total, item) => total + Number(item.quantity), 0);
       setCount(totalItemCount);
 
@@ -54,20 +58,24 @@ function AddCart() {
     navigate("/payment");
   };
 
-  const handleItemRemove = (id) => {
-    dispatch(fetchCartProducts(userID));
+  const handleItemRemove = (productID) => {
+    dispatch(removeFromCart({ userID, productID }));
+    dispatch(fetchCartProducts(userID))
   };
 
-  const handleQuantityChange = (newQty) => {
-    const totalItemCount = cart.reduce((total, item) => total + newQty[item._id], 0);
-    setCount(totalItemCount);
-
-    const totalCartPrice = cart.reduce((total, item) => {
-      const itemQty = newQty[item._id] || item.quantity; // Use updated quantity or current quantity
-      return total + itemQty * item.prodid.offerPrice;
-    }, 0);
-    setPrice(totalCartPrice.toFixed(2));
+  const handleQuantityChange = (prodid, newQuantity) => {
+    if (newQuantity !== undefined) {
+      dispatch(updateQuantity({ userID, prodid, quantityChange: newQuantity }));
+    }
   };
+
+  if (loading) {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -83,11 +91,11 @@ function AddCart() {
             </div>
             {cart?.map((card) => (
               <CardItems
-                key={card._id}
+                key={card?._id}
                 userID={userID}
                 item={card}
                 onRemove={handleItemRemove}
-                onQuantityChange={handleQuantityChange} // Pass the handler to CardItems
+                onQuantityChange={handleQuantityChange} 
               />
             ))}
             <hr />

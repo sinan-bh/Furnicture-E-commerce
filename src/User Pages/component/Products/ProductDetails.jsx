@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsById } from "../../../lib/store/features/productSlice";
 
 function ProductDetails() {
-
   const { productID } = useParams();
   const dispatch = useDispatch();
 
@@ -26,30 +25,29 @@ function ProductDetails() {
 
   return (
     <div className="productDetails">
-    <div className="card1">
-      {loading && (
-        <div className="spinner-container">
-          <Spinner />
-        </div>
-      )}
-      {error && <div className="error-message">{error}</div>}
-  
-      {product && (
-        <div className="product-details1">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image1"
-          />
-          <h2 className="product-title1">{product.title}</h2>
-          <div className="product-category1">{product.details}</div>
-          <p className="product-price1">₹ price {product.price}</p>
-          <p className="product-price1">₹ offerPrice {product.offerPrice}</p>
-        </div>
-      )}
+      <div className="card1">
+        {loading && (
+          <div className="spinner-container">
+            <Spinner />
+          </div>
+        )}
+        {error && <div className="error-message">{error}</div>}
+
+        {product && (
+          <div className="product-details1">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="product-image1"
+            />
+            <h2 className="product-title1">{product.title}</h2>
+            <div className="product-category1">{product.details}</div>
+            <p className="product-price1">₹ price {product.price}</p>
+            <p className="product-price1">₹ offerPrice {product.offerPrice}</p>
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-  
   );
 }
 

@@ -1,39 +1,20 @@
-import React, { useEffect, useState } from "react";
-import "./OrderProducts.css";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrderProducts } from "../../../lib/store/features/cartSlice";
 import Spinner from "../../../popup box/Spinner";
+import "./OrderProducts.css";
 
 function OrderProducts() {
-  const [order, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { order, loading } = useSelector((state) => state.cart);
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
-    if (data && data.userID) {
-      const userID = data.userID;
+      dispatch(fetchOrderProducts(data.userID));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
-      const fetchData = async () => {
-        try {
-          const res = await fetch(
-            `http://localhost:3000/users/order/${userID}`,
-            //  `https://backend-ecommerce-furniture.onrender.com/users/order/${userID}`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-          const data = await res.json();
-          setOrders(data);
-        } catch (error) {
-          console.error("Error fetching cart data:", error);
-        } finally {
-          setLoading(false)
-        }
-      };
-      fetchData();
-    }
-  }, []);
-
-  const hasItemsInOrder = order?.order?.length > 0;
+  const hasItemsInOrder = order?.length > 0;
 
   if (loading) {
     return <div><Spinner /></div>;
@@ -43,8 +24,8 @@ function OrderProducts() {
     <div>
       {hasItemsInOrder ? (
         <div className="order-product-container">
-          <h2 className="text-center pt-3 m-3">Order Producus Status</h2>
-          <div className="">
+          <h2 className="text-center pt-3 m-3">Order Products Status</h2>
+          <div>
             <table className="order-details-table">
               <thead>
                 <tr>
@@ -55,9 +36,9 @@ function OrderProducts() {
                 </tr>
               </thead>
               <tbody>
-                {order?.order?.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order.date}</td>
+                {order.map((orderItem) => (
+                  <tr key={orderItem._id}>
+                    <td>{orderItem.date}</td>
                     <td>
                       <table className="inner-table">
                         <thead>
@@ -66,11 +47,11 @@ function OrderProducts() {
                             <th>Title</th>
                             <th>Category</th>
                             <th>Quantity</th>
-                            <th>Prize</th>
+                            <th>Price</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {order?.products?.map((item) => (
+                          {orderItem.products.map((item) => (
                             <tr key={item.prodid._id}>
                               <td>
                                 <img
@@ -82,14 +63,14 @@ function OrderProducts() {
                               <td>{item.prodid.title}</td>
                               <td>{item.prodid.category}</td>
                               <td>{item.quantity}</td>
-                              <td>{item.productPrize}</td>
+                              <td>${item.productPrize}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </td>
-                    <td>${order.total_ammount}</td>
-                    <td>{order.status}</td>
+                    <td>${orderItem.total_ammount}</td>
+                    <td>{orderItem.status}</td>
                   </tr>
                 ))}
               </tbody>
@@ -98,7 +79,7 @@ function OrderProducts() {
         </div>
       ) : (
         <div className="text-center bg-white card empt-cart">
-          <h2>Your cart is empty...!</h2>
+          <h2>Your order is empty...!</h2>
         </div>
       )}
     </div>

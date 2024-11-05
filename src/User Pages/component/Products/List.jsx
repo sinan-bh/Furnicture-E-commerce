@@ -4,7 +4,7 @@ import "./products.css";
 import { userContext } from "../../../context/CartContext";
 import { FaHeart } from "react-icons/fa6";
 import { MdShoppingCart } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../../lib/store/features/cartSlice";
 import { addWishList } from "../../../lib/store/features/whishListSlice";
 
@@ -22,8 +22,7 @@ function List({ list }) {
   };
 
   const addToWishListItem = async (id) => {
-    dispatch(addWishList({userID: data?.userID, productID: id}));
-    // setTrigger(id);
+    dispatch(addWishList({ userID: data?.userID, productID: id }));
   };
 
   return (
