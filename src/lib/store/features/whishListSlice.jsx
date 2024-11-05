@@ -1,17 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Thunk for fetching wishlist items
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async (userID) => {
   const response = await axios.get(`http://localhost:3000/users/wishlist/${userID}`, {
     withCredentials: true,
-  });
-  console.log(response.data);
-  
+  });  
   return response.data;
 });
 
-// Thunk for adding an item to the wishlist
 export const addWishList = createAsyncThunk('wishlist/addWishList', async ({ userID, productID }) => {
   const response = await axios.post(`http://localhost:3000/users/wishlist/${userID}`, { id: productID }, {
     withCredentials: true,
@@ -19,12 +15,11 @@ export const addWishList = createAsyncThunk('wishlist/addWishList', async ({ use
   return response.data;
 });
 
-// Thunk for removing an item from the wishlist
 export const removeFromWishList = createAsyncThunk('wishlist/removeFromWishList', async ({ userID, productID }) => {
   await axios.delete(`http://localhost:3000/users/wishlist/${userID}/${productID}`, {
     withCredentials: true,
   });
-  return productID; // Return the productID for the reducer to remove it from the state
+  return productID; 
 });
 
 const wishlistSlice = createSlice({

@@ -1,19 +1,21 @@
-// src/components/Reg.js
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../../lib/store/features/userSlice'; 
 import AlertBox from '../../popup box/AlertBox'; 
 import './login.css'; 
+import { clearAlert } from '../../lib/store/features/userSlice';
 
 function Reg() {
+  const dispatch = useDispatch();
+  const alert = useSelector((state) => state.user.alert); 
   const [usrReg, setUsrReg] = useState({
     name: '',
     email: '',
     userName: '',
     pass: '',
   });
-
   const [errors, setErrors] = useState({});
-  const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -42,27 +44,12 @@ function Reg() {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(usrReg),
-        };
-
-        const url = 'http://localhost:3000/users/registration';
-        // const url = 'https://backend-ecommerce-furniture.onrender.com/users/registration';
-
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        setAlert({ type: 'success', message: 'Registration Complete' });
+        // Dispatch the registration action
+        await dispatch(registerUser(usrReg)).unwrap();
         setTimeout(() => navigate('/login'), 1000);
       } catch (error) {
         console.error('Failed to register:', error);
-        setAlert({ type: 'error', message: 'Registration failed' });
-        setTimeout(() => setAlert(null), 1000);
+        // You can handle errors in the Redux slice, no need to manage alert locally
       }
     } else {
       setErrors(validationErrors);
@@ -75,7 +62,7 @@ function Reg() {
         <AlertBox
           message={alert.message}
           type={alert.type}
-          onClose={() => setAlert(null)}
+          onClose={() => dispatch(clearAlert())} 
         />
       )}
       <div className="row justify-content-center">

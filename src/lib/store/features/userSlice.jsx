@@ -2,21 +2,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const loginUser = createAsyncThunk("user/login", async (credentials) => {
-  const response = await axios.post(
-    "http://localhost:3000/login",
-    credentials,
-    {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    }
-  );
-  if (response.ok) {
-    
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/login",
+      credentials,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+    return response.data; // Assuming response data is formatted correctly
+  } catch (error) {
+    throw new Error("Login failed");
   }
-  return response.data;
 });
 
-// Async thunk for registration
 export const registerUser = createAsyncThunk(
   "user/register",
   async (userData) => {
@@ -71,6 +71,7 @@ const initialState = {
     address: false,
   },
   isAnyFieldEditing: false,
+  loading: false, 
   status: "idle",
   error: null,
 };
