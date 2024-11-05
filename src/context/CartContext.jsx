@@ -11,7 +11,7 @@ function CartContext(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [order, setOrder] = useState({});
   const [cartProduct, setCartProduct] = useState();
-  const [trigger, setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState(false);  
   const [alert, setAlert] = useState(null); 
   const [confirm, setConfirm] = useState(null); 
   const [loading, setLoading] = useState(true);
@@ -30,8 +30,8 @@ function CartContext(props) {
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const navigate = useNavigate();
 
-  // const { data: products } = useFetch("http://localhost:3000/users/products");
-  const { data: products } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
+  const { data: products } = useFetch("http://localhost:3000/users/products");
+  // const { data: products } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
 
   const addToCart = async (productID) => {
     if (!isLogin) {
@@ -50,8 +50,8 @@ function CartContext(props) {
           };
 
           const { userID } = data;
-          // const url = `http://localhost:3000/users/cart/${userID}`;
-          const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
+          const url = `http://localhost:3000/users/cart/${userID}`;
+          // const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
 
           const response = await fetch(url, options);
           const result = await response.json();
@@ -79,8 +79,8 @@ function CartContext(props) {
         credentials: 'include'
       };
       const { userID } = data;
-      // const url = `http://localhost:3000/users/cart/${userID}`;
-      const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
+      const url = `http://localhost:3000/users/cart/${userID}`;
+      // const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
       const response = await fetch(url, options);
       const result = await response.json();
       setCart(result);
@@ -97,8 +97,8 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
-    // const url = `http://localhost:3000/users/cart/${userID}`;
-    const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
+    const url = `http://localhost:3000/users/cart/${userID}`;
+    // const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`;
     const response = await fetch(url, options);
     const result = await response.json();
     setCart(result);
@@ -113,8 +113,8 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
-    // const url = `http://localhost:3000/users/cart/${userID}/${productID}`;
-    const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}/${productID}`;
+    const url = `http://localhost:3000/users/cart/${userID}/${productID}`;
+    // const url = `https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}/${productID}`;
     const response = await fetch(url, options);
     if (response.ok) {
       const result = await response.json();
@@ -143,8 +143,8 @@ function CartContext(props) {
         };
 
         const { userID } = data;
-        // const url = `http://localhost:3000/users/wishlist/${userID}`;
-        const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`;
+        const url = `http://localhost:3000/users/wishlist/${userID}`;
+        // const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`;
 
         const response = await fetch(url, options);
         const result = await response.json();
@@ -168,8 +168,8 @@ function CartContext(props) {
       credentials: 'include'
     };
     const { userID } = data;
-    // const url = `http://localhost:3000/users/wishlist/${userID}/${productID}`;
-    const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}/${productID}`;
+    const url = `http://localhost:3000/users/wishlist/${userID}/${productID}`;
+    // const url = `https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}/${productID}`;
     const response = await fetch(url, options);
     if (response.ok) {
       const result = await response.json();
@@ -180,39 +180,39 @@ function CartContext(props) {
     }
   };
 
-  useEffect(() => {
-    const { userID } = data;
-    if (userID) {
-      const fetchData = async () => {
-        try {
-          const res = await fetch(
-            // `http://localhost:3000/users/profile/${userID}`,
-             `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-            }
-          );
-          const fetchedData = await res.json();
-          setUserData(fetchedData);
-        } catch (error) {
-          console.error("Error fetching profile data:", error);
-        } finally {
-          setLoading(false)
-        }
-      };
-      fetchData();
-    }
-  }, [data?.userID]);
+  // useEffect(() => {
+  //   const { userID } = data;
+  //   if (userID) {
+  //     const fetchData = async () => {
+  //       try {
+  //         const res = await fetch(
+  //           `http://localhost:3000/users/profile/${userID}`,
+  //           //  `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`,
+  //           {
+  //             method: "GET",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             credentials: "include",
+  //           }
+  //         );
+  //         const fetchedData = await res.json();
+  //         setUserData(fetchedData);
+  //       } catch (error) {
+  //         console.error("Error fetching profile data:", error);
+  //       } finally {
+  //         setLoading(false)
+  //       }
+  //     };
+  //     fetchData();
+  //   }
+  // }, [data?.userID]);
 
   const updateUserData = async () => {
     const { userID } = data;
     try {
-      // const res = await fetch(`http://localhost:3000/users/profile/${userID}`, {
-      const res = await fetch( `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`, {
+      const res = await fetch(`http://localhost:3000/users/profile/${userID}`, {
+      // const res = await fetch( `https://backend-ecommerce-furniture.onrender.com/users/profile/${userID}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

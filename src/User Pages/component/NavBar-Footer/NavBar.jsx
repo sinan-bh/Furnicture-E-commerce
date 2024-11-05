@@ -13,6 +13,7 @@ import ConfirmBox from "../../../popup box/ConfirmBox";
 import AlertBox from "../../../popup box/AlertBox";
 
 import "./Style.css";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
@@ -26,55 +27,54 @@ const Navbar = () => {
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
   const [dropdownOpen, setDropdownOpen] = useState(false); 
   const { searchTerm, setSearchTerm, trigger, handleLogout,confirm,alert,setAlert } = useContext(userContext);
+  const {userData} = useSelector(state=> state.user)
 
+  // useEffect(() => {
+  //   const fetchCartLength = async () => {
+  //     if (isLogin && data) {
+  //       const { userID } = data;
+  //       const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
+  //         method: "GET",
+  //         headers:{
+  //           "Content-Type": "Application/json"
+  //         },
+  //         credentials: 'include',
+  //       });
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setCartLength(result?.length);
+  //       } else {
+  //         setAlert({ type: "error", message: "Failed to fetch cart data." });
+  //         setTimeout(() => setAlert(null), 1000);
+  //       }
+  //     }
+  //   };
+  //   fetchCartLength();
+  // }, [data.userID]);
 
-  useEffect(() => {
-    const fetchCartLength = async () => {
-      if (isLogin && data) {
-        const { userID } = data;
-        // const response = await fetch(`http://localhost:3000/users/cart/${userID}`,{
-        const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/cart/${userID}`,{
-          method: "GET",
-          headers:{
-            "Content-Type": "Application/json"
-          },
-          credentials: 'include',
-        });
-        if (response.ok) {
-          const result = await response.json();
-          setCartLength(result?.length);
-        } else {
-          setAlert({ type: "error", message: "Failed to fetch cart data." });
-          setTimeout(() => setAlert(null), 1000);
-        }
-      }
-    };
-    fetchCartLength();
-  }, [data.userID,trigger]);
-
-  useEffect(() => {
-    const fetchWishListLength = async () => {
-      if (isLogin && data) {
-        const { userID } = data;
-        // const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
-        const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
-          method: "GET",
-          headers:{
-            "Content-Type": "Application/json"
-          },
-          credentials: 'include',
-        });
-        if (response.ok) {
-          const result = await response.json();
-          setWishListLength(result?.data?.length);
-        } else {
-          setAlert({ type: "error", message: "Failed to fetch wishlist data" });
-          setTimeout(() => setAlert(null), 1000);
-        }
-      }
-    };
-    fetchWishListLength();
-  }, [data.userID,trigger]);
+  // useEffect(() => {
+  //   const fetchWishListLength = async () => {
+  //     if (isLogin && data) {
+  //       const { userID } = data;
+  //       const response = await fetch(`http://localhost:3000/users/wishlist/${userID}`,{
+  //       // const response = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/wishlist/${userID}`,{
+  //         method: "GET",
+  //         headers:{
+  //           "Content-Type": "Application/json"
+  //         },
+  //         credentials: 'include',
+  //       });
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setWishListLength(result?.data?.length);
+  //       } else {
+  //         setAlert({ type: "error", message: "Failed to fetch wishlist data" });
+  //         setTimeout(() => setAlert(null), 1000);
+  //       }
+  //     }
+  //   };
+  //   fetchWishListLength();
+  // }, [data.userID]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
