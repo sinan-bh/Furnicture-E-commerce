@@ -97,41 +97,27 @@ function Login() {
                   <input
                     type="text"
                     className="form-control"
-                    id="username"
                     placeholder="Username"
                     name="userName"
                     onChange={handleChange}
                     required
                   />
-                  {errors.userName && (
-                    <div className="text-danger">{errors.userName}</div>
-                  )}
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
                     className="form-control"
-                    id="password"
                     placeholder="Password"
                     name="pass"
                     onChange={handleChange}
                     required
                   />
-                  {errors.pass && (
-                    <div className="text-danger">{errors.pass}</div>
-                  )}
                 </div>
-                <button
-                  type="submit"
-                  className="btn-navy btn-block form-group p-1"
-                >
+                <button type="submit" className="btn-navy btn-block form-group p-1">
                   Login
                 </button>
                 <Link to={"/registration"}>
-                  <button
-                    type="button"
-                    className="btn-navy btn-block form-group p-1"
-                  >
+                  <button type="button" className="btn-navy btn-block form-group p-1">
                     Sign In
                   </button>
                 </Link>

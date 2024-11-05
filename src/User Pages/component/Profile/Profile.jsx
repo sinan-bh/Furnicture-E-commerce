@@ -9,6 +9,7 @@ import {
 } from "../../../lib/store/features/userSlice";
 import Spinner from "../../../popup box/Spinner";
 import "./Profile.css";
+import "./Profile.css";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function Profile() {
   };
 
   const handleBlur = (field) => {
+    dispatch(stopEditingField(field));
     dispatch(stopEditingField(field));
   };
 

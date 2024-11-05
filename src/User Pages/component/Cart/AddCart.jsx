@@ -28,6 +28,7 @@ function AddCart() {
     }
   }, [userID, dispatch]);
 
+
   useEffect(() => {
     if (cart?.length > 0) {
       const totalItemCount = cart.reduce((total, item) => total + Number(item.quantity), 0);
@@ -47,6 +48,9 @@ function AddCart() {
   const handleCheckout = async () => {
     const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: price }),
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: price }),
       credentials: "include",
@@ -79,6 +83,9 @@ function AddCart() {
 
   return (
     <div>
+      <Link to={"/orderstatus"} className="orderstatus btn btn-secondary">
+        Order Products Status
+      </Link>
       <Link to={"/orderstatus"} className="orderstatus btn btn-secondary">
         Order Products Status
       </Link>

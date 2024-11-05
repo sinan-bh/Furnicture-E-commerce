@@ -15,6 +15,10 @@ function ProductDetails() {
     dispatch(fetchProductsById(productID));
   }, [dispatch, productID]);
 
+  useEffect(() => {
+    dispatch(fetchProductsById(productID));
+  }, [dispatch, productID]);
+
   if (error) {
     return <div>Error: {error.message || JSON.stringify(error)}</div>;
   }

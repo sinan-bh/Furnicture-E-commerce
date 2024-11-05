@@ -40,6 +40,7 @@ function Collections({ type }) {
     return <div>No products found.</div>;
   }
 
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products?.slice(
