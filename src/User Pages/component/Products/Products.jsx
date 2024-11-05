@@ -1,47 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts, fetchProductsByCategory } from "../../../lib/store/features/productSlice";
 import "./products.css";
 import List from "./List";
 import Pagination from "../../../popup box/Pagination";
 import Spinner from "../../../popup box/Spinner";
-import useFetch from "../../../Custom Hook/useFetch";
 
 function Collections({ type }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
+  const dispatch = useDispatch();
 
-  const {
-    data: products,
-    loading,
-    error,
-  // } = useFetch("http://localhost:3000/users/products");
-  } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
+  const { products, loading, error } = useSelector((state) => state.products);
 
-  const {
-    data: category,
-  // } = useFetch(`http://localhost:3000/users/products?category=${type}`);
-  } = useFetch( `https://backend-ecommerce-furniture.onrender.com/users/products?category=${type}`);
+  useEffect(() => {
+    if (type === "All") {
+      dispatch(fetchProducts());
+    } else {
+      dispatch(fetchProductsByCategory(type));
+    }
+  }, [dispatch, type]);
 
   if (loading) {
-    return <div className="d-flex justify-content-center align-items-center  h-100"><Spinner /></div>;
+    return <div className="d-flex justify-content-center align-items-center h-100"><Spinner /></div>;
   }
 
   if (error) {
     return <div>Error: {error?.message || JSON.stringify(error)}</div>;
   }
 
-  if (!products || products?.length === 0) {
+  if (!products || products.length === 0) {
     return <div>No products found.</div>;
   }
 
- 
-  const list = type === "All" ? products : category;
-
- 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = list?.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products?.slice(indexOfFirstProduct, indexOfLastProduct);
 
- 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -59,7 +54,7 @@ function Collections({ type }) {
       </div>
       <Pagination
         productsPerPage={productsPerPage}
-        totalProducts={list?.length}
+        totalProducts={products.length}
         paginate={paginate}
         currentPage={currentPage}
       />

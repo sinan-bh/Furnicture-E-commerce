@@ -1,44 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import "./Profile.css";
-import { userContext } from "../../../context/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData, updateUserData, startEditingField, stopEditingField } from "../../../lib/store/features/userSlice"; // Adjust the path as necessary
 import Spinner from "../../../popup box/Spinner";
+import "./Profile.css";
 
 function Profile() {
-  const {
-    userData,
-    loading,
-    setUserData,
-    isEditing,
-    setIsEditing,
-    isAnyFieldEditing,
-    setIsAnyFieldEditing,
-    updateUserData,
-  } = useContext(userContext);
+  const dispatch = useDispatch();
+  const { userData, loading, isEditing, isAnyFieldEditing } = useSelector(state => state.user);
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("currentUser"))
+    const userID = data?.userID;
+    dispatch(fetchUserData(userID));
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    dispatch(updateUserData({ userID: userData.id, userData: { ...userData, [name]: value } })); // Assuming you have user ID in userData
   };
 
   const handleBlur = (field) => {
-    setIsEditing((prev) => ({ ...prev, [field]: false }));
-    checkIfAnyFieldIsEditing(); 
-  };
-
-  const checkIfAnyFieldIsEditing = () => {
-    const isEditingNow = Object.values(isEditing).some((edit) => edit === true);
-    setIsAnyFieldEditing(isEditingNow);
+    dispatch(stopEditingField(field));
   };
 
   const toggleEdit = (field) => {
-    setIsEditing((prev) => ({ ...prev, [field]: true }));
-    setIsAnyFieldEditing(true);
+    dispatch(startEditingField(field));
+  };
+
+  const updateProfile = () => {
+    const userID = userData?.id;
+    dispatch(updateUserData({ userID, userData })); 
   };
 
   if (loading) {
-    return <div><Spinner /></div>;
+    return <Spinner />;
   }
 
   return (
@@ -47,145 +43,37 @@ function Profile() {
         <div className="profile-details-section">
           <h3 className="details-heading text-white">Profile Details</h3>
           <ul className="details-list">
-            <li>
-              <strong>Name:</strong>{" "}
-              {isEditing.name ? (
-                <input
-                  type="text"
-                  name="name"
-                  value={userData?.name || ""}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur("name")}
-                  autoFocus
-                />
-              ) : userData?.name ? (
-                <span
-                  className="editable"
-                  style={{ color: "white", padding: "0 10px" }}
-                  onClick={() => toggleEdit("name")}
-                >
-                  {userData?.name} <FaEdit />
-                </span>
-              ) : (
-                <span className="add-link" onClick={() => toggleEdit("name")}>
-                  + Add Name
-                </span>
-              )}
-            </li>
-
-            <li>
-              <strong>User Name:</strong>{" "}
-              {isEditing.userName ? (
-                <input
-                  type="text"
-                  name="userName"
-                  value={userData?.userName || ""}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur("userName")}
-                  autoFocus
-                />
-              ) : userData?.userName ? (
-                <span
-                  className="editable"
-                  style={{ color: "white", padding: "0 10px" }}
-                  onClick={() => toggleEdit("userName")}
-                >
-                  {userData?.userName} <FaEdit />
-                </span>
-              ) : (
-                <span
-                  className="add-link"
-                  onClick={() => toggleEdit("userName")}
-                >
-                  + Add User Name
-                </span>
-              )}
-            </li>
-
-            <li>
-              <strong>Mobile:</strong>{" "}
-              {isEditing.phone ? (
-                <input
-                  type="text"
-                  name="phone"
-                  value={userData?.phone || ""}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur("phone")}
-                  autoFocus
-                />
-              ) : userData?.phone ? (
-                <span
-                  className="editable"
-                  style={{ color: "white", padding: "0 10px" }}
-                  onClick={() => toggleEdit("phone")}
-                >
-                  {userData?.phone} <FaEdit />
-                </span>
-              ) : (
-                <span className="add-link" onClick={() => toggleEdit("phone")}>
-                  + Add Phone
-                </span>
-              )}
-            </li>
-
-            <li>
-              <strong>Email:</strong>{" "}
-              {isEditing.email ? (
-                <input
-                  type="email"
-                  name="email"
-                  value={userData?.email || ""}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur("email")}
-                  autoFocus
-                />
-              ) : userData?.email ? (
-                <span
-                  className="editable"
-                  style={{ color: "white", padding: "0 10px" }}
-                  onClick={() => toggleEdit("email")}
-                >
-                  {userData?.email} <FaEdit />
-                </span>
-              ) : (
-                <span className="add-link" onClick={() => toggleEdit("email")}>
-                  + Add Email
-                </span>
-              )}
-            </li>
-
-            <li>
-              <strong>Address:</strong>{" "}
-              {isEditing.address ? (
-                <input
-                  type="text"
-                  name="address"
-                  value={userData?.address || ""}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur("address")}
-                  autoFocus
-                />
-              ) : userData?.address ? (
-                <span
-                  className="editable"
-                  style={{ color: "white", padding: "0 10px" }}
-                  onClick={() => toggleEdit("address")}
-                >
-                  {userData?.address} <FaEdit />
-                </span>
-              ) : (
-                <span
-                  className="add-link"
-                  onClick={() => toggleEdit("address")}
-                >
-                  + Add Address
-                </span>
-              )}
-            </li>
+            {Object.keys(userData).map((key) => (
+              <li key={key}>
+                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
+                {isEditing[key] ? (
+                  <input
+                    type="text"
+                    name={key}
+                    value={userData[key] || ""}
+                    onChange={handleChange}
+                    onBlur={() => handleBlur(key)}
+                    autoFocus
+                  />
+                ) : userData[key] ? (
+                  <span
+                    className="editable"
+                    style={{ color: "white", padding: "0 10px" }}
+                    onClick={() => toggleEdit(key)}
+                  >
+                    {userData[key]} <FaEdit />
+                  </span>
+                ) : (
+                  <span className="add-link" onClick={() => toggleEdit(key)}>
+                    + Add {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </span>
+                )}
+              </li>
+            ))}
           </ul>
 
           {isAnyFieldEditing && (
-            <button className="update-button" onClick={updateUserData}>
+            <button className="update-button" onClick={updateProfile}>
               Update Profile
             </button>
           )}
