@@ -3,46 +3,21 @@ import { Link, useParams } from "react-router-dom";
 import Pagination from "../../../../popup box/Pagination";
 import Spinner from "../../../../popup box/Spinner";
 import { formContext } from "../../../../context/AdminContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser, updateOrderStatus } from "../../../../lib/store/features/adminSlice";
 
 const UserById = () => {
-  const [ordersUser, setOrdersUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const {
-    handleSaveClick,
-    updateOrderID,
-    dependency,
-    loading,
-    setLoading,
-    setUpdateOrderID,
-    updateStatus,
-    setUpdateStatus,
-  } = useContext(formContext);
+  const [updateStatus, setUpdateStatus] = useState("")
+  const [updateOrderID, setUpdateOrderID] = useState(null)
   const ordersPerPage = 5;
   const { userId } = useParams();
+  const dispatch = useDispatch()
+  const {user, loading} = useSelector(state=> state.admin)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/admin/user/${userId}`, {
-          // const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/admin/user/${userId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          credentials: "include",
-        });
-        const order = await res.json();
-        console.log(order);
-
-        setOrdersUser(order);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [dependency]);
+    dispatch(fetchUser(userId))
+  }, [dispatch, userId]);  
 
   const handleEditClick = (orderId, currentStatus) => {
     setUpdateOrderID(orderId);
@@ -52,22 +27,28 @@ const UserById = () => {
   const handleStatusChange = (e) => {
     setUpdateStatus(e.target.value);
   };
-
+  const handleSaveClick = () => {
+    if (updateOrderID && updateStatus) {
+      dispatch(updateOrderStatus({ orderId: updateOrderID, status: updateStatus }));
+      dispatch(fetchUser(userId))
+      setUpdateOrderID(null); 
+    }
+  };
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = ordersUser?.order?.slice(
+  const currentOrders = user?.order?.slice(
     indexOfFirstOrder,
     indexOfLastOrder
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalPurchased = ordersUser?.order
+  const totalPurchased = user?.order
     ?.map((item) => item.products.length)
     .reduce((acc, item) => acc + item, 0);
-  const totalPrize = ordersUser?.order?.reduce(
+  const totalPrize = user?.order?.reduce(
     (acc, item) => acc + item.total_ammount,
     0
   );
-  const hasItemOrder = ordersUser?.order?.length;
+  const hasItemOrder = user?.order?.length;
 
   if (loading) {
     return (
@@ -82,12 +63,12 @@ const UserById = () => {
       <h2>User Details</h2>
       <div className="userById-container ">
         <div className="userById-left">
-          <div>Name : {ordersUser?.data?.name}</div>
-          <div>E-mail : {ordersUser?.data?.email}</div>
-          <div>Phone Number :{ordersUser?.data?.phone}</div>
+          <div>Name : {user?.data?.name}</div>
+          <div>E-mail : {user?.data?.email}</div>
+          <div>Phone Number :{user?.data?.phone}</div>
         </div>
         <div>
-          <div>Address :{ordersUser?.data?.address}</div>
+          <div>Address :{user?.data?.address}</div>
           <div>Total Purchased : {totalPurchased}</div>
           <div>Total Prize : {totalPrize?.toFixed()}</div>
         </div>
@@ -174,7 +155,7 @@ const UserById = () => {
             </table>
             <Pagination
               ordersPerPage={ordersPerPage}
-              totalOrders={ordersUser?.data?.length || 0}
+              totalOrders={user?.data?.length || 0}
               paginate={paginate}
               currentPage={currentPage}
             />

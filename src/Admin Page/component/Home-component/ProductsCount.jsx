@@ -4,10 +4,18 @@ import useFetch from "../../../Custom Hook/useFetch";
 import './home-combonent.css'
 import Spinner from "../../../popup box/Spinner";
 import { formContext } from "../../../context/AdminContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrderDetails, fetchProducts } from "../../../lib/store/features/adminSlice";
 
 function ProductsCount() {
-  const {products,orderDetails,loading} = useContext(formContext)
+  const dispatch = useDispatch()
+  const {products,orderDetails,loading} = useSelector(state=> state.admin)
 
+  useEffect(()=> {
+    dispatch(fetchProducts())
+    dispatch(fetchOrderDetails())
+  }, [dispatch])
+  
   const livingRoomItems = products
     ?.filter((type) => type?.type === "Living Room Furniture")
     ?.reduce((total, item) => total + Number(item?.quantity), 0);

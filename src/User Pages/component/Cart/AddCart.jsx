@@ -51,9 +51,6 @@ function AddCart() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: price }),
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: price }),
-      credentials: "include",
     });
 
     const order = await response.json();
@@ -83,9 +80,6 @@ function AddCart() {
 
   return (
     <div>
-      <Link to={"/orderstatus"} className="orderstatus btn btn-secondary">
-        Order Products Status
-      </Link>
       <Link to={"/orderstatus"} className="orderstatus btn btn-secondary">
         Order Products Status
       </Link>
