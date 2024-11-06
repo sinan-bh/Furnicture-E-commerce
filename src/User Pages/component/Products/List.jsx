@@ -12,13 +12,9 @@ function List({ list }) {
   const dispatch = useDispatch();
   const { _id: productID, title, image, description, price, offerPrice } = list;
   const data = JSON.parse(localStorage.getItem("currentUser"));
-  const { setTrigger } = useContext(userContext);
 
   const addToCartItem = async (id) => {
-    if (data) {
       dispatch(addToCart({ userID: data.userID, productID }));
-    }
-    setTrigger(id);
   };
 
   const addToWishListItem = async (id) => {

@@ -7,8 +7,8 @@ function AdminContext(props) {
   const [products, setProducts] = useState([]);
   const [trigger, setTrigger] = useState();
   const [updateStatus, setUpdateStatus] = useState("")
-  const [orderDetails, setOrderDetails] = useState([]);
   const [updateOrderID, setUpdateOrderID] = useState(null)
+  const [orderDetails, setOrderDetails] = useState([]);
   const [order, setOrder] = useState([])
   const [loading, setLoading] = useState(true)
   const [dependency, setDependency] = useState()
@@ -113,6 +113,7 @@ function AdminContext(props) {
           credentials: "include",
         });
         const order = await res.json();
+console.log(order);
 
         setOrderDetails(order);
       } catch (error) {

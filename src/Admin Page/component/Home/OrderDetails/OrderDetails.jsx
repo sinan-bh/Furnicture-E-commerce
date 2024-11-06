@@ -1,28 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrders, updateOrderStatus } from "../../../../lib/store/features/adminSlice";
 import "./OrderDetails.css";
 import Pagination from "../../../../popup box/Pagination";
-import useFetch from "../../../../Custom Hook/useFetch";
-import { Link, useParams } from "react-router-dom";
 import Spinner from "../../../../popup box/Spinner";
-import AdminContext, { formContext } from "../../../../context/AdminContext";
+import { Link } from "react-router-dom";
 
 function OrderDetails() {
+  const [updateStatus, setUpdateStatus] = useState("")
+  const [updateOrderID, setUpdateOrderID] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
-  const {updateStatus, setUpdateStatus, loading, order, setUpdateOrderID, updateOrderID, handleSaveClick} = useContext(formContext)
   const ordersPerPage = 5;
+  
+  const dispatch = useDispatch(); 
+  const { loading, error, orders } = useSelector((state) => state.admin); 
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, [dispatch]);
 
   const handleEditClick = (orderId, currentStatus) => {
-    setUpdateOrderID(orderId); 
-    setUpdateStatus(currentStatus); 
+    setUpdateOrderID(orderId);
+    setUpdateStatus(currentStatus);
   };
 
   const handleStatusChange = (e) => {
-    setUpdateStatus(e.target.value); 
+    setUpdateStatus(e.target.value);
+  };
+
+  const handleSaveClick = (orderId) => {    
+    dispatch(updateOrderStatus({ orderId: orderId, status: updateStatus }));
+    setUpdateOrderID(null); 
+    dispatch(fetchOrders())
   };
 
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = order?.data?.slice(indexOfFirstOrder, indexOfLastOrder);  
+  const currentOrders = orders?.slice(indexOfFirstOrder, indexOfLastOrder);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -30,9 +43,13 @@ function OrderDetails() {
     return <div><Spinner /></div>;
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div>
-      <h2 className="text-center pt-3">Order Producus Status</h2>
+      <h2 className="text-center pt-3">Order Products Status</h2>
       <div className="order-details-container">
         <table className="order-details-table">
           <thead>
@@ -103,7 +120,7 @@ function OrderDetails() {
         </table>
         <Pagination
           ordersPerPage={ordersPerPage}
-          totalOrders={order?.data?.length || 0}
+          totalOrders={orders?.length || 0}
           paginate={paginate}
           currentPage={currentPage}
         />
