@@ -14,10 +14,16 @@ import { addToCart } from "../../../lib/store/features/cartSlice";
 
 const Wishlist = () => {
   const [alert, setAlert] = useState(null);
+<<<<<<< HEAD
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, loading } = useSelector((state) => state.wishList);
 
+=======
+  const navigete = useNavigate()
+  const { removeFromWishList, addToCart, setTrigger,trigger, loading, setLoading } =
+    useContext(userContext);
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data?.userID;
 
@@ -25,6 +31,7 @@ const Wishlist = () => {
     if (userID) {
       dispatch(fetchWishlist(userID));
     }
+<<<<<<< HEAD
   }, [dispatch, userID]);
 
   const addToCartItem = (id) => {
@@ -37,6 +44,26 @@ const Wishlist = () => {
     dispatch(removeFromWishList({ userID, productID: id }));
     setAlert({ type: "success", message: "Removed from Wishlist" });
     setTimeout(() => setAlert(null), 1000);
+=======
+  }, [userID,trigger]);
+
+  const addToCartItem = async (id) => {
+    await addToCart(id);
+    setTrigger(!trigger);
+  };
+
+  const handleRemoveItem = async (id) => {
+    const success = await removeFromWishList(id);
+    if (success) {
+      setWishList((prevUser) => ({
+        ...prevUser,
+        data: prevUser.data.filter((item) => item._id !== id),
+      }));
+      setAlert({ type: "info", message: "Remove From WishList" });
+      setTimeout(() => setAlert(null), 1000);
+      setTrigger(true);
+    }
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
   };
 
   const handleDetails = (id) => {
@@ -62,14 +89,24 @@ const Wishlist = () => {
       )}
       <h1 className={wishStyle["wishlist-title"]}>My Wishlist</h1>
       <div className={wishStyle["wishlist-grid"]}>
+<<<<<<< HEAD
         {items?.length > 0 ? (
           items?.map((item) => (
             <div key={item._id} className={wishStyle["wishlist-item"]}>
+=======
+        {wishlist?.data?.length > 0 ? (
+          wishlist.data.map((item) => (
+            <div key={item._id} className={wishStyle["wishlist-item"]} >
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
               <img
                 src={item.image}
                 alt={item.name}
                 className={wishStyle["wishlist-item-image"]}
+<<<<<<< HEAD
                 onClick={() => handleDetails(item._id)}
+=======
+                onClick={()=>handleDetails(item._id)}
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
               />
               <div className={wishStyle["wishlist-item-details"]}>
                 <h2 className={wishStyle["wishlist-item-name"]}>

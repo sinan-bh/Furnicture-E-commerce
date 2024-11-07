@@ -8,11 +8,17 @@ import {
 function CardItems({ userID, item, onRemove, onQuantityChange }) {
   const dispatch = useDispatch();
   const [qty, setQty] = useState(item.quantity);
+<<<<<<< HEAD
   const { _id, title, image, price, offerPrice } = item?.prodid;
 
   useEffect(() => {
     setQty(item.quantity);
   }, [item?.quantity]);
+=======
+  const { _id,title, image,  price, offerPrice } = item.prodid;
+  const { addFromCart, removeFromCart, removeItem, setCartProduct,trigger,cartProduct, setTrigger } =
+  useContext(userContext);
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
 
   const handleAdd = (id) => {
     const updatedQty = qty + 1;
@@ -29,6 +35,20 @@ function CardItems({ userID, item, onRemove, onQuantityChange }) {
       onQuantityChange({ [_id]: updatedQty });
     }
   };
+<<<<<<< HEAD
+=======
+  
+  setCartProduct(qty)
+  
+  const handleRemoveItem = (id) => {
+    removeItem(id).then((success) => {
+      if (success) {
+        onRemove(id);
+        setTrigger(!trigger) 
+      }
+    });
+  };
+>>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
 
   return (
     <div>
