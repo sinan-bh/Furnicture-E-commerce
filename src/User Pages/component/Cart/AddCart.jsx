@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { userContext } from "../../../context/CartContext";
 import CardItems from "./CardItems";
 import { Link, useNavigate } from "react-router-dom";
 import "./Style.css";
@@ -14,7 +13,6 @@ import Spinner from "../../../popup box/Spinner";
 function AddCart() {
   const dispatch = useDispatch();
   const { cart, loading } = useSelector((state) => state.cart);
-  const { setOrder } = useContext(userContext);
   const navigate = useNavigate();
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
@@ -54,7 +52,6 @@ function AddCart() {
     });
 
     const order = await response.json();
-    setOrder(order);
     localStorage.setItem("order", JSON.stringify({ order }));
     navigate("/payment");
   };

@@ -1,14 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import List from "../Products/List";
 import "./home.css";
-import { userContext } from "../../../context/CartContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../../lib/store/features/productSlice";
 import Spinner from "../../../popup box/Spinner";
 
 function SearchItem() {
   const dispatch = useDispatch();
-  const { searchTerm } = useContext(userContext);
+  const { searchTerm } = useSelector(state=> state.user);
 
   const { products, loading, error } = useSelector((state) => state.products);
 

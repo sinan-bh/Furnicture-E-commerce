@@ -1,10 +1,8 @@
 import "./userDatas.css";
-import useFetch from "../../../../Custom Hook/useFetch";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Pagination from "../../../../popup box/Pagination";
 import Spinner from "../../../../popup box/Spinner";
-import { formContext } from "../../../../context/AdminContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../../../lib/store/features/adminSlice";
 

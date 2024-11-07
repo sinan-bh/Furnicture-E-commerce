@@ -11,7 +11,6 @@ import Footer from "../src/User Pages/component/NavBar-Footer/Footer";
 import SearchItem from "../src/User Pages/component/Home/SearchItem";
 import ProductDetails from "../src/User Pages/component/Products/ProductDetails";
 import Admin from "./Admin Page/AdminHome/Admin";
-import CartContext from "./context/CartContext";
 import Registration from "./User Pages/Registration-Login/Registration";
 import Wishlist from "./User Pages/component/wishList/WishList";
 import OrderProducts from "./User Pages/component/orderProducts/OrderProducts";
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <div className="App">
-      <CartContext>
         {!hideNavAndFooter ? (
           <div>
             <NavBar />
@@ -64,7 +62,6 @@ function App() {
             <Admin />
           </div>
         )}
-      </CartContext>
     </div>
   );
 }
