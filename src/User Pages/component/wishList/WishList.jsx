@@ -17,7 +17,6 @@ const Wishlist = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, loading } = useSelector((state) => state.wishList);
-
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data?.userID;
 

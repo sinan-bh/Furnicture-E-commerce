@@ -42,6 +42,7 @@ const Navbar = () => {
     dispatch(fetchWishlist(data?.userID));
   }, [data?.userID, dispatch]);
 
+
   const handleChange = (e) => {
     dispatch(setSearchTerm(e.target.value));
     if (!e.target.value) {
