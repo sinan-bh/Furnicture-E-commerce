@@ -17,6 +17,7 @@ const Wishlist = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, loading } = useSelector((state) => state.wishList);
+
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const userID = data?.userID;
 
@@ -64,6 +65,7 @@ const Wishlist = () => {
         {items?.length > 0 ? (
           items?.map((item) => (
             <div key={item._id} className={wishStyle["wishlist-item"]}>
+
               <img
                 src={item.image}
                 alt={item.name}

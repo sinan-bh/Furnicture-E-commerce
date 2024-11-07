@@ -13,6 +13,7 @@ function Popular() {
     dispatch(fetchpPopularProducts());
   }, []);
 
+
   if (loading) {
     return (
       <div>
