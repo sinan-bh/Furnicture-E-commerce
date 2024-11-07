@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoCartSharp } from "react-icons/io5";
-import { userContext } from "../../../context/CartContext";
 import { CiSearch, CiLogin } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { TbLogout } from "react-icons/tb";
@@ -16,28 +15,35 @@ import "./Style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartProducts } from "../../../lib/store/features/cartSlice";
 import { fetchWishlist } from "../../../lib/store/features/whishListSlice";
+import {
+  setSearchTerm,
+} from "../../../lib/store/features/userSlice";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null)
+  const menuRef = useRef(null);
   const [lastScrollY, setLastScrollY] = useState(window.scrollY);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("currentUser"));
   const isLogin = JSON.parse(localStorage.getItem("isLogin"));
-  const [dropdownOpen, setDropdownOpen] = useState(false); 
-  const { searchTerm, setSearchTerm, handleLogout,confirm,alert ,setAlert } = useContext(userContext);
-  const dispatch = useDispatch()
-  const {cart} = useSelector(state=> state.cart)
-  const {items} = useSelector(state=> state.wishList)
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [confirm, setConfirm] = useState(null);
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const { items } = useSelector((state) => state.wishList);
+  const { searchTerm } = useSelector((state) => state.user);
+
+  console.log(searchTerm);
 
   useEffect(() => {
-    dispatch(fetchCartProducts(data?.userID))
-    dispatch(fetchWishlist(data?.userID))
+    dispatch(fetchCartProducts(data?.userID));
+    dispatch(fetchWishlist(data?.userID));
   }, [data?.userID, dispatch]);
 
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
+    dispatch(setSearchTerm(e.target.value));
     if (!e.target.value) {
       navigate("/");
     } else {
@@ -59,32 +65,46 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastScrollY]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  useEffect(()=>{
-  
+  useEffect(() => {
     const handleMEnuClick = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-              setIsOpen(false);
-              setDropdownOpen(false)
-            }
-          };
-      
-          document.addEventListener("mousedown", handleMEnuClick);
-          return () => {
-            document.removeEventListener("mousedown", handleMEnuClick);
-          };
-  },[menuRef])
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleMEnuClick);
+    return () => {
+      document.removeEventListener("mousedown", handleMEnuClick);
+    };
+  }, [menuRef]);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
-  
+    setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    setConfirm({
+      message: `Do you want to logout?`,
+      onConfirm: () => {
+        localStorage.removeItem("isLogin");
+        setAlert({ type: "success", message: "Logged out successfully." });
+        setTimeout(() => setAlert(null), 1000);
+        navigate("/");
+        setConfirm(null);
+      },
+      onCancel: () => {
+        setConfirm(null);
+      },
+    });
+  };
 
   return (
     <nav className={`navbar ${show ? "navbar-show" : "navbar-hide"}`}>
@@ -163,7 +183,7 @@ const Navbar = () => {
                 onChange={handleChange}
               />
               <div className="searchBtn">
-                <CiSearch size={20}/>
+                <CiSearch size={20} />
               </div>
             </div>
           </div>
@@ -207,14 +227,28 @@ const Navbar = () => {
                 </button>
                 {dropdownOpen && (
                   <div className="dropdown-menus" ref={menuRef}>
-                    <Link to="/profile" className="dropdown-item" onClick={toggleDropdown}>Profile <CgProfile /></Link>
-                    <Link to="/orderstatus" className="dropdown-item" onClick={toggleDropdown}>Order <BsCartCheck /></Link>
+                    <Link
+                      to="/profile"
+                      className="dropdown-item"
+                      onClick={toggleDropdown}
+                    >
+                      Profile <CgProfile />
+                    </Link>
+                    <Link
+                      to="/orderstatus"
+                      className="dropdown-item"
+                      onClick={toggleDropdown}
+                    >
+                      Order <BsCartCheck />
+                    </Link>
                     <button
                       type="button"
                       className="dropdown-item"
-                      onClick={handleLogout}
+                      onClick={() => handleLogout()}
                     >
-                      <span onClick={toggleDropdown}>Logout <TbLogout /></span>
+                      <span onClick={toggleDropdown}>
+                        Logout <TbLogout />
+                      </span>
                     </button>
                   </div>
                 )}
@@ -229,31 +263,38 @@ const Navbar = () => {
         </div>
       </div>
       <div>
-      <div className="menu-toggle" onClick={toggleMenu}>
-        {isOpen ? <IoIosClose size={30} /> : <IoIosMenu size={30} />}
-      </div>
-      <div className={`off-canvas-container ${isOpen ? "menu-open" : ""}`} ref={menuRef}>
-        <div className="off-canvas-menu">
-          <Link to={'/'} className="menu-item" onClick={toggleMenu}>
-            Home
-          </Link>
-          <Link to={'/allproducts'} className="menu-item" onClick={toggleMenu}>
-            All Products
-          </Link>
-          <Link to={'/livingroom'} className="menu-item" onClick={toggleMenu}>
-          Living Room
-          </Link>
-          <Link to={'/diningset'} className="menu-item" onClick={toggleMenu}>
-            Dining Room
-          </Link>
-          <Link to={'/bedroom'} className="menu-item" onClick={toggleMenu}>
-            Bed Room
-          </Link>
-          <Link className="menu-item" onClick={()=>handleLogout()}>
-            Logout
-          </Link>
+        <div className="menu-toggle" onClick={toggleMenu}>
+          {isOpen ? <IoIosClose size={30} /> : <IoIosMenu size={30} />}
         </div>
-      </div>
+        <div
+          className={`off-canvas-container ${isOpen ? "menu-open" : ""}`}
+          ref={menuRef}
+        >
+          <div className="off-canvas-menu">
+            <Link to={"/"} className="menu-item" onClick={toggleMenu}>
+              Home
+            </Link>
+            <Link
+              to={"/allproducts"}
+              className="menu-item"
+              onClick={toggleMenu}
+            >
+              All Products
+            </Link>
+            <Link to={"/livingroom"} className="menu-item" onClick={toggleMenu}>
+              Living Room
+            </Link>
+            <Link to={"/diningset"} className="menu-item" onClick={toggleMenu}>
+              Dining Room
+            </Link>
+            <Link to={"/bedroom"} className="menu-item" onClick={toggleMenu}>
+              Bed Room
+            </Link>
+            <Link className="menu-item" onClick={handleLogout}>
+              Logout
+            </Link>
+          </div>
+        </div>
       </div>
     </nav>
   );

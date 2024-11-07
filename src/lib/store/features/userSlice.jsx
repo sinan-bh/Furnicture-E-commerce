@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk("user/login", async (credentials) => {
         withCredentials: true,
       }
     );
-    return response.data; // Assuming response data is formatted correctly
+    return response.data; 
   } catch (error) {
     throw new Error("Login failed");
   }
@@ -63,6 +63,7 @@ export const updateUserData = createAsyncThunk(
 const initialState = {
   userData: {},
   alert: null,
+  searchTerm: "",
   isEditing: {
     name: false,
     userName: false,
@@ -80,8 +81,14 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setSearchTerm: (state, action) => {      
+      state.searchTerm = action.payload;
+    },
     clearAlert: (state) => {
       state.alert = null;
+    },
+    setUserData: (state, action) => {
+      state.userData = { ...state.userData, ...action.payload };
     },
     startEditingField: (state, action) => {
       state.isEditing[action.payload] = true;
@@ -126,5 +133,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { startEditingField, stopEditingField, clearAlert } = userSlice.actions;
+export const { setSearchTerm, setUserData, startEditingField, stopEditingField, clearAlert } = userSlice.actions;
 export default userSlice.reducer;

@@ -3,12 +3,11 @@ import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchUserData,
-  updateUserData,
   startEditingField,
   stopEditingField,
+  setUserData,
 } from "../../../lib/store/features/userSlice";
 import Spinner from "../../../popup box/Spinner";
-import "./Profile.css";
 import "./Profile.css";
 
 function Profile() {
@@ -16,7 +15,7 @@ function Profile() {
   const { userData, loading, isEditing, isAnyFieldEditing } = useSelector(
     (state) => state.user
   );
-  const [localUserData, setLocalUserData] = useState(userData);
+  const [localUserData, setLocalUserData] = useState({});
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -36,7 +35,6 @@ function Profile() {
 
   const handleBlur = (field) => {
     dispatch(stopEditingField(field));
-    dispatch(stopEditingField(field));
   };
 
   const toggleEdit = (field) => {
@@ -45,7 +43,7 @@ function Profile() {
 
   const handleUpdate = () => {
     const userID = data?.userID;
-    dispatch(updateUserData({ userID, userData: localUserData }));
+    dispatch(setUserData({ userID, userData: localUserData }));
   };
 
   if (loading) {

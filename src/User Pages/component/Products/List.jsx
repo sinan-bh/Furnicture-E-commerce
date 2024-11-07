@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./products.css";
-import { userContext } from "../../../context/CartContext";
 import { FaHeart } from "react-icons/fa6";
 import { MdShoppingCart } from "react-icons/md";
 import { useDispatch } from "react-redux";
