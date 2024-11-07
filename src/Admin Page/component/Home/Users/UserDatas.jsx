@@ -1,16 +1,21 @@
 import "./userDatas.css";
-import useFetch from "../../../../Custom Hook/useFetch";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Pagination from "../../../../popup box/Pagination";
 import Spinner from "../../../../popup box/Spinner";
-import { formContext } from "../../../../context/AdminContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../../../../lib/store/features/adminSlice";
 
 function UserDatas() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
-  const { users, loading} = useContext(formContext)
+  const dispatch = useDispatch()
+  const {users, loading} = useSelector(state=> state.admin)
+
+  useEffect(()=> {
+    dispatch(fetchAllUsers())
+  },[dispatch])
 
   const filteredUsers = users?.data?.filter((list) =>
     list.date.toLowerCase().includes(searchTerm.toLowerCase())

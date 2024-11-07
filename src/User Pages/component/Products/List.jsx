@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./products.css";
-import { userContext } from "../../../context/CartContext";
 import { FaHeart } from "react-icons/fa6";
 import { MdShoppingCart } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../lib/store/features/cartSlice";
+import { addWishList } from "../../../lib/store/features/whishListSlice";
 
 function List({ list }) {
+  const dispatch = useDispatch();
   const { _id: productID, title, image, description, price, offerPrice } = list;
-
-  const { addToCart, addWishList, setTrigger } = useContext(userContext);
+  const data = JSON.parse(localStorage.getItem("currentUser"));
 
   const addToCartItem = async (id) => {
-    await addToCart(id)
-    setTrigger(id)
-  }
+      dispatch(addToCart({ userID: data.userID, productID }));
+  };
 
   const addToWishListItem = async (id) => {
-    await addWishList(id)
-    setTrigger(id)
-  }
-
-
+    dispatch(addWishList({ userID: data?.userID, productID: id }));
+  };
 
   return (
     <div className=" card-item">
@@ -54,13 +52,10 @@ function List({ list }) {
             className="btn-save"
             onClick={() => addToWishListItem(productID)}
           >
-            <FaHeart size={20}/>
+            <FaHeart size={20} />
           </div>
-          <div
-            className="btn-list"
-            onClick={() => addToCartItem(productID)}
-          >
-            <MdShoppingCart size={20}/>
+          <div className="btn-list" onClick={() => addToCartItem(productID)}>
+            <MdShoppingCart size={20} />
           </div>
         </div>
       </div>

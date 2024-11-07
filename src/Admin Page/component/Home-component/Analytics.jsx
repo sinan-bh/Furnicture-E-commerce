@@ -1,12 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import useFetch from "../../../Custom Hook/useFetch";
-
+import React, { useEffect } from "react";
 import './home-combonent.css'
 import Spinner from "../../../popup box/Spinner";
-import { formContext } from "../../../context/AdminContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers, fetchOrderDetails, fetchProducts } from "../../../lib/store/features/adminSlice";
 
 function Analytics() {
-  const { users, loading, orderDetails, products} = useContext(formContext)
+  const dispatch = useDispatch()
+  const {users, products, orderDetails, loading} = useSelector(state=> state.admin)
+
+  useEffect(()=> {
+    dispatch(fetchAllUsers())
+    dispatch(fetchProducts())
+    dispatch(fetchOrderDetails())
+  }, [dispatch])  
 
   const userCount = users?.data?.length;
   const productCount = products?.length;

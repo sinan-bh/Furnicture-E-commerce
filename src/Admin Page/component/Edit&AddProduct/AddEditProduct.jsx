@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AlertBox from "../../../popup box/AlertBox";
 import "./form.css";
-import { formContext } from "../../../context/AdminContext";
 
 function AddEditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [alert, setAlert] = useState(null);
-  const {trigger,setTrigger} = useContext(formContext)
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -25,8 +23,8 @@ function AddEditProduct() {
 
   useEffect(() => {
     if (id) {
-      // fetch(`http://localhost:3000/admin/product/${id}`,{
-      fetch(`https://backend-ecommerce-furniture.onrender.com/admin/product/${id}`,{
+      fetch(`http://localhost:3000/admin/product/${id}`,{
+      // fetch(`https://backend-ecommerce-furniture.onrender.com/admin/product/${id}`,{
         method: 'GET',
         credentials: 'include'
       })
@@ -78,10 +76,10 @@ function AddEditProduct() {
       };
 
       const url = id
-        // ? `http://localhost:3000/admin/products/${id}`
-        ? `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`
-        // : "http://localhost:3000/admin/products";
-        : "https://backend-ecommerce-furniture.onrender.com/admin/products";
+        ? `http://localhost:3000/admin/products/${id}`
+        // ? `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`
+        : "http://localhost:3000/admin/products";
+        // : "https://backend-ecommerce-furniture.onrender.com/admin/products";
 
       const response = await fetch(url, options);
 
@@ -89,9 +87,7 @@ function AddEditProduct() {
         throw new Error("Network response was not ok");
       }
       setAlert({ type: 'success', message: id ? 'Product Updated' : 'Product Added' });
-      setTimeout(() => navigate("/adminhome/product-details"), 1000);
-      setTrigger(!trigger)
-      
+      setTimeout(() => navigate("/adminhome/product-details"), 1000);      
     } catch (error) {
       console.error("Failed to add/edit product:", error);
       setAlert({ type: 'error', message: 'Update failed' });

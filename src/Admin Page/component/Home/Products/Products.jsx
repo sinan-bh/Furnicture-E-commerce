@@ -1,11 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConfirmBox from "../../../../popup box/ConfirmBox";
 import AlertBox from "../../../../popup box/AlertBox";
 import Pagination from "../../../../popup box/Pagination";
 import "./products.css";
 import { Link } from "react-router-dom";
 import Spinner from "../../../../popup box/Spinner";
-import { formContext } from "../../../../context/AdminContext";
+import {
+  deleteProduct,
+  fetchProducts,
+} from "../../../../lib/store/features/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Products({ type }) {
   const [alert, setAlert] = useState(null);
@@ -13,41 +17,33 @@ function Products({ type }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
-  const {products,trigger,setTrigger,loading,setProducts} = useContext(formContext)
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector((state) => state.admin);
 
-  const filteredProducts = products.filter((product) => type === "All" || product.category === type).filter((product) =>
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const filteredProducts = products
+    ?.filter((product) => type === "All" || product.category === type)
+    .filter((product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const handleDelete = async (id) => {
     setConfirm({
       message: `Do you want to Delete Product?`,
       onConfirm: async () => {
         try {
-          const response = await fetch(
-            // `http://localhost:3000/admin/products/${id}`,
-            `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`,
-            {
-              method: "DELETE",
-              credentials: 'include'
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-
-          setProducts((prevProducts) =>
-            prevProducts.filter((product) => product._id !== id)
-          );
-
-          setTrigger(!trigger);
-
+          dispatch(deleteProduct(id));
+          dispatch(fetchProducts);
           setAlert({
             type: "success",
             message: "Product deleted successfully",
@@ -72,7 +68,11 @@ function Products({ type }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (loading) {
-    return <div><Spinner /></div>;
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -168,7 +168,9 @@ function Products({ type }) {
           <tbody>
             {currentProducts.map((product, index) => (
               <tr key={product._id}>
-                <td data-label="ProductId">{index + 1 + indexOfFirstProduct}</td>
+                <td data-label="ProductId">
+                  {index + 1 + indexOfFirstProduct}
+                </td>
                 <td data-label="Image">
                   <img
                     src={product.image}

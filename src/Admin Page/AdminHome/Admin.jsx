@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import AdminHome from "../component/Home/AdminHome";
 import UserDatas from "../component/Home/Users/UserDatas";
 import Products from "../component/Home/Products/Products";
-import AdminContext from "../../context/AdminContext";
 import AddEditProduct from "../component/Edit&AddProduct/AddEditProduct";
 import OrderDetails from "../component/Home/OrderDetails/OrderDetails";
 import '../component/Home/admin.css'
@@ -20,7 +19,6 @@ function Admin() {
         <img src={Logo} alt="" />
       </div>
       <div className="">
-      <AdminContext>
         <NavBarAdmin />
         <Routes>
         <Route path="/adminhome/*" element={<ProtectedRoute element={<AdminHome />} />} />
@@ -36,7 +34,6 @@ function Admin() {
           <Route path="/adminhome/add-edit-product/:id" element={<ProtectedRoute element={<AddEditProduct />} />} />
           <Route path="/adminhome/user/:userId" element={<ProtectedRoute element={<UserById />} />} />
         </Routes>
-      </AdminContext>
       </div>
     </div>
   );

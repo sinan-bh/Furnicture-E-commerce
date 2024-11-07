@@ -1,21 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "./Style.css";
 import Logo from "../../../assets/img/logo/logo.png";
 import AlertBox from "../../../popup box/AlertBox";
 import { useNavigate } from "react-router-dom";
-import { userContext } from "../../../context/CartContext";
+import { updateUserData, setUserData } from "../../../lib/store/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Payment() {
-  const { setTrigger,userData,setUserData, updateUserData } = useContext(userContext);
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const order = JSON.parse(localStorage.getItem("order"));
   const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(null);
 
   const handleChange = (e) => {
-    e.preventDefault()
     const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    dispatch(setUserData({ [name]: value }));
   };
 
   const validateForm = () => {
@@ -42,29 +44,23 @@ function Payment() {
         image: Logo,
         handler: async (response) => {
           try {
-            const userID = JSON.parse(
-              localStorage.getItem("currentUser")
-            ).userID;
-            const res = await fetch(
-              // `http://localhost:3000/users/verify_payment/${userID}`,
-               `https://backend-ecommerce-furniture.onrender.com/users/verify_payment/${userID}`,
+            const userID = JSON.parse(localStorage.getItem("currentUser")).userID;
+            const res = await axios.put(
+              `http://localhost:3000/users/verify_payment/${userID}`,
               {
-                method: "PUT",
+                order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+              {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                  order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                }),
-                credentials: "include"
+                withCredentials: true,
               }
             );
 
-            const text = await res.text();
-            setAlert({ message: text, type: "success" });
-            setTrigger(true);
+            setAlert({ message: res.data, type: "success" });
             navigate("/orderstatus");
             setTimeout(() => setAlert(null), 2000);
           } catch (error) {
@@ -87,6 +83,11 @@ function Payment() {
     } else {
       setAlert({ message: "Something went wrong", type: "info" });
     }
+  };
+
+  const handleUpdate = () => {
+    const userID = JSON.parse(localStorage.getItem("currentUser")).userID;
+    dispatch(updateUserData({ userID, userData }));
   };
 
   return (
@@ -153,20 +154,12 @@ function Payment() {
               </div>
             </div>
           </div>
-          <div className="pay">
-            <button
-              type="button"
-              className="finish-update-btn"
-              onClick={updateUserData}
-            >
-              Update
+          <div className="pay-btn">
+            <button type="button" onClick={handlePay}>
+              Make Payment
             </button>
-            <button
-              type="button"
-              className="finish-pay-btn"
-              onClick={handlePay}
-            >
-              Pay ${total_ammount}
+            <button type="button" onClick={handleUpdate} className="handleUpdate">
+              update
             </button>
           </div>
         </form>
