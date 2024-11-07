@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { axiosPrivate } from "../../../utils/axios";
+import axios from "../../../utils/axios";
 
 export const loginUser = createAsyncThunk("user/login", async (credentials) => {
   try {
@@ -34,11 +35,10 @@ export const registerUser = createAsyncThunk(
 export const fetchUserData = createAsyncThunk(
   "user/fetchUserData",
   async (userID) => {
-    const response = await axios.get(
-      `http://localhost:3000/users/profile/${userID}`,
+    const response = await axiosPrivate.get(
+      `/users/profile/${userID}`,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       }
     );
     return response.data;
@@ -48,12 +48,11 @@ export const fetchUserData = createAsyncThunk(
 export const updateUserData = createAsyncThunk(
   "user/updateUserData",
   async ({ userID, userData }) => {
-    const response = await axios.put(
-      `http://localhost:3000/users/profile/${userID}`,
+    const response = await axiosPrivate.put(
+      `/users/profile/${userID}`,
       userData,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       }
     );
     return response.data;

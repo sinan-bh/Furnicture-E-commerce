@@ -1,35 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { axiosPrivate } from "../../../utils/axios";
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-  const response = await axios.get("http://localhost:3000/users/products", {
-    withCredentials: true,
-  });
+  const response = await axiosPrivate.get("/users/products");
   return response.data;
 });
 
 export const fetchProductsByCategory = createAsyncThunk("products/fetchProductsByCategory", async (category) => {
-  const response = await axios.get(`http://localhost:3000/users/products?category=${category}`, {
-    withCredentials: true,
-  });
+  const response = await axiosPrivate.get(`/users/products?category=${category}`);
   return response.data;
 });
 
 export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productID) => {
-  const response = await axios.get(`http://localhost:3000/users/products/${productID}`, {
-    withCredentials: true,
-  });
+  const response = await axiosPrivate.get(`/users/products/${productID}`);
   return response.data;
 });
 
 export const fetchpPopularProducts = createAsyncThunk("products/fetchPopularProducts", async () => {
-  const response = await axios.get(`http://localhost:3000/users/popularproducts`,{
-    withCredentials: true
-  });
+  const response = await axiosPrivate.get(`/users/popularproducts`);
   return response.data
 })
-
-
 
 const initialState = {
   products: [],

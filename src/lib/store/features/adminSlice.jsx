@@ -1,61 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { axiosPrivate } from "../../../utils/axios";
 
 export const fetchAllUsers = createAsyncThunk(
   "users/fetchAllUsers",
   async () => {
-    const response = await axios.get(`http://localhost:3000/admin/allusers`, {
-      withCredentials: true,
-    });
+    const response = await axiosPrivate.get(`/admin/allusers`);
     return response.data;
   }
 );
 
 export const fetchUser = createAsyncThunk("users/fetchUser", async (userId) => {
-  const response = await axios.get(
-    `http://localhost:3000/admin/user/${userId}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axiosPrivate.get(`/admin/user/${userId}`);
   return response.data;
 });
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get(`http://localhost:3000/admin/products`, {
-      withCredentials: true,
-    });
+    const response = await axiosPrivate.get(`/admin/products`);
     return response.data;
-  }
-);
-
-export const addOrEditProduct = createAsyncThunk(
-  "admin/addOrEditProduct",
-  async ({ formData, id }, { rejectWithValue }) => {
-    try {
-      const formDataToSend = new FormData();
-      Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
-      });
-      const response = await fetch(
-        id
-          ? `http://localhost:3000/admin/products/${id}`
-          : "http://localhost:3000/admin/products",
-        {
-          method: id ? "PUT" : "POST",
-          body: formDataToSend,
-          credentials: "include",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to add/edit product");
-      }
-      return { formData, id };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
   }
 );
 
@@ -63,39 +26,29 @@ export const deleteProduct = createAsyncThunk(
   "admin/deleteProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/admin/products/${id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+      const response = await axiosPrivate.delete(`/admin/products/${id}`);
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to delete product");
       }
 
       return id;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
-
 export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
-  const response = await axios.get(`http://localhost:3000/admin/orders`, {
-    withCredentials: true,
-  });
+  const response = await axiosPrivate.get(`/admin/orders`);
   return response.data.data;
 });
 
 export const updateOrderStatus = createAsyncThunk(
   "orders/updateOrderStatus",
   async ({ orderId, status }) => {
-    const response = await axios.put(
-      `http://localhost:3000/admin/order`,
+    const response = await axiosPrivate.put(
+      `/admin/order`,
       { order_id: orderId, status },
-      { withCredentials: true }
     );
     return response.data;
   }
@@ -104,12 +57,7 @@ export const updateOrderStatus = createAsyncThunk(
 export const fetchOrderDetails = createAsyncThunk(
   "orders/fetchOrderDetails",
   async () => {
-    const response = await axios.get(
-      `http://localhost:3000/admin/orders/details`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axiosPrivate.get(`/admin/orders/details`);
     return response.data;
   }
 );

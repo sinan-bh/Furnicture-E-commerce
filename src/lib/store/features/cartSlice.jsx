@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { axiosPrivate } from "../../../utils/axios";
 
 export const fetchCartProducts = createAsyncThunk(
   "cart/fetchCartProducts",
   async (userID) => {
-    const response = await axios.get(
-      `http://localhost:3000/users/cart/${userID}`,
-      { withCredentials: true }
+    const response = await axiosPrivate.get(
+      `/users/cart/${userID}`
     );
     return response.data;
   }
@@ -15,10 +14,10 @@ export const fetchCartProducts = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userID, productID }) => {
-    const response = await axios.post(
-      `http://localhost:3000/users/cart/${userID}`,
-      { id: productID },
-      { withCredentials: true }
+    const response = await axiosPrivate.post(
+      `/users/cart/${userID}`,
+      { id: productID }
+      
     );
     return response.data;
   }
@@ -28,10 +27,9 @@ export const updateQuantity = createAsyncThunk(
   "cart/updateQuantity",
   async ({ userID, prodid, quantityChange }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/users/cart/${userID}`,
-        { prodid, quantityChange },
-        { withCredentials: true }
+      const response = await axiosPrivate.put(
+        `/users/cart/${userID}`,
+        { prodid, quantityChange }
       );
       return response.data;
     } catch (error) {
@@ -45,9 +43,8 @@ export const updateQuantity = createAsyncThunk(
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async ({ userID, productID }) => {
-    const response = await axios.delete(
-      `http://localhost:3000/users/cart/${userID}/${productID}`,
-      { withCredentials: true }
+    const response = await axiosPrivate.delete(
+      `/users/cart/${userID}/${productID}`
     );
     return response.status === 200;
   }
@@ -56,9 +53,8 @@ export const removeFromCart = createAsyncThunk(
 export const fetchOrderProducts = createAsyncThunk(
   "cart/fetchOrderProducts",
   async (userID) => {
-    const response = await axios.get(
-      `http://localhost:3000/users/order/${userID}`,
-      { withCredentials: true }
+    const response = await axiosPrivate.get(
+      `/users/order/${userID}`
     );
     return response.data;
   }

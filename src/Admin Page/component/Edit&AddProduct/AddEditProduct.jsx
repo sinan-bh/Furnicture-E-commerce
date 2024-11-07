@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AlertBox from "../../../popup box/AlertBox";
 import "./form.css";
+import { axiosPrivate } from "../../../utils/axios";
 
 function AddEditProduct() {
   const { id } = useParams();
@@ -18,21 +19,18 @@ function AddEditProduct() {
     quantity: "",
   });
 
-
   const [file, setFile] = useState(null);
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3000/admin/product/${id}`,{
-      // fetch(`https://backend-ecommerce-furniture.onrender.com/admin/product/${id}`,{
-        method: 'GET',
-        credentials: 'include'
-      })
-        .then((response) => response.json())
-        .then((data) => {
+      axiosPrivate
+        .get(`http://localhost:3000/admin/product/${id}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
           setFormData({
-            ...data.data,
-          })
+            ...response.data.data,
+          });
         })
         .catch((error) => {
           console.error("Failed to fetch product data:", error);
@@ -69,29 +67,28 @@ function AddEditProduct() {
     }
 
     try {
-      const options = {
-        method: id ? "PUT" : "POST",
-        body: formDataToSend,
-        credentials: 'include'
-      };
-
       const url = id
         ? `http://localhost:3000/admin/products/${id}`
-        // ? `https://backend-ecommerce-furniture.onrender.com/admin/products/${id}`
         : "http://localhost:3000/admin/products";
-        // : "https://backend-ecommerce-furniture.onrender.com/admin/products";
 
-      const response = await fetch(url, options);
+      const response = await axiosPrivate({
+        method: id ? "PUT" : "POST",
+        url: url,
+        data: formDataToSend,
+        withCredentials: true,
+      });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: id ? "Product Updated" : "Product Added",
+        });
+        setTimeout(() => navigate("/adminhome/product-details"), 1000);
       }
-      setAlert({ type: 'success', message: id ? 'Product Updated' : 'Product Added' });
-      setTimeout(() => navigate("/adminhome/product-details"), 1000);      
     } catch (error) {
       console.error("Failed to add/edit product:", error);
-      setAlert({ type: 'error', message: 'Update failed' });
-        setTimeout(() => setAlert(null), 1000);
+      setAlert({ type: "error", message: "Update failed" });
+      setTimeout(() => setAlert(null), 1000);
     }
   };
 
@@ -118,7 +115,7 @@ function AddEditProduct() {
                   className="form-control"
                   name="image"
                   onChange={handleFileChange}
-                  required = {!id ? true : false}
+                  required={!id ? true : false}
                 />
               </div>
               <div className="form-group">
@@ -131,7 +128,6 @@ function AddEditProduct() {
                   required
                 />
               </div>
-              
             </div>
             <div className="">
               <div className="form-group">
@@ -156,17 +152,17 @@ function AddEditProduct() {
                 />
               </div>
               <div className="qty-price">
-              <div className="form-group">
-                <label>Price:</label>
-                <input
-                  type="number"
-                  className=""
-                  name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label>Price:</label>
+                  <input
+                    type="number"
+                    className=""
+                    name="price"
+                    value={formData.price}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
                 <div className="form-group">
                   <label>Offer Price:</label>
                   <input

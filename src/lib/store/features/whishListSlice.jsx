@@ -1,24 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { axiosPrivate } from '../../../utils/axios';
 
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async (userID) => {
-  const response = await axios.get(`http://localhost:3000/users/wishlist/${userID}`, {
-    withCredentials: true,
-  });  
+  const response = await axiosPrivate.get(`/users/wishlist/${userID}`);  
   return response.data;
 });
 
 export const addWishList = createAsyncThunk('wishlist/addWishList', async ({ userID, productID }) => {
-  const response = await axios.post(`http://localhost:3000/users/wishlist/${userID}`, { id: productID }, {
-    withCredentials: true,
-  });
+  const response = await axiosPrivate.post(`/users/wishlist/${userID}`, { id: productID });
   return response.data;
 });
 
 export const removeFromWishList = createAsyncThunk('wishlist/removeFromWishList', async ({ userID, productID }) => {
-  await axios.delete(`http://localhost:3000/users/wishlist/${userID}/${productID}`, {
-    withCredentials: true,
-  });
+  await axiosPrivate.delete(`/users/wishlist/${userID}/${productID}`);
   return productID; 
 });
 
