@@ -6,38 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchpPopularProducts } from "../../../lib/store/features/productSlice";
 
 function Popular() {
-<<<<<<< HEAD
   const dispatch = useDispatch();
   const { popular, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchpPopularProducts());
   }, []);
-=======
-  const [popularProducts, setPopularProducts] = useState()
-  const { loading, setLoading } = useContext(userContext)
-  
-  useEffect(()=> {
-    const fetchData = async () => {
-      try {
-        // const res = await fetch(`http://localhost:3000/users/popularproducts`, {
-        const res = await fetch(`https://backend-ecommerce-furniture.onrender.com/users/popularproducts`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json"
-          },
-        });
-        const product = await res.json();
-        setPopularProducts(product);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      } finally {
-        setLoading(false)
-      }
-    };
-    fetchData();  
-  },[])
->>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
 
   if (loading) {
     return (

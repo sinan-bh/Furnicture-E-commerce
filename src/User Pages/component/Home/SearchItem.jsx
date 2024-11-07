@@ -9,20 +9,11 @@ function SearchItem() {
   const dispatch = useDispatch();
   const { searchTerm } = useSelector(state=> state.user);
 
-<<<<<<< HEAD
   const { products, loading, error } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-=======
-  const {
-    data: products,
-    loading,
-    error,
-  // } = useFetch("http://localhost:3000/users/products");
-  } = useFetch("https://backend-ecommerce-furniture.onrender.com/users/products");
->>>>>>> 4c9eb599ba297559085d511ce885143557c0db66
 
   if (loading) {
     return (
