@@ -30,7 +30,7 @@ function AddCart() {
 
   useEffect(() => {
     if (cart?.length > 0) {
-      const totalItemCount = cart.reduce((total, item) => total + Number(item.quantity), 0);
+      const totalItemCount = cart?.reduce((total, item) => total + Number(item.quantity), 0);
       setCount(totalItemCount);
 
       const totalCartPrice = cart.reduce(
@@ -42,7 +42,7 @@ function AddCart() {
       setCount(0);
       setPrice(0);
     }
-  }, [cart]);
+  }, [cart, userID]);
 
   const handleCheckout = async () => {
     try {
