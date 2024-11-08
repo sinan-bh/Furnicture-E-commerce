@@ -33,10 +33,10 @@ function AddCart() {
       const totalItemCount = cart?.reduce((total, item) => total + Number(item.quantity), 0);
       setCount(totalItemCount);
 
-      const totalCartPrice = cart.reduce(
-        (total, item) => total + item.quantity * item.prodid.offerPrice,
-        0
-      );
+       const totalCartPrice = cart.reduce((total, item) => {
+        const offerPrice = item?.prodid?.offerPrice || 0; 
+        return total + item.quantity * offerPrice;
+      }, 0);
       setPrice(totalCartPrice.toFixed(2));
     } else {
       setCount(0);
