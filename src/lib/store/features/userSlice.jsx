@@ -5,7 +5,7 @@ import axios from "../../../utils/axios";
 export const loginUser = createAsyncThunk("user/login", async (credentials) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/login",
+      "/login",
       credentials,
       {
         headers: { "Content-Type": "application/json" },
@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk(
   "user/register",
   async (userData) => {
     const response = await axios.post(
-      "http://localhost:3000/users/registration",
+      "/users/registration",
       userData,
       {
         headers: { "Content-Type": "application/json" },

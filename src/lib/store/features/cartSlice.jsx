@@ -17,7 +17,6 @@ export const addToCart = createAsyncThunk(
     const response = await axiosPrivate.post(
       `/users/cart/${userID}`,
       { id: productID }
-      
     );
     return response.data;
   }
