@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./Style.css";
 import { useDispatch } from "react-redux";
-import { updateQuantity } from "../../../lib/store/features/cartSlice";
+import { fetchCartProducts, updateQuantity } from "../../../lib/store/features/cartSlice";
 
-function CardItems({ userID, item, onRemove, onQuantityChange }) {
+function CardItems({ userID, item, onRemove }) {
   const dispatch = useDispatch();
   const { _id, title, image, price, offerPrice } = item?.prodid || {};
-  const quantity = item?.quantity || 1; // Get the quantity from the Redux store
+  const quantity = item?.quantity || 1; 
 
-  const handleAdd = (id) => {
-    const newQuantity = quantity + 1;
-    dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
-    // onQuantityChange({ [_id]: newQuantity }); 
+  const handleAdd = async (id) => {
+    await dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
+    dispatch(fetchCartProducts(userID))
   };
-
-  const handleRemove = (id) => {
+  
+  const handleRemove = async (id) => {
     if (quantity > 1) {
-      const newQuantity = quantity - 1;
-      dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
-      // onQuantityChange({ [_id]: newQuantity }); 
+      await dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
+      dispatch(fetchCartProducts(userID))
     }
   };
 

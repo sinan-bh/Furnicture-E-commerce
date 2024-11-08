@@ -68,12 +68,6 @@ function AddCart() {
     dispatch(fetchCartProducts(userID))
   };
 
-  const handleQuantityChange = (prodid, newQuantity) => {
-    if (newQuantity !== undefined) {
-      dispatch(updateQuantity({ userID, prodid, quantityChange: newQuantity }));
-    }
-  };
-
   if (loading) {
     return (
       <div>
@@ -100,7 +94,6 @@ function AddCart() {
                 userID={userID}
                 item={card}
                 onRemove={handleItemRemove}
-                onQuantityChange={handleQuantityChange} 
               />
             ))}
             <hr />
