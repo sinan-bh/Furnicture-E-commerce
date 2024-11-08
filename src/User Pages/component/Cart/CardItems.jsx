@@ -12,7 +12,7 @@ function CardItems({ userID, item, onRemove, onQuantityChange }) {
 
   useEffect(() => {
     setQty(item.quantity);
-  }, [item?.quantity]);
+  }, [item?.quantity, _id]);
 
   const handleAdd = (id) => {
     const updatedQty = qty + 1;
