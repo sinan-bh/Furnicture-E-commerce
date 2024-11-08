@@ -7,12 +7,12 @@ import {
 
 function CardItems({ userID, item, onRemove, onQuantityChange }) {
   const dispatch = useDispatch();
-  const [qty, setQty] = useState(item?.quantity);
-  const { _id, title, image, price, offerPrice } = item?.prodid;
+  const [qty, setQty] = useState(item?.quantity || 1);
+  const { _id, title, image, price, offerPrice } = item?.prodid || {};
 
   useEffect(() => {
     setQty(item.quantity);
-  }, [item?.quantity, _id]);
+  }, [item?.quantity, _id, userID]);
 
   const handleAdd = (id) => {
     const updatedQty = qty + 1;
@@ -29,6 +29,10 @@ function CardItems({ userID, item, onRemove, onQuantityChange }) {
       onQuantityChange({ [_id]: updatedQty });
     }
   };
+
+  if (!item?.prodid) {
+    return null;
+  }
 
   return (
     <div>
