@@ -11,14 +11,14 @@ function CardItems({ userID, item, onRemove, onQuantityChange }) {
   const handleAdd = (id) => {
     const newQuantity = quantity + 1;
     dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
-    onQuantityChange({ [_id]: newQuantity }); // Callback to update the parent if needed
+    // onQuantityChange({ [_id]: newQuantity }); 
   };
 
   const handleRemove = (id) => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
-      onQuantityChange({ [_id]: newQuantity }); // Callback to update the parent if needed
+      // onQuantityChange({ [_id]: newQuantity }); 
     }
   };
 
