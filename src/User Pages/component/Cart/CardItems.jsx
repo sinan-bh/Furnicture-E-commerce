@@ -7,7 +7,7 @@ import {
 
 function CardItems({ userID, item, onRemove, onQuantityChange }) {
   const dispatch = useDispatch();
-  const [qty, setQty] = useState(item.quantity);
+  const [qty, setQty] = useState(item?.quantity);
   const { _id, title, image, price, offerPrice } = item?.prodid;
 
   useEffect(() => {

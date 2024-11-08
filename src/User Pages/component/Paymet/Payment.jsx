@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./Style.css";
 import Logo from "../../../assets/img/logo/logo.png";
 import AlertBox from "../../../popup box/AlertBox";
 import { useNavigate } from "react-router-dom";
 import { updateUserData, setUserData } from "../../../lib/store/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { axiosPrivate } from "../../../utils/axios";
 
 function Payment() {
   const dispatch = useDispatch();
@@ -45,8 +45,8 @@ function Payment() {
         handler: async (response) => {
           try {
             const userID = JSON.parse(localStorage.getItem("currentUser")).userID;
-            const res = await axios.put(
-              `http://localhost:3000/users/verify_payment/${userID}`,
+            const res = await axiosPrivate.put(
+              `/users/verify_payment/${userID}`,
               {
                 order_id,
                 razorpay_payment_id: response.razorpay_payment_id,

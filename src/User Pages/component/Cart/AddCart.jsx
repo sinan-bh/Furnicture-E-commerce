@@ -9,6 +9,7 @@ import {
   updateQuantity,
 } from "../../../lib/store/features/cartSlice";
 import Spinner from "../../../popup box/Spinner";
+import { axiosPrivate } from "../../../utils/axios";
 
 function AddCart() {
   const dispatch = useDispatch();
@@ -44,16 +45,22 @@ function AddCart() {
   }, [cart]);
 
   const handleCheckout = async () => {
-    const response = await fetch(`http://localhost:3000/users/payment/${userID}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: price }),
-      credentials: "include",
-    });
-
-    const order = await response.json();
-    localStorage.setItem("order", JSON.stringify({ order }));
-    navigate("/payment");
+    try {
+      const response = await axiosPrivate.post(
+        `/users/payment/${userID}`,
+        { amount: price },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+  
+      const order = response.data;
+      localStorage.setItem("order", JSON.stringify({ order }));
+      navigate("/payment");
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
   };
 
   const handleItemRemove = (productID) => {
