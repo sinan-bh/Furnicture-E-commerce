@@ -4,21 +4,24 @@ import { axiosPrivate } from "../../../utils/axios";
 export const fetchCartProducts = createAsyncThunk(
   "cart/fetchCartProducts",
   async (userID) => {
-    const response = await axiosPrivate.get(
-      `/users/cart/${userID}`
-    );
+    const response = await axiosPrivate.get(`/users/cart/${userID}`);
     return response.data;
   }
 );
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async ({ userID, productID }) => {
-    const response = await axiosPrivate.post(
-      `/users/cart/${userID}`,
-      { id: productID }
-    );
-    return response.data;
+  async ({ userID, productID }, { rejectWithValue }) => {
+    try {
+      const response = await axiosPrivate.post(`/users/cart/${userID}`, {
+        id: productID,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
   }
 );
 
@@ -26,10 +29,10 @@ export const updateQuantity = createAsyncThunk(
   "cart/updateQuantity",
   async ({ userID, prodid, quantityChange }, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.put(
-        `/users/cart/${userID}`,
-        { prodid, quantityChange }
-      );
+      const response = await axiosPrivate.put(`/users/cart/${userID}`, {
+        prodid,
+        quantityChange,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -52,9 +55,7 @@ export const removeFromCart = createAsyncThunk(
 export const fetchOrderProducts = createAsyncThunk(
   "cart/fetchOrderProducts",
   async (userID) => {
-    const response = await axiosPrivate.get(
-      `/users/order/${userID}`
-    );
+    const response = await axiosPrivate.get(`/users/order/${userID}`);
     return response.data;
   }
 );
@@ -102,11 +103,10 @@ const cartSlice = createSlice({
       })
       .addCase(updateQuantity.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.cart.findIndex(
-          (item) => item.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.cart[index] = action.payload;
+        const item = state.cart.find((item) => item._id === action.payload.id);
+
+        if (item) {
+          item.quantity = action.payload.quantity;
         }
       })
       .addCase(updateQuantity.rejected, (state, action) => {
@@ -119,8 +119,10 @@ const cartSlice = createSlice({
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
+        console.log(action.meta.arg.productID);
+
         state.cart = state.cart.filter(
-          (item) => item.id !== action.meta.arg.productID
+          (item) => item._id !== action.meta.arg.productID
         );
       })
       .addCase(removeFromCart.rejected, (state, action) => {
@@ -133,12 +135,12 @@ const cartSlice = createSlice({
       })
       .addCase(fetchOrderProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.order = action.payload.order
+        state.order = action.payload.order;
       })
       .addCase(fetchOrderProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
+      });
   },
 });
 

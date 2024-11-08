@@ -9,7 +9,6 @@ export const loginUser = createAsyncThunk("user/login", async (credentials) => {
       credentials,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       }
     );
     return response.data; 

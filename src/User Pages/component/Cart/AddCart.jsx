@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCartProducts,
   removeFromCart,
-  updateQuantity,
 } from "../../../lib/store/features/cartSlice";
 import Spinner from "../../../popup box/Spinner";
 import { axiosPrivate } from "../../../utils/axios";
@@ -48,10 +47,9 @@ function AddCart() {
     try {
       const response = await axiosPrivate.post(
         `/users/payment/${userID}`,
-        { amount: price },
+        { amount: Math.round(price * 100) },
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
   
@@ -63,9 +61,9 @@ function AddCart() {
     }
   };
 
-  const handleItemRemove = (productID) => {
-    dispatch(removeFromCart({ userID, productID }));
-    dispatch(fetchCartProducts(userID))
+  const handleItemRemove =  async (userID, productID) => {
+    await dispatch(removeFromCart({ userID, productID }));
+    dispatch(fetchCartProducts(userID));
   };
 
   if (loading) {
@@ -102,7 +100,7 @@ function AddCart() {
               <h6>${price}</h6>
             </div>
             <div className="text-end">
-              <button className="btn btn-secondary" onClick={handleCheckout}>
+              <button className="btn btn-secondary" onClick={()=> handleCheckout()}>
                 Checkout
               </button>
             </div>

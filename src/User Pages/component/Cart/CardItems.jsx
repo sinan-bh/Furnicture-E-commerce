@@ -10,13 +10,11 @@ function CardItems({ userID, item, onRemove }) {
 
   const handleAdd = async (id) => {
     await dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
-    // dispatch(fetchCartProducts(userID))
   };
   
   const handleRemove = async (id) => {
     if (quantity > 1) {
       await dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
-      // dispatch(fetchCartProducts(userID))
     }
   };
 
@@ -57,7 +55,7 @@ function CardItems({ userID, item, onRemove }) {
           <br />
           <span
             className="text-danger remove-cart-product"
-            onClick={() => onRemove(_id)}
+            onClick={() => onRemove(userID, _id)}
           >
             Remove
           </span>

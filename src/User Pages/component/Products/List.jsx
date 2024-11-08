@@ -3,21 +3,26 @@ import { Link } from "react-router-dom";
 import "./products.css";
 import { FaHeart } from "react-icons/fa6";
 import { MdShoppingCart } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../lib/store/features/cartSlice";
 import { addWishList } from "../../../lib/store/features/whishListSlice";
 
-function List({ list }) {
+function List({ list, setAlert }) {
   const dispatch = useDispatch();
+  const {error} = useSelector(state=> state.cart)
   const { _id: productID, title, image, description, price, offerPrice } = list;
   const data = JSON.parse(localStorage.getItem("currentUser"));
 
-  const addToCartItem = async (id) => {
-      dispatch(addToCart({ userID: data.userID, productID }));
+  const addToCartItem = (id) => {
+    dispatch(addToCart({ userID: data.userID, productID }));
+    setAlert({ type: "success", message: "Added To Cart" });
+    setTimeout(() => setAlert(null), 1000);
   };
 
-  const addToWishListItem = async (id) => {
+  const addToWishListItem = (id) => {
     dispatch(addWishList({ userID: data?.userID, productID: id }));
+    setAlert({ type: "success", message: "Added To WishList" });
+    setTimeout(() => setAlert(null), 1000);
   };
 
   return (

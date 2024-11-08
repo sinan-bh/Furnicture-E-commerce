@@ -8,10 +8,13 @@ import "./products.css";
 import List from "./List";
 import Pagination from "../../../popup box/Pagination";
 import Spinner from "../../../popup box/Spinner";
+import AlertBox from "../../../popup box/AlertBox";
+import { clearAlert } from "../../../lib/store/features/userSlice";
 
 function Collections({ type }) {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
+  const [alert, setAlert] = useState(null);
   const dispatch = useDispatch();
 
   const { products, loading, error } = useSelector((state) => state.products);
@@ -52,6 +55,13 @@ function Collections({ type }) {
 
   return (
     <div className="container card-list pb-5 mb-5">
+       {alert && (
+        <AlertBox
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <h2 className="categories-head text-center">
         {type === "All" && "All Products"}
         {type === "livingroom" && "Living Room Furniture"}
@@ -60,7 +70,7 @@ function Collections({ type }) {
       </h2>
       <div className="furcategories">
         {currentProducts?.map((item) => (
-          <List key={item._id} list={item} />
+          <List key={item._id} list={item} setAlert={setAlert} />
         ))}
       </div>
       <Pagination

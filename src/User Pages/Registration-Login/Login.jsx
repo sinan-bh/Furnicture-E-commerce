@@ -7,6 +7,7 @@ import AlertBox from "../../popup box/AlertBox";
 
 function Login() {
   const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState(null);
   const [formValue, setFormValue] = useState({
     userName: "",
     pass: "",
@@ -14,7 +15,6 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useSelector((state) => state.user.alert);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,18 +38,19 @@ function Login() {
       const resultAction = await dispatch(loginUser(formValue));
 
       if (loginUser.fulfilled.match(resultAction)) {
-        const { userName, token, user, data } = resultAction.payload;
+        const { userName, token, user, data, message } = resultAction.payload;
 
         if (formValue.userName === userName) {
           if (!token) {
             localStorage.removeItem("isLogin");
-          } else {
+          }  else {
             if (user) {
               localStorage.setItem(
                 "currentUser",
                 JSON.stringify({ username: userName, userID: user._id })
               );
               localStorage.setItem("isLogin", JSON.stringify(true));
+              setAlert({ type: "success", message:  message})
               setTimeout(() => navigate("/"), 1000);
             }
           }
@@ -57,7 +58,7 @@ function Login() {
           localStorage.setItem("isAdmin", JSON.stringify(true));
           setTimeout(() => navigate("/adminhome"), 1000);
         } else {
-          dispatch(clearAlert());
+          setAlert({ type: "error", message: "Username or Password is Incorrect" });
           dispatch({
             type: "user/setAlert",
             payload: {
@@ -67,7 +68,7 @@ function Login() {
           });
         }
       } else {
-        dispatch(clearAlert());
+        setAlert({ type: "error", message: "Username or Password is Incorrect" });
         dispatch({
           type: "user/setAlert",
           payload: { type: "error", message: "Login failed" },
