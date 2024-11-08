@@ -10,13 +10,13 @@ function CardItems({ userID, item, onRemove }) {
 
   const handleAdd = async (id) => {
     await dispatch(updateQuantity({ userID, prodid: id, quantityChange: 1 }));
-    dispatch(fetchCartProducts(userID))
+    // dispatch(fetchCartProducts(userID))
   };
   
   const handleRemove = async (id) => {
     if (quantity > 1) {
       await dispatch(updateQuantity({ userID, prodid: id, quantityChange: -1 }));
-      dispatch(fetchCartProducts(userID))
+      // dispatch(fetchCartProducts(userID))
     }
   };
 
